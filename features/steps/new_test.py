@@ -1,4 +1,4 @@
-import os
+'''import os
 from time import sleep
 
 from altunityrunner import AltrunUnityDriver
@@ -42,3 +42,4 @@ driver.press_keycode()
 #altdriver.stop()
 #driver.quit()
 
+'''

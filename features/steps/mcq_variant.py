@@ -1,6 +1,6 @@
 from time import sleep
 
-from ..Pages.mcq import MCQ
+from ..games.templetes.mcq import MCQ
 
 start_y = None
 end_y = None

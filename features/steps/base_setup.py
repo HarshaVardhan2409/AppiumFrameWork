@@ -1,13 +1,5 @@
-import os
-
-from altunityrunner import AltrunUnityDriver
 from appium import webdriver
-
-
-PATH = lambda p: os.path.abspath(
-    os.path.join(os.path.dirname(__file__), p)
-)
-
+from altunityrunner import AltrunUnityDriver
 
 class Base_Setup():
     altdriver = None

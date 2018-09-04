@@ -1,4 +1,7 @@
-from ..generics import test_management
+import sys
+
+sys.path.append('../generics/')
+import test_management
 
 
 @then('Update mcq result to testrail "{caseID}"')

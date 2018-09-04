@@ -1,9 +1,10 @@
-from testrail import *
 import time
+
+from testrail import *
 import test_management
 
 client = APIClient(test_management.testrail_url)
-client.user = test_management.testrail_user
+client.user = test_management.testrail_username
 client.password = test_management.testrail_password
 
 def get_comparision_report(num, num2):

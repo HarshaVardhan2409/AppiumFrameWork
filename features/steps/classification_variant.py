@@ -1,7 +1,10 @@
 from time import sleep
 
-from ..Pages.classification import Classification
-from ..generics import test_management
+from ..games.templetes.classification import Classification
+import sys
+
+sys.path.append('../generics/')
+import test_management
 
 start_y = None
 end_y = None

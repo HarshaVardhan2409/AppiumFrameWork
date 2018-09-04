@@ -1,7 +1,6 @@
 '''
 This module contains tasks in Scene Classification
 '''
-
 from time import sleep
 
 
@@ -13,7 +12,7 @@ class Classification():
     driver = None
 
 
-    def __init__(self,altdriver,driver):
+    def __init__(self, altdriver, driver):
         self.altdriver = altdriver
         self.driver = driver
 

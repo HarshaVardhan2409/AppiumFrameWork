@@ -49,7 +49,7 @@ class MCQ():
         name = str(name)
         assert 'stage_003' in name
         
-    def clickMCQ(self):
+    def click_mcq(self):
         self.altdriver.wait_for_current_scene_to_be('LaunchPad')
         self.altdriver.wait_for_element('MCQ').tap()
 
