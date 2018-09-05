@@ -1,17 +1,12 @@
 '''
 This module contains tasks in MCQ scene
 '''
+from base_class import BaseClass
 
-class MCQ():
+class MCQ(BaseClass):
     '''
     This class contains methods to perform mcq actions
     '''
-    altdriver = None
-    driver = None
-
-    def __init__(self, altdriver, driver):
-        self.altdriver = altdriver
-        self.driver = driver
 
     def verify_main_screen(self):
         self.altdriver.wait_for_current_scene_to_be('LaunchPad')

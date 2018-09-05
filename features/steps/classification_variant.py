@@ -1,74 +1,37 @@
 from time import sleep
-
-from ..games.templetes.classification import Classification
 import sys
 
+from ..games.templetes.classification import Classification
 sys.path.append('../generics/')
 import test_management
+import generics_lib
+import constants
 
 start_y = None
 end_y = None
+game_name = None
 
-@given('User is main page of the classification application')
-def user_is_main_page_of_the_application(context):
+@step('game is launched')
+def game_is_launched(context):
+    for row in context.table:
+        game_name = row["game_name"]
     context.classify = Classification(context.obj.altdriver, context.obj.driver)
-    context.classify.verify_main_screen()
-
-
-@when('User tap on Launch Classification button')
-def user_tap_on_launch_classification_button(context):
-    context.classify = Classification(context.obj.altdriver, context.obj.driver)
-    context.classify.click_classification()
-
-@then('Classification screen is loaded')
-def classification_screen_is_loaded(context):
-    context.classify = Classification(context.obj.altdriver, context.obj.driver)
-    context.classify.verify_classification_screen()
-
-@then('All the classification objects are loaded')
-def all_the_objects_are_loaded(context):
-    context.classify = Classification(context.obj.altdriver, context.obj.driver)
-    context.classify.verify_classification_screen()
-    sleep(3)
-
-@given('Classification question 1 is loaded')
-def question_1_is_loaded(context):
-    context.classify = Classification(context.obj.altdriver, context.obj.driver)
-    context.classify.verify_question_1('DraggableObject')
-
-@when('User drag and drop the classification "{draggable}" to the bucket')
-def user_drag_and_drop_the_draggables(context, draggable):
-    context.classify = Classification(context.obj.altdriver, context.obj.driver)
-    start_y = context.classify.object_location_y(draggable)
-    context.classify.drag_object(draggable)
-    sleep(2)
-
-@then('Verify the classification "{draggable}"')
-def verify_the_draggable(context, draggable):
-    context.classify = Classification(context.obj.altdriver, context.obj.driver)
-    end_y = context.classify.object_location_y(draggable)
-    name = context.classify.object_name(draggable)
-    if 'Stage_1' in name:
-        if '1' in name or '2' in name:
-            assert start_y != end_y
-        if '3' in name or '4' in name or '5' in name:
-            assert start_y != end_y
-    elif 'Stage_2' in name:
-        if '1' in name or '2' in name:
-            assert start_y != end_y
-        if '3' in name or '4' in name or '5' in name:
-            assert start_y != end_y
-
-@then('Update classification result to testrail "{caseID}"')
-def update_result_to_testrail(context, caseID):
-    if 'None' not in caseID:
-        test_management.update_testrail(caseID, '11', True, 'Test case passed')
-
-@given('Application is relaunched')
-def application_is_relaunched(context):
-    context
+    context.classify.wait_for_scene(generics_lib.get_data(constants.classification_path, game_name, "launch_screen"))
+    context.classify.start_game(generics_lib.get_data(constants.classification_path, game_name, "launch_game"))
     
-@given('Classification question 2 is loaded')
-def question_2_is_loaded(context):
+
+@step('start scene is loaded')
+def start_scene_is_loaded(context):
     context.classify = Classification(context.obj.altdriver, context.obj.driver)
-    context.classify.verify_question_2('DraggableObject')
+    sleep(5)
+    #game_name = str(context.feature.name)
+    context.classify.wait_for_scene(generics_lib.get_data(constants.classification_path, context.feature.name, "start_screen"))
+
+    
+@step('drag and drop the draggables to bucket')
+def drag_and_drop_the_draggables_to_bucket(context):
+    context.classify = Classification(context.obj.altdriver, context.obj.driver)
+    for row in context.table:
+        sleep(3)
+        context.classify.drag_object_to_bucket(row['draggable'], row['bucket'])
+

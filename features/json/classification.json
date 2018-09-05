@@ -1,0 +1,12 @@
+{
+	"shapes_classification": 
+		{
+        	"launch_game":"Button",
+        	"launch_screen":"LaunchPad",
+        	"start_screen":"classification",
+            "bucket": "Box",
+            "draggables":"DraggableObject"
+		}
+    
+ 
+}

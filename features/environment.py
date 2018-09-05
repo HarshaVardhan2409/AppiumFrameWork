@@ -13,9 +13,11 @@ obj = Base_Setup()
 def before_all(context):
     Base_Setup.app_path = str(context.config.userdata['APP_PATH'])
     device_type = str(context.config.userdata['DEVICE_TYPE'])
+    Base_Setup.platform = device_type
     
     test_management.testrail_username = str(context.config.userdata['TESTRAIL_USER'])
     test_management.testrail_password = str(context.config.userdata['TESTRAIL_PASS'])
+    
     if 'android' in device_type:
         subprocess.Popen('adb forward tcp:13001 tcp:13000', shell=True)
     elif 'ios' in device_type:
@@ -45,8 +47,9 @@ def after_feature(context, feature):
     context.obj.teardown()
     
 def after_all(context):
+    context
     # Use below code to Stop appium server on the local windows machine
     #call(["cmd.exe",'/c',"Taskkill /IM node.exe /F"])
 
     # Use below code to stop appium server on the local mac machine
-    subprocess.Popen('killall node',shell=True)
+    subprocess.Popen('Taskkill /IM node.exe /F',shell=True)

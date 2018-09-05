@@ -4,7 +4,7 @@ from altunityrunner import AltrunUnityDriver
 class Base_Setup():
     altdriver = None
     driver = None
-    platform = None  # set to `ios` or `android` to change platform
+    platform = 'android'  # set to `ios` or `android` to change platform
     app_path = None
     
     def setup(self):
@@ -17,7 +17,6 @@ class Base_Setup():
             print 'platform do not match'
         self.driver = webdriver.Remote('http://localhost:4723/wd/hub', self.desired_caps)
         self.altdriver = AltrunUnityDriver(self.driver, self.platform)
-        
 
     def teardown(self):
         self.altdriver.stop()
