@@ -1,9 +1,10 @@
 import sys
 
-sys.path.append('../generics/')
+sys.path.append('.../generics/')
 import test_management
 
-@then('Update mcq result to testrail "{caseID}"')
-def update_result_to_testrail(context, caseID):
-    if 'None' not in caseID:
-        test_management.update_testrail(caseID, '15', True, 'Test case passed')
+@then('Update result to testrail')
+def update_result_to_testrail(context):
+    for row in context.table:
+        test_management.update_testrail(row["caseID"], row["suiteID"], True, 'Test case passed')
+        

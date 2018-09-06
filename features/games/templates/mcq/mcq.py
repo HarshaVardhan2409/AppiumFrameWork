@@ -1,7 +1,7 @@
 '''
 This module contains tasks in MCQ scene
 '''
-from base_class import BaseClass
+from ..base_class import BaseClass
 
 class MCQ(BaseClass):
     '''

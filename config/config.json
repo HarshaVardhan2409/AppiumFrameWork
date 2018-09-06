@@ -2,7 +2,13 @@
 
 "testrail": 
    {
-	"url":"https://tnl.testrail.io"
+		"url":"https://tnl.testrail.io"
+	},
+	
+"appium_server":
+	{
+		"ip_address":"localhost",
+		"port":"4723"
 	}
 	
 }

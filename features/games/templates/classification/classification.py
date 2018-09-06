@@ -1,10 +1,7 @@
 '''
 This module contains tasks in Scene Classification
 '''
-from time import sleep
-
-from base_class import BaseClass
-
+from ..base_class import BaseClass
 
 class Classification(BaseClass):
     '''

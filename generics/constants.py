@@ -5,5 +5,5 @@ PATH = lambda p: os.path.abspath(
 )
 
 config_path = PATH('../config/config.json')
-classification_path = PATH('../features/json/classification.json')
-mcq_path = PATH('../features/json/classification.json')
+classification_path = PATH('../features/games/templates/classification/classification.json')
+mcq_path = PATH('../features/games/templates/mcq/mcq.json')
