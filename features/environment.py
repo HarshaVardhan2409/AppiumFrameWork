@@ -24,31 +24,23 @@ def before_all(context):
         subprocess.Popen('iproxy forward tcp:13001 tcp:13000', shell=True)
     subprocess.Popen('appium', shell=True)
     sleep(20)
-    
-    context.obj = obj
-    context.obj.setup()
-    
-'''    
+
+
 def before_scenario(context, scenario):
     context.obj = obj
     context.obj.setup()
-'''    
+
 def after_scenario(context, scenario):
-    '''
     if context.failed:
         print 'failed'
     else:
         print 'passed'
     context.obj = obj
     context.obj.teardown()
-    '''
-    context.obj = obj
-    context.obj.relaunch_app()
-    
+
+
 def after_all(context):
-    context.obj = obj
-    context.obj.teardown()
-    
+
     try:
         # Use below code to Stop appium server on the local windows machine
         subprocess.Popen('Taskkill /IM node.exe /F',shell=True)

@@ -5,7 +5,8 @@
         	"launch_screen":"LaunchPad",
         	"start_screen":"classification",
             "bucket": "Box",
-            "draggables":"DraggableObject"
+            "draggables":"DraggableObject",
+            "axis": "y"
 		}
     
  

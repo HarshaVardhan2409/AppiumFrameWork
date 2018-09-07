@@ -46,4 +46,3 @@ class BaseSetup():
         
     def relaunch_app(self):
         self.driver.launch_app()
-

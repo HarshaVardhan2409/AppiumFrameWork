@@ -1,0 +1,11 @@
+{
+	"game_mcq": 
+		{
+        	"launch_game":"MCQ",
+        	"launch_screen":"LaunchPad",
+        	"start_screen":"MCQ",
+            "axis": "x"
+		}
+    
+ 
+}

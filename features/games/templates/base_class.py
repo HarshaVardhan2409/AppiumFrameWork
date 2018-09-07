@@ -37,8 +37,8 @@ class BaseClass():
         assert question_number in name
     
     def verify_object_location(self, start_position, end_position, check_status):
-        if 'same' in check_status:
+        if 'false' in check_status:
             assert start_position == end_position
-        elif 'different' in check_status:
+        elif 'true' in check_status:
             assert start_position != end_position
     
