@@ -1,3 +1,8 @@
+from time import sleep
+import sys
+
+sys.path.append('../generics/')
+import generics_lib
 
 
 class BaseClass():
@@ -12,6 +17,10 @@ class BaseClass():
         
     def start_game(self, game_name):
         self.altdriver.wait_for_element_where_name_contains(game_name).tap()
+        
+    def start_game_with_text(self, text_field, text, load_button):
+        self.enter_text(text_field, text)
+        self.altdriver.wait_for_element_where_name_contains(load_button).tap()
         
     def wait_for_scene(self, scene_name):
         self.altdriver.wait_for_current_scene_to_be(scene_name)
@@ -41,4 +50,12 @@ class BaseClass():
             assert start_position == end_position
         elif 'true' in check_status:
             assert start_position != end_position
+            
+    def enter_text(self, object_name, text):
+        self.altdriver.wait_for_element_where_name_contains(object_name).tap()
+        sleep(2)
+        generics_lib.action_sendkeys(self.driver, text)
+        self.driver.find_element_by_xpath('//android.widget.Button[@text="OK"]').click()
+        
+        
     

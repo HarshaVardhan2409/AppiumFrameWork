@@ -7,7 +7,29 @@
             "bucket": "Box",
             "draggables":"DraggableObject",
             "axis": "y"
-		}
+		},
+		
+	"mulan_classification":
+	{
+		"launch_screen":"AutomationScene",
+		"text_field": "InputField",
+		"game_code": "classification_mulan_classification_1_1",
+		"load_game":"Button",
+		"start_screen": "classification",
+		"axis": "y"
+	
+	},
+	
+	"mulansort_classification":
+	{
+		"launch_screen":"AutomationScene",
+		"text_field": "InputField",
+		"game_code": "classification_mulansort_1_1",
+		"load_game":"Button",
+		"start_screen":"classification",
+		"axis": "y"
+	
+	}
     
  
 }

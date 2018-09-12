@@ -23,7 +23,7 @@ def before_all(context):
     elif 'ios' in device_type:
         subprocess.Popen('iproxy forward tcp:13001 tcp:13000', shell=True)
     subprocess.Popen('appium', shell=True)
-    sleep(20)
+    sleep(40)
 
 
 def before_scenario(context, scenario):

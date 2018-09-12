@@ -29,6 +29,7 @@ class McqStep(GenericStep):
             elif 'y' in axis:
                 self.mcq.verify_object_location(start_position['y'], end_position['y'], row["acceptable"])
             
-    @then('verify the popup message')
-    def verify_the_popup_message(self):
-        self
+    @then('verify the level successful message')
+    def verify_level_successful_message(self):
+        for row in self.table:
+            self.mcq.level_successful_message(row['object_name'], row['text'])

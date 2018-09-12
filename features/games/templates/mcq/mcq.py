@@ -11,12 +11,7 @@ class MCQ(BaseClass):
     def tap_option(self, option):
         self.altdriver.wait_for_element(option).tap()
 
-    def check_animation(self, option):
-        value = self.altdriver.wait_for_element(option).x
-        print type(value)
-        print value
-
-    def verify_popup(self, popup):
-        text = self.altdriver.wait_for_element_where_name_contains('GratificationText').get_text()
-        assert popup in text
+    def level_successful_message(self, object_name, expected_text):
+        actual_text = self.altdriver.wait_for_element_where_name_contains(object_name).get_text()
+        assert expected_text in actual_text
 
