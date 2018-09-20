@@ -36,6 +36,7 @@ class BaseSetup():
         self.desired_caps['platformName'] = 'android'
         self.desired_caps['deviceName'] = 'device'
         self.desired_caps['app'] = self.app_path
+        self.desired_caps['newCommandTimeout'] = 300
 
     # This will be handled with iOS implementation.
     def setup_ios(self):
@@ -43,6 +44,7 @@ class BaseSetup():
         self.desired_caps['deviceName'] = 'device'
         self.desired_caps['automationName'] = 'XCUITest'
         self.desired_caps['app'] = self.app_path
+        self.desired_caps['newCommandTimeout'] = 300
         
     def relaunch_app(self):
         self.driver.launch_app()

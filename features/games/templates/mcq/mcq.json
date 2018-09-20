@@ -5,6 +5,17 @@
         	"launch_screen":"LaunchPad",
         	"start_screen":"MCQ",
             "axis": "x"
+		},
+		
+	"perimater_mcq": 
+		{
+        	"launch_screen":"AutomationScene",
+			"text_field": "InputField",
+			"game_code": "mcq_peri-mater_maths_0_0",
+			"load_game":"Button",
+			"start_screen": "MCQ",
+			"axis": "x",
+			"animation_object": ""
 		}
     
  

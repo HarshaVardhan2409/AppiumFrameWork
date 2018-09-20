@@ -41,7 +41,7 @@ Feature: game_mcq
    When select the option and verify:
    | option   | acceptable |
    | Option 1 | true       |
-   Then question is loaded:=
+   Then question is loaded:
    | object_with_question | question_number |
    | mcq_four             | stage_002       |
    

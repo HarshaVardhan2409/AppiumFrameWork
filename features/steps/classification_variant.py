@@ -17,15 +17,13 @@ class ClassificationStep(GenericStep):
         
         self.classification = Classification(self.obj.altdriver, self.obj.driver)
         
-        #added sleep only for now
-        sleep(15)
         for row in self.table:
             #wait time for elements to appear on the screen
-            sleep(2)
+            sleep(3)
             start_position = self.classification.get_object_location(row["draggable"])
             self.classification.drag_object_to_bucket(row['draggable'], row['bucket'])
             axis = generics_lib.get_data(self.path, self.game_name, 'axis')
-            sleep(1)
+            sleep(2)
             end_position = self.classification.get_object_location(row["draggable"])
             if 'x' in axis:
                 self.classification.verify_object_location(start_position['x'], end_position['x'], row["acceptable"])

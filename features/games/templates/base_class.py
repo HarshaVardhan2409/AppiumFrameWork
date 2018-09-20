@@ -57,5 +57,11 @@ class BaseClass():
         generics_lib.action_sendkeys(self.driver, text)
         self.driver.find_element_by_xpath('//android.widget.Button[@text="OK"]').click()
         
-        
+    def wait_for_element_display(self, object_name):
+        value1 = self.get_object_location(object_name)
+        sleep(2)
+        value2 = self.get_object_location(object_name)
+        while int(value1['x']) == int(value2['x']) and int(value1['y']) == int(value2['y']):
+            sleep(1)
+            value2 = self.get_object_location(object_name)
     

@@ -65,6 +65,9 @@ class GenericStep():
     def question_is_loaded(self):
         for row in self.table:
             self.base_class.verify_question(row["object_with_question"], row["question_number"])
+            self.base_class.wait_for_element_display(row["object_with_question"])
+            
+    @step('verify the animation')
             
     @then('Update result to testrail')
     def update_result_to_testrail(self):
