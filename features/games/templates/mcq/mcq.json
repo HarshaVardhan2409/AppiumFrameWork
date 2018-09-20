@@ -4,7 +4,7 @@
         	"launch_game":"MCQ",
         	"launch_screen":"LaunchPad",
         	"start_screen":"MCQ",
-            "axis": "x"
+            "animation_object": "GratificationText"
 		},
 		
 	"perimater_mcq": 
@@ -14,8 +14,7 @@
 			"game_code": "mcq_peri-mater_maths_0_0",
 			"load_game":"Button",
 			"start_screen": "MCQ",
-			"axis": "x",
-			"animation_object": ""
+			"animation_object": "ClosureSolution"
 		}
     
  

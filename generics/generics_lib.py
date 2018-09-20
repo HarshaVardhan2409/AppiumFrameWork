@@ -24,3 +24,6 @@ def get_data(file, group_name, key):
             data = json.load(f)
             value = data[group_name][key]
         return value
+    
+def action_sendkeys_to_elements(driver, text):
+    driver.find_element_by_xpath('//android.widget.EditText[@index="0"]').send_keys(text)

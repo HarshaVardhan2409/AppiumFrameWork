@@ -10,7 +10,6 @@ class BaseClass():
     altdriver = None
     driver = None
 
-
     def __init__(self, altdriver, driver):
         self.altdriver = altdriver
         self.driver = driver
@@ -47,21 +46,27 @@ class BaseClass():
     
     def verify_object_location(self, start_position, end_position, check_status):
         if 'false' in check_status:
-            assert start_position == end_position
+            assert int(start_position['x']) == int(end_position['x']) and int(start_position['y']) == int(end_position['y'])
         elif 'true' in check_status:
-            assert start_position != end_position
+            assert int(start_position['x']) != int(end_position['x']) or int(start_position['y']) != int(end_position['y'])
             
     def enter_text(self, object_name, text):
         self.altdriver.wait_for_element_where_name_contains(object_name).tap()
+        #wait time for keypad to load
         sleep(2)
         generics_lib.action_sendkeys(self.driver, text)
         self.driver.find_element_by_xpath('//android.widget.Button[@text="OK"]').click()
         
     def wait_for_element_display(self, object_name):
         value1 = self.get_object_location(object_name)
+        #wait time for element to appear on screen
         sleep(2)
         value2 = self.get_object_location(object_name)
+        count = 0
         while int(value1['x']) == int(value2['x']) and int(value1['y']) == int(value2['y']):
             sleep(1)
             value2 = self.get_object_location(object_name)
-    
+            count = count + 1
+            if count == 7:
+                break
+            

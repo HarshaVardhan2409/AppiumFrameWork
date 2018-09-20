@@ -67,7 +67,8 @@ class GenericStep():
             self.base_class.verify_question(row["object_with_question"], row["question_number"])
             self.base_class.wait_for_element_display(row["object_with_question"])
             
-    @then('Update result to testrail')
+            
+    @then('update result to testrail')
     def update_result_to_testrail(self):
         for row in self.table:
             test_management.update_testrail(row["caseID"], row["suiteID"], True, 'Test case passed')

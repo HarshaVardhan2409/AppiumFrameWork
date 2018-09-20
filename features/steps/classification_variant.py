@@ -22,11 +22,8 @@ class ClassificationStep(GenericStep):
             sleep(3)
             start_position = self.classification.get_object_location(row["draggable"])
             self.classification.drag_object_to_bucket(row['draggable'], row['bucket'])
-            axis = generics_lib.get_data(self.path, self.game_name, 'axis')
+            #wait time for animation to happen
             sleep(2)
             end_position = self.classification.get_object_location(row["draggable"])
-            if 'x' in axis:
-                self.classification.verify_object_location(start_position['x'], end_position['x'], row["acceptable"])
-            elif 'y' in axis:
-                self.classification.verify_object_location(start_position['y'], end_position['y'], row["acceptable"])
+            self.classification.verify_object_location(start_position, end_position, row["acceptable"])
     

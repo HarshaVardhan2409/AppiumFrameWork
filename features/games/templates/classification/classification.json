@@ -5,8 +5,7 @@
         	"launch_screen":"LaunchPad",
         	"start_screen":"classification",
             "bucket": "Box",
-            "draggables":"DraggableObject",
-            "axis": "y"
+            "draggables":"DraggableObject"
 		},
 		
 	"mulan_classification":
@@ -15,8 +14,7 @@
 		"text_field": "InputField",
 		"game_code": "classification_mulan_classification_1_1",
 		"load_game":"Button",
-		"start_screen": "classification",
-		"axis": "y"
+		"start_screen": "classification"
 	
 	},
 	
@@ -26,8 +24,7 @@
 		"text_field": "InputField",
 		"game_code": "classification_mulansort_1_1",
 		"load_game":"Button",
-		"start_screen":"classification",
-		"axis": "y"
+		"start_screen":"classification"
 	
 	}
     
