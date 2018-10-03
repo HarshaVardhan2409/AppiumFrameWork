@@ -8,13 +8,15 @@
             "draggables":"DraggableObject"
 		},
 		
-	"mulan_classification":
+	"classification_mulan_classification_1_1":
 	{
 		"launch_screen":"AutomationScene",
 		"text_field": "InputField",
 		"game_code": "classification_mulan_classification_1_1",
 		"load_game":"Button",
-		"start_screen": "classification"
+		"start_screen": "classification",
+		"text": "systems of measurement"
+		
 	
 	},
 	

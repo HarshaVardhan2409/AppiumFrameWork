@@ -9,6 +9,12 @@
 	{
 		"ip_address":"localhost",
 		"port":"4723"
+	},
+	
+"app_config":
+	{
+		"app_package": "com.byjus.k3",
+		"app_activity": "com.unity3d.player.UnityPlayerActivity"
 	}
 	
 }

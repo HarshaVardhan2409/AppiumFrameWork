@@ -1,13 +1,23 @@
 from __builtin__ import str
+import os
 import subprocess
+import sys
 from time import sleep
 
 from steps.base_setup import BaseSetup
-import sys
 
 sys.path.append('../generics/')
 import test_management
 
+class Environment():
+    
+    case_num = None
+    run_num = None
+    
+    def case_details(self, case, run):
+        self.case_num = case
+        self.run_num = run
+        
 obj = BaseSetup()
 
 def before_all(context):
@@ -24,23 +34,37 @@ def before_all(context):
         subprocess.Popen('iproxy forward tcp:13001 tcp:13000', shell=True)
     subprocess.Popen('appium', shell=True)
     sleep(40)
-
-
-def before_scenario(context, scenario):
     context.obj = obj
     context.obj.setup()
 
 def after_scenario(context, scenario):
-    if context.failed:
-        print 'failed'
-    else:
-        print 'passed'
     context.obj = obj
-    context.obj.teardown()
-
+    
+    
+    print context.table
+    print context.text
+    f = open('../features/test.text', "w+")
+    f.write(str(context.table))
+    f.close()
+    f = open('../features/test2.text', "w+")
+    f.write(str(context.text))
+    f.close()
+    if context.failed:
+        directory = '%s/' % os.getcwd()
+        file_name = 'screen.png'
+        
+        context.obj.driver.save_screenshot(directory + file_name)
+        test_management.update_testrail(Environment.case_num, Environment.run_num , False, 'Test case failed')
+    else:
+        test_management.update_testrail(Environment.case_num, Environment.run_num , False, 'Test case failed')
+    
+    context.obj.relaunch_app()
 
 def after_all(context):
-
+    
+    context.obj = obj
+    context.obj.teardown()
+    
     try:
         # Use below code to Stop appium server on the local windows machine
         subprocess.Popen('Taskkill /IM node.exe /F',shell=True)

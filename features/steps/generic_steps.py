@@ -5,13 +5,14 @@ from behave import *
 sys.path.append('../features/')
 from games.templates.base_class import BaseClass
 
-sys.path.append('.../generics/')
-import test_management
+sys.path.append('../')
+from environment import Environment
+
 
 sys.path.append('../generics/')
 import generics_lib
 import constants
-
+import test_management
 
 class GenericStep():
     
@@ -21,6 +22,9 @@ class GenericStep():
     
     base_class = None
     path = None
+    
+    case = None
+    run = None
     
     @step('game is launched with text')
     def game_is_launched_with_text(self):
@@ -65,10 +69,22 @@ class GenericStep():
     def question_is_loaded(self):
         for row in self.table:
             self.base_class.verify_question(row["object_with_question"], row["question_number"])
-            self.base_class.wait_for_element_display(row["object_with_question"])
+            self.base_class.wait_for_element_display(row["question_number"])
             
-            
-    @then('update result to testrail')
-    def update_result_to_testrail(self):
+    @step('verify the level successful message')
+    def verify_level_successful_message(self):
         for row in self.table:
-            test_management.update_testrail(row["caseID"], row["suiteID"], True, 'Test case passed')
+            self.base_class.level_successful_message(row['object_name'], row['text'])
+            
+    @step('verify the text')
+    def verify_the_text(self):
+        for row in self.table:
+            self.base_class.verify_text(row['object_name'], generics_lib.get_data(self.path, self.game_name, "text"))
+            
+            
+    @then('update the result to testrail: case {caseID} : suite {runID}')
+    def update_result_to_testrail(self, caseID, runID):
+        envi = Environment()
+        envi.case_details(format(caseID), format(runID))
+        test_management.update_testrail(format(caseID), format(runID), True, 'Test case passed')
+            

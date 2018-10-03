@@ -13,6 +13,9 @@ class BaseSetup():
     driver = None
     platform = None  # set to `ios` or `android` to change platform
     app_path = None
+    desired_caps = None
+    ip_address = None
+    port = None
     
     def setup(self):
         self.desired_caps = {}
@@ -23,9 +26,9 @@ class BaseSetup():
         else:
             print 'platform do not match'
             
-        ip_address = generics_lib.get_data(constants.config_path, 'appium_server', 'ip_address')
-        port = generics_lib.get_data(constants.config_path, 'appium_server', 'port')
-        self.driver = webdriver.Remote('http://'+ip_address+':'+port+'/wd/hub', self.desired_caps)
+        self.ip_address = generics_lib.get_data(constants.config_path, 'appium_server', 'ip_address')
+        self.port = generics_lib.get_data(constants.config_path, 'appium_server', 'port')
+        self.driver = webdriver.Remote('http://'+self.ip_address+':'+self.port+'/wd/hub', self.desired_caps)
         self.altdriver = AltrunUnityDriver(self.driver, self.platform)
 
     def teardown(self):
@@ -47,4 +50,11 @@ class BaseSetup():
         self.desired_caps['newCommandTimeout'] = 300
         
     def relaunch_app(self):
-        self.driver.launch_app()
+        self.desired_caps['platformName'] = 'android'
+        self.desired_caps['deviceName'] = 'device'
+        self.desired_caps['newCommandTimeout'] = 300
+        self.desired_caps['appPackage'] = generics_lib.get_data(constants.config_path, 'app_config', 'app_package')
+        self.desired_caps['appActivity'] = generics_lib.get_data(constants.config_path, 'app_config', 'app_activity')
+        self.driver = webdriver.Remote('http://'+self.ip_address+':'+self.port+'/wd/hub', self.desired_caps)
+        self.altdriver = AltrunUnityDriver(self.driver, self.platform)
+        

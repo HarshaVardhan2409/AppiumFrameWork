@@ -70,3 +70,12 @@ class BaseClass():
             if count == 7:
                 break
             
+    def level_successful_message(self, object_name, expected_text):
+        actual_text = self.altdriver.wait_for_element_where_name_contains(object_name).get_text()
+        assert expected_text in actual_text
+        
+    def verify_text(self, object_name, expected_text):
+        actual_text = self.altdriver.wait_for_element_where_name_contains(object_name).get_text()
+        assert expected_text in actual_text
+        
+            

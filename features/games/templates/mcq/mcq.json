@@ -1,20 +1,20 @@
 {
 	"game_mcq": 
 		{
-        	"launch_game":"MCQ",
         	"launch_screen":"LaunchPad",
         	"start_screen":"MCQ",
             "animation_object": "GratificationText"
 		},
 		
-	"perimater_mcq": 
+	"mcq_peri-mater_maths_0_0": 
 		{
         	"launch_screen":"AutomationScene",
 			"text_field": "InputField",
 			"game_code": "mcq_peri-mater_maths_0_0",
 			"load_game":"Button",
 			"start_screen": "MCQ",
-			"animation_object": "ClosureSolution"
+			"animation_object": "ClosureSolution",
+			"text": "perimeter of the shape"
 		}
     
  

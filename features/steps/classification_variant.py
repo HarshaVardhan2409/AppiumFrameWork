@@ -16,10 +16,10 @@ class ClassificationStep(GenericStep):
     def drag_and_drop_the_draggables_to_bucket(self):
         
         self.classification = Classification(self.obj.altdriver, self.obj.driver)
-        
+        sleep(2.5)
         for row in self.table:
             #wait time for elements to appear on the screen
-            sleep(3)
+            sleep(1)
             start_position = self.classification.get_object_location(row["draggable"])
             self.classification.drag_object_to_bucket(row['draggable'], row['bucket'])
             #wait time for animation to happen
