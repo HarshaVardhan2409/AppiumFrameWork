@@ -194,19 +194,17 @@ def create_feature_file(suite_ID, project_ID, run_ID):
                 if case['custom_background'] != None:
                     filedata += ('\n\nBackground: ' + case['custom_background'].strip())
             if case['title'] != None:
-                filedata += ('\n\n' + case['title'].strip())     
+                filedata += ('\n\n' + case['title'].strip() + ' testrail details_' + str(case['id']) + '_' + run_ID)     
             if case['custom_given'] != None:
                 filedata += ('\nGiven ' + case['custom_given'].strip())
             if case['custom_when'] != None:
                 filedata += ('\nWhen ' + case['custom_when'].replace("And", '\n\t\t\tAnd').strip())    
             if case['custom_then'] != None:
                 filedata += ('\nThen ' + case['custom_then'].strip())
-                if 'testrail' in case['custom_then']:
-                    filedata += (': case '+str(case['id']) + ' : suite '+ run_ID)
             if case['custom_example'] != None:
                 filedata += ('\n\nExample ' + case['custom_example'].strip())
     f.write(filedata)
     f.close()
     print 'Number of feature file created = '+ str(count)
     
-#create_feature_file('27', '2', '30')
+create_feature_file('27', '2', '20')

@@ -8,15 +8,6 @@ from steps.base_setup import BaseSetup
 
 sys.path.append('../generics/')
 import test_management
-
-class Environment():
-    
-    case_num = None
-    run_num = None
-    
-    def case_details(self, case, run):
-        self.case_num = case
-        self.run_num = run
         
 obj = BaseSetup()
 
@@ -40,23 +31,20 @@ def before_all(context):
 def after_scenario(context, scenario):
     context.obj = obj
     
+    data = None
+    data = str(context.scenario)
+    data = data.split('">')
+    data = data[0].split('_')
+    data.reverse()
     
-    print context.table
-    print context.text
-    f = open('../features/test.text', "w+")
-    f.write(str(context.table))
-    f.close()
-    f = open('../features/test2.text', "w+")
-    f.write(str(context.text))
-    f.close()
     if context.failed:
         directory = '%s/' % os.getcwd()
         file_name = 'screen.png'
-        
         context.obj.driver.save_screenshot(directory + file_name)
-        test_management.update_testrail(Environment.case_num, Environment.run_num , False, 'Test case failed')
+        
+        test_management.update_testrail(data[1], data[0] , False, 'Test case failed')
     else:
-        test_management.update_testrail(Environment.case_num, Environment.run_num , False, 'Test case failed')
+        test_management.update_testrail(data[1], data[0] , True, 'Test case passed')
     
     context.obj.relaunch_app()
 

@@ -67,7 +67,7 @@ class BaseClass():
             sleep(1)
             value2 = self.get_object_location(object_name)
             count = count + 1
-            if count == 7:
+            if count == 10:
                 break
             
     def level_successful_message(self, object_name, expected_text):

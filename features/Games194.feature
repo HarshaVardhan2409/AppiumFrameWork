@@ -7,7 +7,7 @@ Background: Launch game
  | game_name             |
  | mcq_peri-mater_maths_0_0 |
 
-Scenario: check when a correct answer is selected for question 1
+Scenario: check when a correct answer is selected for question 1 testrail details_1601_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -15,9 +15,9 @@ And question is loaded:
 When select the option and verify:  
 | option | acceptable |
 | CorrectOption | true |
-Then update the result to testrail: case 1601 : suite 30
+Then update the result to testrail
 
-Scenario: check when incorrect answer is selected for question 1
+Scenario: check when incorrect answer is selected for question 1 testrail details_1602_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -27,9 +27,9 @@ When select the option and verify:
 | WrongOption_1 | false |
 | WrongOption_2 | false |
 | WrongOption_3 | false |
-Then update the result to testrail: case 1602 : suite 30
+Then update the result to testrail
 
-Scenario: check the text of question 1 on the screen
+Scenario: check the text of question 1 on the screen testrail details_1603_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -37,9 +37,9 @@ And question is loaded:
 When verify the text:
 | object_name |
 | Question |
-Then update the result to testrail: case 1603 : suite 30
+Then update the result to testrail
 
-Scenario: check the text message when correct answer is selected for question 1
+Scenario: check the text message when correct answer is selected for question 1 testrail details_1604_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -47,9 +47,9 @@ And question is loaded:
 When select the option and verify:  
 | option | acceptable |
 | CorrectOption | true |
-Then update the result to testrail: case 1604 : suite 30
+Then update the result to testrail
 
-Scenario: check when a correct answer is selected for question 2
+Scenario: check when a correct answer is selected for question 2 testrail details_1605_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -63,9 +63,9 @@ Then question is loaded:
 When select the option and verify:  
 | option | acceptable |
 | CorrectOption | true |
-Then update the result to testrail: case 1605 : suite 30
+Then update the result to testrail
 
-Scenario: check when incorrect answer is selected for question 2
+Scenario: check when incorrect answer is selected for question 2 testrail details_1606_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -81,9 +81,9 @@ When select the option and verify:
 | WrongOption_1 | false |
 | WrongOption_2 | false |
 | WrongOption_3 | false |
-Then update the result to testrail: case 1606 : suite 30
+Then update the result to testrail
 
-Scenario: check the text of question 2 on the screen
+Scenario: check the text of question 2 on the screen testrail details_1607_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -97,9 +97,9 @@ Then question is loaded:
 When verify the text:
 | object_name | 
 | Question |
-Then update the result to testrail: case 1607 : suite 30
+Then update the result to testrail
 
-Scenario: check the text message when correct answer is selected for question 2
+Scenario: check the text message when correct answer is selected for question 2 testrail details_1608_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -113,9 +113,9 @@ Then question is loaded:
 When select the option and verify:  
 | option | acceptable |
 | CorrectOption | true |
-Then update the result to testrail: case 1608 : suite 30
+Then update the result to testrail
 
-Scenario: check when a correct answer is selected for question 3
+Scenario: check when a correct answer is selected for question 3 testrail details_1609_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -135,9 +135,9 @@ Then question is loaded:
 When select the option and verify:  
 | option | acceptable |
 | CorrectOption | true |
-Then update the result to testrail: case 1609 : suite 30
+Then update the result to testrail
 
-Scenario: check when incorrect answer is selected for question 3
+Scenario: check when incorrect answer is selected for question 3 testrail details_1610_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -159,9 +159,9 @@ When select the option and verify:
 | WrongOption_1 | false |
 | WrongOption_2 | false |
 | WrongOption_3 | false |
-Then update the result to testrail: case 1610 : suite 30
+Then update the result to testrail
 
-Scenario: check the text of question 3 on the screen
+Scenario: check the text of question 3 on the screen testrail details_1611_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -181,9 +181,9 @@ Then question is loaded:
 When verify the text:
 | object_name | 
 | Question |
-Then update the result to testrail: case 1611 : suite 30
+Then update the result to testrail
 
-Scenario: check the text message when correct answer is selected for question 3
+Scenario: check the text message when correct answer is selected for question 3 testrail details_1612_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -203,9 +203,9 @@ Then question is loaded:
 When select the option and verify:  
 | option | acceptable |
 | CorrectOption | true |
-Then update the result to testrail: case 1612 : suite 30
+Then update the result to testrail
 
-Scenario: check when a correct answer is selected for question 4
+Scenario: check when a correct answer is selected for question 4 testrail details_1613_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -231,9 +231,9 @@ Then question is loaded:
 When select the option and verify:  
 | option | acceptable |
 | CorrectOption | true |
-Then update the result to testrail: case 1613 : suite 30
+Then update the result to testrail
 
-Scenario: check when incorrect answer is selected for question 4
+Scenario: check when incorrect answer is selected for question 4 testrail details_1614_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -261,9 +261,9 @@ When select the option and verify:
 | WrongOption_1 | false |
 | WrongOption_2 | false |
 | WrongOption_3 | false |
-Then update the result to testrail: case 1614 : suite 30
+Then update the result to testrail
 
-Scenario: check the text of question 4 on the screen
+Scenario: check the text of question 4 on the screen testrail details_1615_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -289,9 +289,9 @@ Then question is loaded:
 When verify the text:
 | object_name | 
 | Question |
-Then update the result to testrail: case 1615 : suite 30
+Then update the result to testrail
 
-Scenario: check the text message when correct answer is selected for question 4
+Scenario: check the text message when correct answer is selected for question 4 testrail details_1616_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -317,9 +317,9 @@ Then question is loaded:
 When select the option and verify:  
 | option | acceptable |
 | CorrectOption | true |
-Then update the result to testrail: case 1616 : suite 30
+Then update the result to testrail
 
-Scenario: check whether user can able to complete the game by selecting the correct answers
+Scenario: check whether user can able to complete the game by selecting the correct answers testrail details_1617_20
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -345,4 +345,4 @@ Then question is loaded:
 When select the option and verify:  
 | option | acceptable |
 | CorrectOption | true |
-Then update the result to testrail: case 1617 : suite 30
+Then update the result to testrail

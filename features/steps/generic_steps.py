@@ -5,10 +5,6 @@ from behave import *
 sys.path.append('../features/')
 from games.templates.base_class import BaseClass
 
-sys.path.append('../')
-from environment import Environment
-
-
 sys.path.append('../generics/')
 import generics_lib
 import constants
@@ -84,7 +80,5 @@ class GenericStep():
             
     @then('update the result to testrail: case {caseID} : suite {runID}')
     def update_result_to_testrail(self, caseID, runID):
-        envi = Environment()
-        envi.case_details(format(caseID), format(runID))
-        test_management.update_testrail(format(caseID), format(runID), True, 'Test case passed')
+        print ''
             
