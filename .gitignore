@@ -21,6 +21,9 @@ sdist/
 var/
 wheels/
 *.egg-info/
+execution_data/
+.project
+.pydevproject
 .installed.cfg
 *.egg
 MANIFEST
