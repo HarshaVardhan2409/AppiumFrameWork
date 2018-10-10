@@ -5,7 +5,7 @@ from ..base_class import BaseClass
 
 class Classification(BaseClass):
     '''
-    This class contains methods to perform classification
+    This class contains methods to perform actions on classification template
     '''
             
     def drag_object_to_bucket(self, draggable_name, bucket_name):

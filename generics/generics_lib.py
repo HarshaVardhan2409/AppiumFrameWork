@@ -1,5 +1,5 @@
 '''
-This module contains generic methods
+This module contains generic methods which are mobile specific
 '''
 
 import json

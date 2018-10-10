@@ -6,6 +6,9 @@ import generics_lib
 
 
 class BaseClass():
+    '''
+    This class contains the methods/actions that can be commonly used for all the templates
+    '''
     
     altdriver = None
     driver = None

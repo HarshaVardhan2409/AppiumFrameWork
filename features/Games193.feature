@@ -7,7 +7,7 @@ Background: Launch game
  | game_name             |
  | classification_mulansort_1_1 |
 
-Scenario: check whether buckets are accepting the valid draggables for question 1 testrail details_1506_20
+Scenario: check whether buckets are accepting the valid draggables for question 1 testrail details_1506_29
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -19,7 +19,7 @@ When drag and drop the draggables to bucket and verify position:
 | Stone&DraggableObject_1Stage_1 | Bucket_Stone&Bucket_3Stage_1 | true |
 Then update the result to testrail
 
-Scenario: check whether buckets are accepting the invalid draggables for question 1 testrail details_1507_20
+Scenario: check whether buckets are accepting the invalid draggables for question 1 testrail details_1507_29
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -34,7 +34,7 @@ When drag and drop the draggables to bucket and verify position:
 | Ounces&DraggableObject_3Stage_1 | Bucket_Stone&Bucket_3Stage_1 | false |
 Then update the result to testrail
 
-Scenario: check the animation of buckets by drag and drop the valid draggables for question 1 testrail details_1508_20
+Scenario: check the animation of buckets by drag and drop the valid draggables for question 1 testrail details_1508_29
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -46,7 +46,7 @@ When drag and drop the draggables to bucket and verify position:
 | Stone&DraggableObject_1Stage_1 | Bucket_Stone&Bucket_3Stage_1 | true |
 Then update the result to testrail
 
-Scenario: check the animation of buckets by drag and drop the invalid draggables for question 1 testrail details_1509_20
+Scenario: check the animation of buckets by drag and drop the invalid draggables for question 1 testrail details_1509_29
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -61,7 +61,7 @@ When drag and drop the draggables to bucket and verify position:
 | Ounces&DraggableObject_3Stage_1 | Bucket_Stone&Bucket_3Stage_1 | false |
 Then update the result to testrail
 
-Scenario: check the text of question 1 on the screen testrail details_1510_20
+Scenario: check the text of question 1 on the screen testrail details_1510_29
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -71,7 +71,7 @@ When verify the text
 | Question&Passive_1Stage_1 |
 Then update the result to testrail
 
-Scenario: check the text message when correct answer is selected for question 1 testrail details_1511_20
+Scenario: check the text message when correct answer is selected for question 1 testrail details_1511_29
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -83,7 +83,7 @@ When drag and drop the draggables to bucket and verify position:
 | Stone&DraggableObject_1Stage_1 | Bucket_Stone&Bucket_3Stage_1 | true |
 Then update the result to testrail
 
-Scenario: check whether buckets are accepting the valid draggables for question 2 testrail details_1512_20
+Scenario: check whether buckets are accepting the valid draggables for question 2 testrail details_1512_29
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -104,7 +104,7 @@ When drag and drop the draggables to bucket and verify position:
 | Chick&DraggableObject_2Stage_2 | Bucket_Chickl&Bucket_4Stage_2 | true |
 Then update the result to testrail
 
-Scenario: check whether buckets are accepting the invalid draggables for question 2 testrail details_1513_20
+Scenario: check whether buckets are accepting the invalid draggables for question 2 testrail details_1513_29
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -133,7 +133,7 @@ When drag and drop the draggables to bucket and verify position:
 | Horse&DraggableObject_4Stage_2 | Bucket_Chickl&Bucket_4Stage_2 | false |
 Then update the result to testrail
 
-Scenario: check the animation of buckets by drag and drop the valid draggables for question 2 testrail details_1514_20
+Scenario: check the animation of buckets by drag and drop the valid draggables for question 2 testrail details_1514_29
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -154,7 +154,7 @@ When drag and drop the draggables to bucket and verify position:
 | Chick&DraggableObject_2Stage_2 | Bucket_Chickl&Bucket_4Stage_2 | true |
 Then update the result to testrail
 
-Scenario: check the animation of buckets by drag and drop the invalid draggables for question 2 testrail details_1515_20
+Scenario: check the animation of buckets by drag and drop the invalid draggables for question 2 testrail details_1515_29
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -183,7 +183,7 @@ When drag and drop the draggables to bucket and verify position:
 | Horse&DraggableObject_4Stage_2 | Bucket_Chickl&Bucket_4Stage_2 | false |
 Then update the result to testrail
 
-Scenario: check the text of question 2 on the screen testrail details_1516_20
+Scenario: check the text of question 2 on the screen testrail details_1516_29
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -201,7 +201,7 @@ When verify the text
 | Question&Passive_1Stage_2 |
 Then update the result to testrail
 
-Scenario: check the text message when correct answer is selected for question 2 testrail details_1517_20
+Scenario: check the text message when correct answer is selected for question 2 testrail details_1517_29
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |
@@ -222,7 +222,7 @@ When drag and drop the draggables to bucket and verify position:
 | Chick&DraggableObject_2Stage_2 | Bucket_Chickl&Bucket_4Stage_2 | true |
 Then update the result to testrail
 
-Scenario: check whether user can able to complete the game by drag and drop the valid draggables testrail details_1518_20
+Scenario: check whether user can able to complete the game by drag and drop the valid draggables testrail details_1518_29
 Given start scene is loaded
 And question is loaded:
 | object_with_question | question_number |

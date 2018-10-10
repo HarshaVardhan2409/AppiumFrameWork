@@ -1,3 +1,8 @@
+'''
+This module contains the path for the supporting files
+'''
+
+
 import os
 
 PATH = lambda p: os.path.abspath(

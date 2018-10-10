@@ -1,3 +1,7 @@
+'''
+This module contains methods which can be used for mobile interruption
+'''
+
 from subprocess import call
 
 from appium.webdriver.connectiontype import ConnectionType

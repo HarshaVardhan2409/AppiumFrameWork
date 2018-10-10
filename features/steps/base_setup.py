@@ -12,6 +12,7 @@ class BaseSetup():
     altdriver = None
     driver = None
     platform = None  # set to `ios` or `android` to change platform
+    system_os = None
     app_path = None
     desired_caps = None
     ip_address = None
@@ -50,11 +51,12 @@ class BaseSetup():
         self.desired_caps['newCommandTimeout'] = 300
         
     def relaunch_app(self):
-        self.desired_caps['platformName'] = 'android'
-        self.desired_caps['deviceName'] = 'device'
-        self.desired_caps['newCommandTimeout'] = 300
-        self.desired_caps['appPackage'] = generics_lib.get_data(constants.config_path, 'app_config', 'app_package')
-        self.desired_caps['appActivity'] = generics_lib.get_data(constants.config_path, 'app_config', 'app_activity')
-        self.driver = webdriver.Remote('http://'+self.ip_address+':'+self.port+'/wd/hub', self.desired_caps)
-        self.altdriver = AltrunUnityDriver(self.driver, self.platform)
+        if 'windows' in self.system_os:
+            self.desired_caps['platformName'] = 'android'
+            self.desired_caps['deviceName'] = 'device'
+            self.desired_caps['newCommandTimeout'] = 300
+            self.desired_caps['appPackage'] = generics_lib.get_data(constants.config_path, 'app_config', 'app_package')
+            self.desired_caps['appActivity'] = generics_lib.get_data(constants.config_path, 'app_config', 'app_activity')
+            self.driver = webdriver.Remote('http://'+self.ip_address+':'+self.port+'/wd/hub', self.desired_caps)
+            self.altdriver = AltrunUnityDriver(self.driver, self.platform)
         

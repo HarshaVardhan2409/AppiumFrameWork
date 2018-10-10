@@ -5,7 +5,7 @@ from ..base_class import BaseClass
 
 class MCQ(BaseClass):
     '''
-    This class contains methods to perform mcq actions
+    This class contains methods to perform actions on mcq template
     '''
 
     def tap_option(self, option):

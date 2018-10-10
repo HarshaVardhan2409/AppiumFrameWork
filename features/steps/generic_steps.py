@@ -78,7 +78,7 @@ class GenericStep():
             self.base_class.verify_text(row['object_name'], generics_lib.get_data(self.path, self.game_name, "text"))
             
             
-    @then('update the result to testrail: case {caseID} : suite {runID}')
-    def update_result_to_testrail(self, caseID, runID):
+    @then('update the result to testrail')
+    def update_result_to_testrail(self):
         print ''
             

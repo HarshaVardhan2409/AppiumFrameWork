@@ -16,7 +16,8 @@ class ClassificationStep(GenericStep):
     def drag_and_drop_the_draggables_to_bucket(self):
         
         self.classification = Classification(self.obj.altdriver, self.obj.driver)
-        sleep(2.5)
+        #wait time for elemnts to be loaded
+        sleep(3)
         for row in self.table:
             #wait time for elements to appear on the screen
             sleep(1)
