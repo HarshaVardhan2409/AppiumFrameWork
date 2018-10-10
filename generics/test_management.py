@@ -156,6 +156,20 @@ def get_run_id(test_run_name, project_name):
                     break
             return run_id
         
+def get_sections(project_ID, suite_ID): 
+    client = get_testrail_client()
+    # case = client.send_get('get_case/181')
+    # print(case) 
+    sections = client.send_get('get_sections/' + project_ID + '&suite_id=' + suite_ID)
+    return sections
+
+def get_section(section_ID): 
+    client = get_testrail_client()
+    # case = client.send_get('get_case/181')
+    # print(case) 
+    section = client.send_get('get_section/' + section_ID)
+    return section
+        
 def create_feature_file(suite_ID, project_ID, run_ID): 
     client = APIClient(testrail_url)
     client.user = testrail_username
@@ -188,8 +202,9 @@ def create_feature_file(suite_ID, project_ID, run_ID):
                     f.close()
                 except:
                     print ''
-                f = open('../features/' + feature_name+str(section_id_2) + '.feature', "w+")
-                filedata = "@" + feature_name + '\nFeature: ' + feature_name + '\n'
+                
+                f = open('../features/' + feature_name + '_'  + str(get_section(str(section_id_2))['name']) + '.feature', "w+")
+                filedata = "@" + str(get_section(str(section_id_2))['name']) + '\nFeature: ' + str(get_section(str(section_id_2))['name']) + '\n'
                 count += 1
                 if case['custom_background'] != None:
                     filedata += ('\n\nBackground: ' + case['custom_background'].strip())

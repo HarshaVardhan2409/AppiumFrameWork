@@ -1,5 +1,5 @@
-@Games
-Feature: Games
+@classification_mulansort_1_1
+Feature: classification_mulansort_1_1
 
 
 Background: Launch game 

@@ -20,4 +20,4 @@ def start_execution(feature_file=None):
             shell=False)
 
 
-start_execution('Games192.feature')
+#start_execution('Games192.feature')

@@ -1,5 +1,5 @@
-@Games
-Feature: Games
+@mcq_peri-mater_maths_0_0
+Feature: mcq_peri-mater_maths_0_0
 
 
 Background: Launch game 
