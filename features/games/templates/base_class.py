@@ -78,7 +78,7 @@ class BaseClass():
         assert expected_text in actual_text
         
     def verify_text(self, object_name, expected_text):
-        actual_text = self.altdriver.wait_for_element_where_name_contains(object_name).get_text()
+        actual_text = self.altdriver.wait_for_element_where_name_contains(object_name).text
         assert expected_text in actual_text
         
             

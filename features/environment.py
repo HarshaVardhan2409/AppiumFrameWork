@@ -9,6 +9,7 @@ from steps.base_setup import BaseSetup
 sys.path.append('../generics/')
 import test_management
 import constants
+import generics_lib
         
 obj = BaseSetup()
 
@@ -40,6 +41,13 @@ def before_all(context):
     sleep(40)
     context.obj = obj
     context.obj.setup()
+    
+def before_feature(context, feature):
+    device_type = str(context.config.userdata['DEVICE_TYPE']).lower()
+    if 'android' in device_type:
+        subprocess.Popen('adb logcat -c', shell=True)
+        package_name = generics_lib.get_data(constants.config_path, 'app_config', 'logs')
+        subprocess.Popen('adb logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
 
 def before_scenario(context, scenario):
     data = None
@@ -48,9 +56,12 @@ def before_scenario(context, scenario):
     data = data[0].split('_')
     data.reverse()
     device_type = str(context.config.userdata['DEVICE_TYPE']).lower()
+    '''
     if 'android' in device_type:
         subprocess.Popen('adb logcat -c', shell=True)
-        subprocess.Popen('adb logcat | findstr com.byjus.k3 > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
+        package_name = generics_lib.get_data(constants.config_path, 'app_config', 'logs')
+        subprocess.Popen('adb logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
+    '''
 
 def after_scenario(context, scenario):
     

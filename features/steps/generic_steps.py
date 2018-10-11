@@ -1,6 +1,7 @@
 from time import sleep
 import sys
 from behave import *
+import subprocess
 
 sys.path.append('../features/')
 from games.templates.base_class import BaseClass
@@ -72,11 +73,25 @@ class GenericStep():
         for row in self.table:
             self.base_class.level_successful_message(row['object_name'], row['text'])
             
-    @step('verify the text')
-    def verify_the_text(self):
-        for row in self.table:
-            self.base_class.verify_text(row['object_name'], generics_lib.get_data(self.path, self.game_name, "text"))
+    @step('verify the text "{expected_text}" for element: {element_name}')
+    def verify_the_text(self, element_name, expected_text):
+        self.base_class.verify_text(str(element_name), str(expected_text))
             
+    @step('verify the multiple texts')
+    def verify_the_multiple_texts(self):
+        for row in self.table:
+            self.base_class.verify_text(row['object_with_text'], row['text'])
+            
+    @step('Capture the app logs for: "{package_name}"')
+    def capture_logs(self, package_name):
+        data = None
+        data = str(self.scenario)
+        data = data.split('">')
+        data = data[0].split('_')
+        data.reverse()
+        subprocess.Popen('adb logcat -c', shell=True)
+        subprocess.Popen('adb logcat | findstr ' + str(package_name) + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
+        
             
     @then('update the result to testrail')
     def update_result_to_testrail(self):
