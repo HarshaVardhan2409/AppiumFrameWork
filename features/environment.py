@@ -5,11 +5,16 @@ import subprocess
 import sys
 from time import sleep
 
-from steps.base_setup import BaseSetup
-sys.path.append('../generics/')
-import test_management
+PATH = lambda p: os.path.abspath(
+    os.path.join(os.path.dirname(__file__), p)
+)
+
+from features.steps.base_setup import BaseSetup
+
+sys.path.append(PATH('../generics/'))
 import constants
 import generics_lib
+import test_management
         
 obj = BaseSetup()
 

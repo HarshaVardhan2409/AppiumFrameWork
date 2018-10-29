@@ -1,7 +1,12 @@
 from time import sleep
 import sys
+import os
 
-sys.path.append('../generics/')
+PATH = lambda p: os.path.abspath(
+    os.path.join(os.path.dirname(__file__), p)
+)
+
+sys.path.append(PATH('../../../generics/'))
 import generics_lib
 
 

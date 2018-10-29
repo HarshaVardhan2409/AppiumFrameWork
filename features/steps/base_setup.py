@@ -1,13 +1,16 @@
 from altunityrunner import AltrunUnityDriver
 from appium import webdriver
 import sys
+import os
 
-sys.path.append('../generics/')
+PATH = lambda p: os.path.abspath(
+    os.path.join(os.path.dirname(__file__), p)
+)
+
+sys.path.append(PATH('../../generics/'))
 import generics_lib
 import constants
 
-
-#from ...generics import generics_lib, constants
 class BaseSetup():
     altdriver = None
     driver = None

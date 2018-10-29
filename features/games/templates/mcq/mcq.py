@@ -1,7 +1,14 @@
 '''
 This module contains tasks in MCQ scene
 '''
-from ..base_class import BaseClass
+import os
+import sys
+
+PATH = lambda p: os.path.abspath(
+    os.path.join(os.path.dirname(__file__), p)
+)
+sys.path.append(PATH('../'))
+from base_class import BaseClass
 
 class MCQ(BaseClass):
     '''

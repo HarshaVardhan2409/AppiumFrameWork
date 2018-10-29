@@ -1,11 +1,17 @@
 from time import sleep
+import sys
+import os
 
-from ..games.templates.mcq.mcq import MCQ
+PATH = lambda p: os.path.abspath(
+    os.path.join(os.path.dirname(__file__), p)
+)
+sys.path.append(PATH('../games/templates/'))
+from mcq.mcq import MCQ
 import sys
 
-sys.path.append('../generics/')
-import generics_lib
+sys.path.append(PATH('../../generics/'))
 import constants
+import generics_lib
 
 from generic_steps import GenericStep
 

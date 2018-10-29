@@ -1,11 +1,17 @@
 import sys
 from time import sleep
+import os
 
-sys.path.append('../generics/')
+PATH = lambda p: os.path.abspath(
+    os.path.join(os.path.dirname(__file__), p)
+)
+
+sys.path.append(PATH('../../generics/'))
 import constants
 import generics_lib
 
-from ..games.templates.classification.classification import Classification
+sys.path.append(PATH('../games/templates/'))
+from classification.classification import Classification
 from generic_steps import GenericStep
 
 class ClassificationStep(GenericStep):

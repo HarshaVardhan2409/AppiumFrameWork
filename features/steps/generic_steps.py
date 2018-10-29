@@ -2,13 +2,17 @@ from time import sleep
 import sys
 from behave import *
 import subprocess
+import os
 
-sys.path.append('../features/')
-from games.templates.base_class import BaseClass
+PATH = lambda p: os.path.abspath(
+    os.path.join(os.path.dirname(__file__), p)
+)
+sys.path.append(PATH('../games/templates/'))
+from base_class import BaseClass
 
-sys.path.append('../generics/')
-import generics_lib
+sys.path.append(PATH('../../generics/'))
 import constants
+import generics_lib
 import test_management
 
 class GenericStep():
