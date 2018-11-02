@@ -14,7 +14,7 @@
 "app_config":
 	{
 		"app_package": "com.byjus.k3",
-		"app_activity": "com.unity3d.player.UnityPlayerActivity",
+		"app_activity": "com.byjus.k5.MainActivity",
 		"logs": "com.byjus.k3"
 	}
 	
