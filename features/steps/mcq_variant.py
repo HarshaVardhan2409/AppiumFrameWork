@@ -23,7 +23,7 @@ class McqStep(GenericStep):
     def select_the_option_and_verify(self):
         self.mcq = MCQ(self.obj.altdriver, self.obj.driver)
         #wait for initial load of elements
-        sleep(6.5)
+        sleep(6)
         for row in self.table:
             #wait time for options to load
             #sleep(1)

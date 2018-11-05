@@ -33,8 +33,11 @@ class BaseClass():
     def start_game_with_text_url(self, text_field, text, url_field, url, load_button):
         self.enter_text(text_field, text)
         self.enter_text(url_field, url)
-        self.altdriver.wait_for_element_where_name_contains(load_button).tap()
-        
+        try:
+            self.altdriver.wait_for_element_where_name_contains(load_button).tap()
+        except:
+            self.altdriver.wait_for_element_where_name_contains(load_button).mobile_tap()
+            
     def wait_for_scene(self, scene_name):
         self.altdriver.wait_for_current_scene_to_be(scene_name)
         
@@ -110,11 +113,17 @@ class BaseClass():
         assert expected_text in actual_text
         
     def verify_text(self, object_name, expected_text):
-        actual_text = self.altdriver.wait_for_element_where_name_contains(object_name).text
+        try:
+            actual_text = self.altdriver.wait_for_element(object_name).get_text()
+        except:
+            actual_text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
         assert expected_text in actual_text
         
     def tap(self, object_name):
-        self.altdriver.wait_for_element(object_name).tap()
+        try:
+            self.altdriver.wait_for_element(object_name).tap()
+        except:
+            self.altdriver.wait_for_element(object_name).mobile_tap()
         
     def tap_and_hold(self, object_name, duration):
         self.altdriver.wait_for_element(object_name).mobile_tap(duration)

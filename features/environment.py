@@ -29,7 +29,18 @@ def before_all(context):
     test_management.testrail_password = str(context.config.userdata['TESTRAIL_PASS'])
     
     '''
-    To clear the prvious execution data
+    to create the execution directory and other sub directories
+    '''
+    try:    
+        os.mkdir(constants.PATH('../execution_data'))
+        os.mkdir(constants.PATH('../execution_data/app_logs/'))
+        os.mkdir(constants.PATH('../execution_data/reports/'))
+        os.mkdir(constants.PATH('../execution_data/screenshots/'))
+    except:
+        print "execution directory present"
+    
+    '''
+    To clear the previous execution data
     ''' 
     shutil.rmtree(constants.PATH('../execution_data/app_logs/'))
     os.mkdir(constants.PATH('../execution_data/app_logs/'))
@@ -38,17 +49,32 @@ def before_all(context):
     shutil.rmtree(constants.PATH('../execution_data/screenshots/'))
     os.mkdir(constants.PATH('../execution_data/screenshots/'))
     
+    '''
+    port forwarding for android and ios
+    '''
     if 'android' in device_type:
         subprocess.Popen('adb forward tcp:13001 tcp:13000', shell=True)
     elif 'ios' in device_type:
         subprocess.Popen('iproxy forward tcp:13001 tcp:13000', shell=True)
+        
+    '''
+    starting appium server
+    '''
     subprocess.Popen('appium', shell=True)
     sleep(40)
+    
+    '''
+    launching the application
+    '''
     context.obj = obj
     context.obj.setup()
     
 def before_feature(context, feature):
     device_type = str(context.config.userdata['DEVICE_TYPE']).lower()
+    
+    '''
+    capturing the logs for every feature files
+    '''
     if 'android' in device_type:
         subprocess.Popen('adb logcat -c', shell=True)
         package_name = generics_lib.get_data(constants.config_path, 'app_config', 'logs')
@@ -61,6 +87,10 @@ def before_scenario(context, scenario):
     data = data[0].split('_')
     data.reverse()
     device_type = str(context.config.userdata['DEVICE_TYPE']).lower()
+    
+    '''
+    capturing the logs for every scenario files
+    '''
     if 'android' in device_type:
         subprocess.Popen('adb logcat -c', shell=True)
         package_name = generics_lib.get_data(constants.config_path, 'app_config', 'logs')
@@ -68,10 +98,14 @@ def before_scenario(context, scenario):
 
 def after_scenario(context, scenario):
     
-    machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
-    BaseSetup.system_os = machine_type
+    machine_type = str(context.config.userdata['DEVICE_TYPE']).lower()
+    BaseSetup.platform = machine_type
     
     context.obj = obj
+    
+    '''
+    updating result to testrail
+    '''
     
     data = None
     data = str(context.scenario)
@@ -86,6 +120,10 @@ def after_scenario(context, scenario):
         test_management.update_testrail(data[1], data[0] , False, 'Test case failed')
     else:
         test_management.update_testrail(data[1], data[0] , True, 'Test case passed')
+    
+    '''
+    relaunch of app
+    '''
     context.obj.relaunch_app()
 
 def after_all(context):
@@ -94,7 +132,9 @@ def after_all(context):
     context.obj.teardown()
     
     machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
-    
+    '''
+    closing the appium server
+    '''
     if 'windows' in machine_type:
         # Use below code to Stop appium server on the local windows machine
         subprocess.Popen('Taskkill /IM adb.exe /F',shell=True)
@@ -103,4 +143,3 @@ def after_all(context):
     else:
         # Use below code to stop appium server on the local mac machine
         subprocess.Popen('killall node',shell=True)
-

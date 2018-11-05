@@ -23,7 +23,7 @@ class ClassificationStep(GenericStep):
         
         self.classification = Classification(self.obj.altdriver, self.obj.driver)
         #wait time for elemnts to be loaded
-        sleep(3)
+        sleep(6)
         for row in self.table:
             #wait time for elements to appear on the screen
             sleep(1)

@@ -95,14 +95,14 @@ class GenericStep():
         for row in self.table:
             self.base_class.level_successful_message(row['object_name'], row['text'])
             
-    @step('verify the text "{expected_text}" for element: "{element_name}"')
+    @step('verify the text: "{expected_text}" for element: "{element_name}"')
     def verify_the_text(self, element_name, expected_text):
         self.base_class.verify_text(str(element_name), str(expected_text))
             
-    @step('verify the multiple texts')
+    @step('verify text lines in multiple text boxes')
     def verify_the_multiple_texts(self):
         for row in self.table:
-            self.base_class.verify_text(row['object_with_text'], row['text'])
+            self.base_class.verify_text(row['object_name'], row['text'])
             
     @step('capture the app logs for: "{package_name}"')
     def capture_logs(self, package_name):
@@ -125,8 +125,7 @@ class GenericStep():
         
     @step('enter the "{name}": "{text}" in element: "{object_name}"')
     def enter_text(self, name, text, object_name):
-        
-        self.base_class.enter_text_v2(object_name, text)
+        self.base_class.enter_text_app(object_name, text)
         
     @then('update the result to testrail')
     def update_result_to_testrail(self):

@@ -54,7 +54,7 @@ class BaseSetup():
         self.desired_caps['newCommandTimeout'] = 300
         
     def relaunch_app(self):
-        if 'windows' in self.system_os:
+        if 'android' in self.platform:
             self.desired_caps['platformName'] = 'android'
             self.desired_caps['deviceName'] = 'device'
             self.desired_caps['newCommandTimeout'] = 300
