@@ -6,12 +6,14 @@ PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
-sys.path.append(PATH('../../generics/'))
+sys.path.append(PATH('..\\..\\generics\\'))
 import constants
 import generics_lib
 
-sys.path.append(PATH('../games/templates/'))
+sys.path.append(PATH('..\\games\\templates\\'))
 from classification.classification import Classification
+
+sys.path.append(PATH('.\\'))
 from generic_steps import GenericStep
 
 class ClassificationStep(GenericStep):

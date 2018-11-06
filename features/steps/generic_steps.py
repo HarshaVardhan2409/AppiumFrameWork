@@ -2,12 +2,16 @@ from time import sleep
 import sys
 from behave import *
 import subprocess
+import os
 
+PATH = lambda p: os.path.abspath(
+    os.path.join(os.path.dirname(__file__), p)
+)
 
-sys.path.append('../features/')
-from games.templates.base_class import BaseClass
+sys.path.append(PATH('..\\games\\templates\\'))
+from base_class import BaseClass
 
-sys.path.append('../generics/')
+sys.path.append(PATH('..\\..\\generics\\'))
 import generics_lib
 import constants
 import test_management
@@ -87,13 +91,8 @@ class GenericStep():
     @step('question is loaded')
     def question_is_loaded(self):
         for row in self.table:
-            self.base_class.verify_question(row["object_with_question"], row["question_number"])
-            self.base_class.wait_for_element_display(row["question_number"])
-            
-    @step('verify the level successful message')
-    def verify_level_successful_message(self):
-        for row in self.table:
-            self.base_class.level_successful_message(row['object_name'], row['text'])
+            self.base_class.verify_question(row["object_name"])
+            self.base_class.wait_for_element_display(row["object_name"])
             
     @step('verify the text: "{expected_text}" for element: "{element_name}"')
     def verify_the_text(self, element_name, expected_text):
@@ -103,6 +102,11 @@ class GenericStep():
     def verify_the_multiple_texts(self):
         for row in self.table:
             self.base_class.verify_text(row['object_name'], row['text'])
+            
+    @step('verify the element')
+    def verify_element(self):
+            for row in self.table:
+                self.base_class.verify_the_element_on_screen(row['object_name'])
             
     @step('capture the app logs for: "{package_name}"')
     def capture_logs(self, package_name):
@@ -119,11 +123,11 @@ class GenericStep():
         self.base_class.tap(object_name)
 
 
-    @step('tap and hold element: "{object_name}" for duration {duration}')
+    @step('tap and hold element: "{object_name}" for duration: {duration}')
     def tap_and_hold(self, object_name, duration):
         self.base_class.tap_and_hold(object_name, duration)
         
-    @step('enter the "{name}": "{text}" in element: "{object_name}"')
+    @step('enter the: "{name}": "{text}" in element: "{object_name}"')
     def enter_text(self, name, text, object_name):
         self.base_class.enter_text_app(object_name, text)
         

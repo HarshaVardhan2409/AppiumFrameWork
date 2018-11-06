@@ -1,5 +1,12 @@
 from datetime import datetime
+import sys
+import os
 
+PATH = lambda p: os.path.abspath(
+    os.path.join(os.path.dirname(__file__), p)
+)
+
+sys.path.append(PATH(''))
 import generics_lib
 import constants
 
@@ -222,4 +229,4 @@ def create_feature_file(suite_ID, project_ID, run_ID):
     f.close()
     print 'Number of feature file created = '+ str(count)
     
-#create_feature_file('27', '2', '29')
+#create_feature_file('59', '2', '42')

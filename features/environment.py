@@ -9,9 +9,10 @@ PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
-from features.steps.base_setup import BaseSetup
+sys.path.append(PATH('.\\steps\\'))
+from base_setup import BaseSetup
 
-sys.path.append(PATH('../generics/'))
+sys.path.append(PATH('..\\generics\\'))
 import constants
 import generics_lib
 import test_management

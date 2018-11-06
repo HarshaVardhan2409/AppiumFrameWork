@@ -1,6 +1,13 @@
 import time
+import sys
+import os
 
-from testrail import *
+PATH = lambda p: os.path.abspath(
+    os.path.join(os.path.dirname(__file__), p)
+)
+
+sys.path.append(PATH(''))
+from test_management import APIClient
 import test_management
 
 client = APIClient(test_management.testrail_url)
