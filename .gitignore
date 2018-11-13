@@ -24,6 +24,7 @@ wheels/
 execution_data/
 .project
 .pydevproject
+*.feature
 .installed.cfg
 *.egg
 MANIFEST

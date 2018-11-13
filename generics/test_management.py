@@ -162,7 +162,21 @@ def get_run_id(test_run_name, project_name):
                     run_id = test_run['id']
                     break
             return run_id
-        
+
+def add_run(test_run_name, project_name, suite_id):
+    client = get_testrail_client()
+    project_id = get_project_id(project_name)
+    try:
+        result = client.send_post(
+        'add_run/%s' %(project_id),
+        {'suite_id': suite_id, 'name': test_run_name, 'include_all': True, })
+        print result  
+    except Exception, e:
+        print 'Exception in add_run() updating TestRail.'
+        print 'PYTHON SAYS: '
+        print e
+           
+    return result        
 def get_sections(project_ID, suite_ID): 
     client = get_testrail_client()
     # case = client.send_get('get_case/181')
@@ -192,6 +206,7 @@ def create_feature_file(suite_ID, project_ID, run_ID):
     curstr = currenttime.__str__().replace("-", "").replace(":", "").replace(" ", "")[0:12]
     
     f = None
+    
     filedata = None
     section_id_1 = 0
     section_id_2 = 1
@@ -229,4 +244,5 @@ def create_feature_file(suite_ID, project_ID, run_ID):
     f.close()
     print 'Number of feature file created = '+ str(count)
     
-#create_feature_file('59', '2', '42')
+#create_feature_file('4', '2', '49')
+#add_run('new_run_2', 'K3', '59')

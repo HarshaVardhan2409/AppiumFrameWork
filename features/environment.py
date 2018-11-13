@@ -4,6 +4,7 @@ import shutil
 import subprocess
 import sys
 from time import sleep
+from behave.model_core import Status
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -114,11 +115,19 @@ def after_scenario(context, scenario):
     data = data[0].split('_')
     data.reverse()
     
-    if context.failed:
+    if scenario.status == Status.failed:
+        
         directory = constants.PATH('../execution_data/screenshots/failed_caseID_' + data[1] + '_runID_' + data[0] + '.png')
         context.obj.driver.save_screenshot(directory)
         
         test_management.update_testrail(data[1], data[0] , False, 'Test case failed')
+        
+    elif scenario.status == Status.skipped:
+        test_management.update_testrail(data[1], data[0] , False, 'Test case skipped')
+        
+    elif scenario.status == Status.untested:
+        test_management.update_testrail(data[1], data[0] , False, 'Test case untested')
+        
     else:
         test_management.update_testrail(data[1], data[0] , True, 'Test case passed')
     
