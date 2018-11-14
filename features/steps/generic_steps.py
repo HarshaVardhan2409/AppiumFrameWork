@@ -8,10 +8,10 @@ PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
-sys.path.append(PATH('..\\games\\templates\\'))
+sys.path.append(PATH('../games/templates/'))
 from base_class import BaseClass
 
-sys.path.append(PATH('..\\..\\generics\\'))
+sys.path.append(PATH('../../generics/'))
 import generics_lib
 import constants
 import test_management
@@ -116,7 +116,10 @@ class GenericStep():
         data = data[0].split('_')
         data.reverse()
         subprocess.Popen('adb logcat -c', shell=True)
-        subprocess.Popen('adb logcat | findstr ' + str(package_name) + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
+        try:
+            subprocess.Popen('adb logcat | findstr ' + str(package_name) + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
+        except:
+            subprocess.Popen('adb logcat | grep ' + str(package_name) + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
         
     @step('tap on element: "{object_name}"')
     def tap(self, object_name):

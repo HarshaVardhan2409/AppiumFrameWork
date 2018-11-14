@@ -23,7 +23,7 @@
 			"text_field": "InputFieldTemplateType",
 			"template_name": "MCQ",
 			"url_field": "InputFieldBundleUrl",
-			"bundle_url": "https://s3.ap-southeast-1.amazonaws.com/k123store.tllms.com/2018/10/30/7b1e0e037402f034/mcq_g3mq62-mcq1_0_0",
+			"bundle_url": "https://s3.ap-southeast-1.amazonaws.com/k123store.tllms.com/2018/10/30/7b1e0e037402f034/mcq_g3mq24-mcq1_0_0",
 			"load_game":"Button",
 			"start_screen": "MCQ",
 			"animation_object": "Closure"

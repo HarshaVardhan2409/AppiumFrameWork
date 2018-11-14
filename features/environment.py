@@ -10,10 +10,10 @@ PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
-sys.path.append(PATH('.\\steps\\'))
+sys.path.append(PATH('./steps/'))
 from base_setup import BaseSetup
 
-sys.path.append(PATH('..\\generics\\'))
+sys.path.append(PATH('../generics/'))
 import constants
 import generics_lib
 import test_management
@@ -80,7 +80,10 @@ def before_feature(context, feature):
     if 'android' in device_type:
         subprocess.Popen('adb logcat -c', shell=True)
         package_name = generics_lib.get_data(constants.config_path, 'app_config', 'logs')
-        subprocess.Popen('adb logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
+        try:
+            subprocess.Popen('adb logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
+        except:
+            subprocess.Popen('adb logcat | grep ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
 
 def before_scenario(context, scenario):
     data = None
@@ -114,22 +117,26 @@ def after_scenario(context, scenario):
     data = data.split('">')
     data = data[0].split('_')
     data.reverse()
-    
-    if scenario.status == Status.failed:
-        
-        directory = constants.PATH('../execution_data/screenshots/failed_caseID_' + data[1] + '_runID_' + data[0] + '.png')
-        context.obj.driver.save_screenshot(directory)
-        
-        test_management.update_testrail(data[1], data[0] , False, 'Test case failed')
-        
-    elif scenario.status == Status.skipped:
-        test_management.update_testrail(data[1], data[0] , False, 'Test case skipped')
-        
-    elif scenario.status == Status.untested:
-        test_management.update_testrail(data[1], data[0] , False, 'Test case untested')
-        
-    else:
-        test_management.update_testrail(data[1], data[0] , True, 'Test case passed')
+    try:
+            
+        if scenario.status == Status.failed:
+            
+            directory = constants.PATH('../execution_data/screenshots/failed_caseID_' + data[1] + '_runID_' + data[0] + '.png')
+            context.obj.driver.save_screenshot(directory)
+            
+            test_management.update_testrail(data[1], data[0] , False, 'Test case failed')
+            
+        elif scenario.status == Status.skipped:
+            test_management.update_testrail(data[1], data[0] , False, 'Test case skipped')
+            
+        elif scenario.status == Status.untested:
+            test_management.update_testrail(data[1], data[0] , False, 'Test case untested')
+            
+        else:
+            test_management.update_testrail(data[1], data[0] , True, 'Test case passed')
+            
+    except:
+        print 'Test case ID or the Test Run ID does not match'
     
     '''
     relaunch of app
