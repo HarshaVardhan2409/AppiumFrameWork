@@ -9,6 +9,8 @@ from behave.model_core import Status
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
+sys.path.append(PATH('./games/templates/'))
+from base_class import BaseClass
 
 sys.path.append(PATH('./steps/'))
 from base_setup import BaseSetup
@@ -17,7 +19,7 @@ sys.path.append(PATH('../generics/'))
 import constants
 import generics_lib
 import test_management
-        
+
 obj = BaseSetup()
 
 def before_all(context):
@@ -26,6 +28,7 @@ def before_all(context):
     machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
     BaseSetup.platform = device_type
     BaseSetup.system_os = machine_type
+    BaseClass.platform = device_type
     
     test_management.testrail_username = str(context.config.userdata['TESTRAIL_USER'])
     test_management.testrail_password = str(context.config.userdata['TESTRAIL_PASS'])
@@ -64,12 +67,7 @@ def before_all(context):
     '''
     subprocess.Popen('appium', shell=True)
     sleep(40)
-    
-    '''
-    launching the application
-    '''
     context.obj = obj
-    context.obj.setup()
     
 def before_feature(context, feature):
     device_type = str(context.config.userdata['DEVICE_TYPE']).lower()
@@ -106,7 +104,7 @@ def after_scenario(context, scenario):
     machine_type = str(context.config.userdata['DEVICE_TYPE']).lower()
     BaseSetup.platform = machine_type
     
-    context.obj = obj
+    #context.obj = obj
     
     '''
     updating result to testrail
@@ -138,15 +136,9 @@ def after_scenario(context, scenario):
     except:
         print 'Test case ID or the Test Run ID does not match'
     
-    '''
-    relaunch of app
-    '''
-    context.obj.relaunch_app()
 
 def after_all(context):
-    
     context.obj = obj
-    context.obj.teardown()
     
     machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
     '''

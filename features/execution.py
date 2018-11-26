@@ -19,12 +19,12 @@ def start_execution(feature_file=None):
         
     if feature_file == None:
         subprocess.Popen(
-            'behave -D APP_PATH=C:\\Users\\Administrator.TNPLIND0007\\Downloads\\k123.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234',
+            'behave -D APP_PATH=C:\\Users\\Administrator.TNPLIND0007\\Downloads\\k123_app.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234',
             shell=False)
     else:
         subprocess.Popen(
-            'behave -D APP_PATH=C:\\Users\\Administrator.TNPLIND0007\\Downloads\\k123.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 '+feature_file,
+            'behave -D APP_PATH=C:\\Users\\Administrator.TNPLIND0007\\Downloads\\k123_app.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 01_setup.feature '+feature_file,
             shell=False)
 
 
-start_execution('MCQ_New_Choose.feature')
+start_execution('App_2.feature')

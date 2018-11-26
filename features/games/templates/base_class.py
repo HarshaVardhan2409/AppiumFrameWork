@@ -2,6 +2,9 @@ from time import sleep
 import sys
 import os
 from string import lower
+from selenium.webdriver.common.by import By
+from altunityrunner import AltrunUnityDriver
+from appium import webdriver
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -9,6 +12,7 @@ PATH = lambda p: os.path.abspath(
 
 sys.path.append(PATH('../../../generics/'))
 import generics_lib
+import constants
 
 
 class BaseClass():
@@ -18,11 +22,13 @@ class BaseClass():
     
     altdriver = None
     driver = None
-
+    platform = None
+    desired_caps = None
+    
     def __init__(self, altdriver, driver):
         self.altdriver = altdriver
         self.driver = driver
-        
+    
     def start_game(self, game_name):
         self.tap(game_name)
         
@@ -96,6 +102,7 @@ class BaseClass():
             print 'No ok button'
        
     def  enter_text_app(self, object_name, text):
+        self.altdriver.wait_for_element(object_name)
         self.tap(object_name)
         #wait time for keypad to load
         sleep(2)
@@ -108,10 +115,6 @@ class BaseClass():
                 self.driver.press_keycode(keycodes[text[i]])
             except:
                 self.driver.press_keycode(keycodes[lower(text[i])], 1048576)
-        try:       
-            self.driver.find_element_by_xpath('//android.widget.Button[@text="OK"]').click()
-        except:
-            print 'No ok button'
     
     def get_text(self, object_name):
         text = None
@@ -122,11 +125,35 @@ class BaseClass():
         return text
         
     def tap(self, object_name):
+        self.altdriver.wait_for_element(object_name)
         try:
             self.altdriver.wait_for_element(object_name).tap()
         except:
             self.altdriver.wait_for_element(object_name).mobile_tap()
+            
+    def text_tap(self,object_name, text):
+        self.altdriver.wait_for_element(object_name)
+        
+        elements = self.altdriver.find_elements(object_name)
+        for element in elements:
+            object_text = ''
+            try:
+                try:
+                    object_text = element.get_text()
+                except:
+                    object_text = element.get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
+            except:
+                print 'No text property'
+            if text in object_text:
+                try:
+                    element.tap()
+                except:
+                    element.mobile_tap()
+                    
+    def tap_element_text(self, text):
+        self.driver.find_element(By.XPATH, "//*[@text='"+text+"']").click()
         
     def tap_and_hold(self, object_name, duration):
-        self.altdriver.wait_for_element(object_name).mobile_tap(duration)
+        self.altdriver.wait_for_element(object_name).mobile_tap(int(duration))
+            
             

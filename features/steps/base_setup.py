@@ -2,6 +2,7 @@ from altunityrunner import AltrunUnityDriver
 from appium import webdriver
 import sys
 import os
+from selenium.webdriver.common.by import By
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -21,7 +22,7 @@ class BaseSetup():
     ip_address = None
     port = None
     
-    def setup(self):
+    def install_app(self):
         self.desired_caps = {}
         if ("android" in self.platform.lower()):
             self.setup_android()
@@ -33,11 +34,12 @@ class BaseSetup():
         self.ip_address = generics_lib.get_data(constants.config_path, 'appium_server', 'ip_address')
         self.port = generics_lib.get_data(constants.config_path, 'appium_server', 'port')
         self.driver = webdriver.Remote('http://'+self.ip_address+':'+self.port+'/wd/hub', self.desired_caps)
+        self.driver.implicitly_wait(15)
         self.altdriver = AltrunUnityDriver(self.driver, self.platform)
 
     def teardown(self):
         self.altdriver.stop()
-        self.driver.quit()
+        self.driver.close()
 
     def setup_android(self):
         self.desired_caps['platformName'] = 'android'
@@ -53,13 +55,21 @@ class BaseSetup():
         self.desired_caps['app'] = self.app_path
         self.desired_caps['newCommandTimeout'] = 300
         
-    def relaunch_app(self):
+    def launch_app(self, appPackage, appActivity, noreset_status):
+        self.desired_caps = {}
         if 'android' in self.platform:
             self.desired_caps['platformName'] = 'android'
             self.desired_caps['deviceName'] = 'device'
             self.desired_caps['newCommandTimeout'] = 300
-            self.desired_caps['appPackage'] = generics_lib.get_data(constants.config_path, 'app_config', 'app_package')
-            self.desired_caps['appActivity'] = generics_lib.get_data(constants.config_path, 'app_config', 'app_activity')
+            if 'rue' in noreset_status:
+                noreset_status = True
+            elif 'alse' in noreset_status:
+                noreset_status = False
+            self.desired_caps['noReset'] = noreset_status
+            self.desired_caps['appPackage'] = appPackage
+            self.desired_caps['appActivity'] = appActivity
+            self.ip_address = generics_lib.get_data(constants.config_path, 'appium_server', 'ip_address')
+            self.port = generics_lib.get_data(constants.config_path, 'appium_server', 'port')
             self.driver = webdriver.Remote('http://'+self.ip_address+':'+self.port+'/wd/hub', self.desired_caps)
             self.altdriver = AltrunUnityDriver(self.driver, self.platform)
         

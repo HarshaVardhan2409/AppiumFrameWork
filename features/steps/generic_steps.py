@@ -1,12 +1,16 @@
 from time import sleep
 import sys
 from behave import *
+import random
 import subprocess
 import os
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
+
+sys.path.append(PATH('../'))
+from base_setup import BaseSetup
 
 sys.path.append(PATH('../games/templates/'))
 from base_class import BaseClass
@@ -17,7 +21,7 @@ import constants
 import test_management
 
 class GenericStep():
-    
+    obj = BaseSetup()
     start_position = None
     end_position = None
     game_name = None
@@ -83,6 +87,7 @@ class GenericStep():
         self.base_class.wait_for_scene(generics_lib.get_data(self.path, self.game_name, "launch_screen"))
         self.base_class.start_game(generics_lib.get_data(self.path, self.game_name, "launch_game"))
         
+    @step('')
     
     @step('start scene is loaded')
     def start_scene_is_loaded(self):
@@ -126,14 +131,44 @@ class GenericStep():
         self.base_class.tap(object_name)
 
 
-    @step('tap and hold element: "{object_name}" for duration: {duration}')
+    @step('tap and hold element: "{object_name}" for duration: "{duration}"')
     def tap_and_hold(self, object_name, duration):
         self.base_class.tap_and_hold(object_name, duration)
         
     @step('enter the: "{name}": "{text}" in element: "{object_name}"')
     def enter_text(self, name, text, object_name):
+        if "mobile number" in name:
+            text = str(random.randint(1000000000,9999999999))
         self.base_class.enter_text_app(object_name, text)
+        
+    @step('scene is loaded: "{scene_name}"')
+    def scene_loaded(self, scene_name):
+        self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+        self.base_class.wait_for_scene(scene_name)
+        
+    @step('tap on text element: "{object_name}" with text: "{text}"')
+    def text_tap(self, object_name, text):
+        self.base_class.text_tap(object_name, text)
+        
+    @step('tap on element with text: "{text}"')
+    def tap_element_text(self, text):
+        self.base_class.tap_element_text(text)
+        
+    @step('custom wait: "{time}"')
+    def wait(self, time):
+        sleep(int(time)) 
+        
+    @step('launch app with apppackage: "{appPackage}" appactivity: "{appActivity}"')
+    def launch_app_activity(self, appPackage, appActivity):
+        self.obj.launch_app(appPackage, appActivity, 'True')
+        
+    @step('launch the app')
+    def launch_app(self):
+        self.obj.install_app()
+        
         
     @then('update the result to testrail')
     def update_result_to_testrail(self):
         print ''
+        
+        

@@ -34,4 +34,5 @@ class McqStep(GenericStep):
             sleep(3)
             end_position = self.mcq.get_object_location(generics_lib.get_data(self.path, self.game_name, 'animation_object'))
             self.mcq.verify_object_location(start_position, end_position, row["acceptable"])
-            
+
+
