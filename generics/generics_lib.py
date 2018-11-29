@@ -13,7 +13,7 @@ def scroll(driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue):
     end_x = (dSize['width']*end_xvalue)
     start_y = (dSize['height']*start_yvalue)
     end_y = (dSize['height']*end_yvalue)
-    driver.swipe(start_x, start_y, end_x, end_y)
+    driver.swipe(start_x, start_y, end_x, end_y, 600)
     
 def action_sendkeys(driver, text):
         action = ActionChains(driver);

@@ -86,8 +86,6 @@ class GenericStep():
             
         self.base_class.wait_for_scene(generics_lib.get_data(self.path, self.game_name, "launch_screen"))
         self.base_class.start_game(generics_lib.get_data(self.path, self.game_name, "launch_game"))
-        
-    @step('')
     
     @step('start scene is loaded')
     def start_scene_is_loaded(self):
@@ -106,7 +104,7 @@ class GenericStep():
     @step('verify text lines in multiple text boxes')
     def verify_the_multiple_texts(self):
         for row in self.table:
-            self.base_class.verify_text(row['object_name'], row['text'])
+            self.base_class.verify_text(str(row['object_name']), str(row['text']))
             
     @step('verify the element')
     def verify_element(self):
@@ -166,6 +164,10 @@ class GenericStep():
     def launch_app(self):
         self.obj.install_app()
         
+    @step('scroll screen with start_x: "{start_xvalue}" end_x: "{end_xvalue}" start_y: "{start_yvalue}" end_y: "{end_yvalue}" and verify element: "{object_name}"')
+    def scroll(self, start_xvalue, end_xvalue, start_yvalue, end_yvalue, object_name):
+        
+        self.base_class.scroll_verify(object_name, float(start_xvalue), float(end_xvalue), float(start_yvalue), float(end_yvalue))
         
     @then('update the result to testrail')
     def update_result_to_testrail(self):

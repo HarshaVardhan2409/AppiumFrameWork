@@ -85,10 +85,6 @@ class BaseClass():
         
     def verify_text(self, object_name, expected_text):
         actual_text = self.get_text(object_name)
-        print '------------------------------------------'
-        
-        print actual_text
-        print '--------------------------------------------'
         assert expected_text in actual_text
         
     def enter_text(self, object_name, text):
@@ -152,6 +148,12 @@ class BaseClass():
                     
     def tap_element_text(self, text):
         self.driver.find_element(By.XPATH, "//*[@text='"+text+"']").click()
+        
+    def scroll_verify(self, object_name, start_xvalue, end_xvalue, start_yvalue, end_yvalue):
+        start_position = self.get_object_location(object_name)
+        generics_lib.scroll(self.driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue)
+        end_position = self.get_object_location(object_name)
+        self.verify_object_location(start_position, end_position, 'true')
         
     def tap_and_hold(self, object_name, duration):
         self.altdriver.wait_for_element(object_name).mobile_tap(int(duration))

@@ -6,6 +6,11 @@ Given launch the app
 
 Scenario: Check the login from start scene testrail details_3830_47
 Given scene is loaded: "OnboardingIntroScene"
+And custom wait: "5"
+When scroll screen with start_x: "0.9" end_x: "0.1" start_y: "0.5" end_y: "0.5" and verify element: "Content"
+When scroll screen with start_x: "0.9" end_x: "0.1" start_y: "0.5" end_y: "0.5" and verify element: "Content"
+When scroll screen with start_x: "0.9" end_x: "0.1" start_y: "0.5" end_y: "0.5" and verify element: "Content"
+When scroll screen with start_x: "0.9" end_x: "0.1" start_y: "0.5" end_y: "0.5" and verify element: "Content"
 When tap on element: "Button"
 And scene is loaded: "Onboarding"
 And custom wait: "15"
