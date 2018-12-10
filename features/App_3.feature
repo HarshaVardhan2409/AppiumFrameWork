@@ -5,7 +5,7 @@ Background: Launch the app
 Given launch app with apppackage: "com.byjus.k3" appactivity: "com.byjus.k5.MainActivity"
 And scene is loaded: "GameMapScreen"
 And custom wait: "30"
-And tap and hold element: "LibraryButton/Text" for duration: "5"
+And tap and hold element: "LibraryButton/Text" for duration: "7"
 And parental access: "ParentGatePanel/Question"
 And scene is loaded: "Library"
 And custom wait: "3"
@@ -19,7 +19,8 @@ Scenario: Check the login from start scene testrail details_3830_47
 Then scene is loaded: "classification"
 And question is loaded:
 | object_name  |
-| Passive_2Common_Stage |
+| DraggableObject2degree(Clone)&DraggableObject_1Stage_1 |
+And custom wait: "15"
 When drag and drop the draggables to bucket and verify position:
 | draggable                                               | bucket                                | acceptable |
 | DraggableObject2degree(Clone)&DraggableObject_1Stage_1  | BucketSnowgies(Clone)&Bucket_1Stage_1 | true       |

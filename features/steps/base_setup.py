@@ -39,7 +39,7 @@ class BaseSetup():
 
     def teardown(self):
         self.altdriver.stop()
-        self.driver.close()
+        self.driver.quit()
 
     def setup_android(self):
         self.desired_caps['platformName'] = 'android'
@@ -71,5 +71,6 @@ class BaseSetup():
             self.ip_address = generics_lib.get_data(constants.config_path, 'appium_server', 'ip_address')
             self.port = generics_lib.get_data(constants.config_path, 'appium_server', 'port')
             self.driver = webdriver.Remote('http://'+self.ip_address+':'+self.port+'/wd/hub', self.desired_caps)
+            self.driver.implicitly_wait(15)
             self.altdriver = AltrunUnityDriver(self.driver, self.platform)
         

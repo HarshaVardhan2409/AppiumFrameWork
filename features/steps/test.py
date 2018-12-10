@@ -2,7 +2,8 @@ from altunityrunner.runner import AltrunUnityDriver
 from appium import webdriver
 from time import sleep
 
-'''
+from appium.webdriver.connectiontype import ConnectionType
+
 def launch_app(platform):
     desired_caps = {}
     if 'android' in platform:
@@ -14,6 +15,17 @@ def launch_app(platform):
         desired_caps['appActivity'] = "com.byjus.k5.MainActivity"
         driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
         altdriver = AltrunUnityDriver(driver, platform)
+        altdriver.wait_for_current_scene_to_be('Onboarding')
+        sleep(20)
+        value = altdriver.wait_for_element('InputFieldPrefab/Text').get_text()
+        print 'd'+value+'b'
+        print type(value)
+        #value = altdriver.wait_for_element('CountryIcon').get_component_property("UnityEngine.RectTransform", "localRotation")
+        #print value
+        #altdriver.wait_for_element('arrowIndicator').mobile_tap()
+        #print altdriver.wait_for_element('Item 1: UAE/Item Label').get_text()
+        #print altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
+        '''
         altdriver.wait_for_current_scene_to_be('GameMapScreen')
         sleep(10)
         altdriver.wait_for_element('LibraryButton/Text').mobile_tap(5)
@@ -28,6 +40,8 @@ def launch_app(platform):
         altdriver.wait_for_current_scene_to_be('classification')
         sleep(10)
         altdriver.wait_for_element_where_name_contains('&DraggableObject_1Stage_1')
+        '''
+        
         
 #DraggableObject2degree(Clone)&DraggableObject_1Stage_1        
 def parental_access(question, altdriver):
@@ -83,6 +97,4 @@ def text_tap(object_name, text, altdriver):
                 except:
                     element.mobile_tap()
     
-launch_app('android')
-        
-'''
+#launch_app('android')

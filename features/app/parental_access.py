@@ -32,7 +32,7 @@ class ParentalAccess(BaseClass):
             for i in range(len(keys)):
                 try:
                     if ans[j] == keys[i].get_text():
-                        keys[i].tap()
+                        keys[i].mobile_tap()
                 except:
                     break
 
