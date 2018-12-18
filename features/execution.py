@@ -9,12 +9,6 @@ PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
-sys.path.append(PATH('../generics/'))
-import test_management
-
-def create_feature(suite_ID, project_ID, run_ID):
-    test_management.create_feature_file(suite_ID, project_ID, run_ID)
-
 def start_execution(feature_file=None):
         
     if feature_file == None:
