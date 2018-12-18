@@ -225,7 +225,7 @@ def create_feature_file(suite_ID, project_ID, run_ID):
                 except:
                     print ''
                 
-                f = open('../features/' + feature_name + '_'  + str(get_section(str(section_id_2))['name']) + '.feature', "w+")
+                f = open(PATH('../features/' + feature_name + '_'  + str(get_section(str(section_id_2))['name']) + '.feature'), "w+")
                 filedata = "@" + str(get_section(str(section_id_2))['name']) + '\nFeature: ' + str(get_section(str(section_id_2))['name']) + '\n'
                 count += 1
                 if case['custom_background'] != None:
