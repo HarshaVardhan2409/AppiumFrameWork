@@ -37,10 +37,10 @@ def before_all(context):
     to create the execution directory and other sub directories
     '''
     try:    
-        os.mkdir(constants.PATH('../execution_data'))
-        os.mkdir(constants.PATH('../execution_data/app_logs'))
-        os.mkdir(constants.PATH('../execution_data/reports'))
-        os.mkdir(constants.PATH('../execution_data/screenshots'))
+        os.mkdir(constants.PATH('..\\execution_data\\'))
+        os.mkdir(constants.PATH('..\\execution_data\\app_logs\\'))
+        os.mkdir(constants.PATH('..\\execution_data\\reports\\'))
+        os.mkdir(constants.PATH('..\\execution_data\\screenshots\\'))
     except:
         print "execution directory present"
     
@@ -58,9 +58,9 @@ def before_all(context):
     port forwarding for android and ios
     '''
     if 'android' in device_type:
-        subprocess.Popen('adb forward tcp:13001 tcp:13000', shell=True)
+        subprocess.Popen('adb forward tcp:13000 tcp:13000', shell=True)
     elif 'ios' in device_type:
-        subprocess.Popen('iproxy forward tcp:13001 tcp:13000', shell=True)
+        subprocess.Popen('iproxy forward tcp:13000 tcp:13000', shell=True)
         
     '''
     starting appium server
@@ -77,7 +77,7 @@ def before_feature(context, feature):
     '''
     if 'android' in device_type:
         subprocess.Popen('adb logcat -c', shell=True)
-        package_name = generics_lib.get_data(constants.config_path, 'app_config', 'logs')
+        package_name = generics_lib.get_data(constants.CONFIG_PATH, 'app_config', 'logs')
         try:
             subprocess.Popen('adb logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
         except:
@@ -96,7 +96,7 @@ def before_scenario(context, scenario):
     '''
     if 'android' in device_type:
         subprocess.Popen('adb logcat -c', shell=True)
-        package_name = generics_lib.get_data(constants.config_path, 'app_config', 'logs')
+        package_name = generics_lib.get_data(constants.CONFIG_PATH, 'app_config', 'logs')
         subprocess.Popen('adb logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
 
 def after_scenario(context, scenario):

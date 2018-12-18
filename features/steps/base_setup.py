@@ -31,8 +31,8 @@ class BaseSetup():
         else:
             print 'platform do not match'
             
-        self.ip_address = generics_lib.get_data(constants.config_path, 'appium_server', 'ip_address')
-        self.port = generics_lib.get_data(constants.config_path, 'appium_server', 'port')
+        self.ip_address = generics_lib.get_data(constants.CONFIG_PATH, 'appium_server', 'ip_address')
+        self.port = generics_lib.get_data(constants.CONFIG_PATH, 'appium_server', 'port')
         self.driver = webdriver.Remote('http://'+self.ip_address+':'+self.port+'/wd/hub', self.desired_caps)
         self.driver.implicitly_wait(15)
         self.altdriver = AltrunUnityDriver(self.driver, self.platform)
@@ -68,8 +68,8 @@ class BaseSetup():
             self.desired_caps['noReset'] = noreset_status
             self.desired_caps['appPackage'] = appPackage
             self.desired_caps['appActivity'] = appActivity
-            self.ip_address = generics_lib.get_data(constants.config_path, 'appium_server', 'ip_address')
-            self.port = generics_lib.get_data(constants.config_path, 'appium_server', 'port')
+            self.ip_address = generics_lib.get_data(constants.CONFIG_PATH, 'appium_server', 'ip_address')
+            self.port = generics_lib.get_data(constants.CONFIG_PATH, 'appium_server', 'port')
             self.driver = webdriver.Remote('http://'+self.ip_address+':'+self.port+'/wd/hub', self.desired_caps)
             self.driver.implicitly_wait(15)
             self.altdriver = AltrunUnityDriver(self.driver, self.platform)

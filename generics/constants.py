@@ -7,6 +7,4 @@ PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
-config_path = PATH('../config/config.json')
-classification_path = PATH('../features/games/templates/classification/classification.json')
-mcq_path = PATH('../features/games/templates/mcq/mcq.json')
+CONFIG_PATH = PATH('../config/config.json')

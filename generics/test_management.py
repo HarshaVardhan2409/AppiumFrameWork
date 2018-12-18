@@ -92,7 +92,7 @@ class APIError(Exception):
 
 
 
-testrail_file = constants.config_path
+testrail_file = constants.CONFIG_PATH
 testrail_url = generics_lib.get_data(testrail_file, 'testrail', 'url')
 testrail_username = 'archana.r@testyantra.com'
 testrail_password = 'Pass1234'
@@ -244,5 +244,5 @@ def create_feature_file(suite_ID, project_ID, run_ID):
     f.close()
     print 'Number of feature file created = '+ str(count)
     
-#create_feature_file('59', '2', '47')
+create_feature_file(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
 #add_run('new_run_2', 'K3', '59')

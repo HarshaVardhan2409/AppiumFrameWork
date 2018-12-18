@@ -1,6 +1,15 @@
-# -- RERUN: 4 failing scenarios during last test run.
+# -- RERUN: 13 failing scenarios during last test run.
+Account_creation.feature:83
 Account_creation.feature:96
+Account_creation.feature:108
+Account_creation.feature:127
+Account_creation.feature:145
+Account_creation.feature:174
+Account_creation.feature:191
 Account_creation.feature:227
+Account_creation.feature:254
 Account_creation.feature:273
+Account_creation.feature:295
+Account_creation.feature:315
 Account_creation.feature:342
 

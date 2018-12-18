@@ -77,10 +77,10 @@ class BaseClass():
         value2 = self.get_object_location(object_name)
         count = 0
         while int(value1['x']) == int(value2['x']) and int(value1['y']) == int(value2['y']):
-            sleep(1)
+            sleep(0.3)
             value2 = self.get_object_location(object_name)
             count = count + 1
-            if count == 10:
+            if count == 20:
                 break
         
     def verify_text(self, object_name, expected_text):
