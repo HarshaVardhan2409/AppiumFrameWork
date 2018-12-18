@@ -243,6 +243,5 @@ def create_feature_file(suite_ID, project_ID, run_ID):
     f.write(filedata)
     f.close()
     print 'Number of feature file created = '+ str(count)
-    
-create_feature_file(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
+
 #add_run('new_run_2', 'K3', '59')
