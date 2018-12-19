@@ -71,6 +71,7 @@ def before_all(context):
     
 def before_feature(context, feature):
     device_type = str(context.config.userdata['DEVICE_TYPE']).lower()
+    machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
     
     '''
     capturing the logs for every feature files
@@ -78,9 +79,9 @@ def before_feature(context, feature):
     if 'android' in device_type:
         subprocess.Popen('adb logcat -c', shell=True)
         package_name = generics_lib.get_data(constants.CONFIG_PATH, 'app_config', 'logs')
-        try:
+        if 'windows' in machine_type:
             subprocess.Popen('adb logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
-        except:
+        else:
             subprocess.Popen('adb logcat | grep ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
 
 def before_scenario(context, scenario):
@@ -90,6 +91,7 @@ def before_scenario(context, scenario):
     data = data[0].split('_')
     data.reverse()
     device_type = str(context.config.userdata['DEVICE_TYPE']).lower()
+    machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
     
     '''
     capturing the logs for every scenario files
@@ -97,7 +99,8 @@ def before_scenario(context, scenario):
     if 'android' in device_type:
         subprocess.Popen('adb logcat -c', shell=True)
         package_name = generics_lib.get_data(constants.CONFIG_PATH, 'app_config', 'logs')
-        subprocess.Popen('adb logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
+        if 'windows' in machine_type:
+            subprocess.Popen('adb logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
 
 def after_scenario(context, scenario):
     

@@ -1,19 +1,21 @@
+from __builtin__ import str
 from datetime import datetime
-import sys
 import os
+import sys
+import urllib2, json, base64
+
+import constants
+import generics_lib
+
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
 sys.path.append(PATH(''))
-import generics_lib
-import constants
 
 #-----------------------------------------------------------------
 
-import urllib2, json, base64
-from __builtin__ import str
 
 class APIClient:
     def __init__(self, base_url):
@@ -244,4 +246,135 @@ def create_feature_file(suite_ID, project_ID, run_ID):
     f.close()
     print 'Number of feature file created = '+ str(count)
 
+def create_feature_from_run(suite_ID, project_ID, run_ID): 
+    client = APIClient(testrail_url)
+    client.user = testrail_username
+    client.password = testrail_password
+    # case = client.send_get('get_case/181')
+    # print(case) 
+    suite = client.send_get('get_suite/' + suite_ID)
+    feature_name = suite['name'].replace(" ", "_")
+    # print suite
+    cases = client.send_get('get_tests/' + run_ID)
+    # print(cases[0])
+    currenttime = datetime.now()
+    curstr = currenttime.__str__().replace("-", "").replace(":", "").replace(" ", "")[0:12]
+    
+    f = None
+    
+    filedata = None
+    section_id_1 = 0
+    section_id_2 = 1
+    count = 0
+    
+    for case in cases:
+        if case['custom_autostatus'] != 3:
+            
+            section_id_1 = section_id_2
+            section_id_2 = case['section_id']
+            
+            if section_id_1 != section_id_2:
+                try:
+                    f.write(filedata)
+                    f.close()
+                except:
+                    print ''
+                
+                f = open(PATH('../features/' + feature_name + '_'  + str(get_section(str(section_id_2))['name']) + '.feature'), "w+")
+                filedata = "@" + str(get_section(str(section_id_2))['name']) + '\nFeature: ' + str(get_section(str(section_id_2))['name']) + '\n'
+                count += 1
+                if case['custom_background'] != None:
+                    filedata += ('\n\nBackground: ' + case['custom_background'].strip())
+            if case['title'] != None:
+                filedata += ('\n\n' + case['title'].strip() + ' testrail details_' + str(case['id']) + '_' + run_ID)     
+            if case['custom_given'] != None:
+                filedata += ('\nGiven ' + case['custom_given'].strip())
+            if case['custom_when'] != None:
+                filedata += ('\nWhen ' + case['custom_when'].replace("And", '\n\t\t\tAnd').strip())    
+            if case['custom_then'] != None:
+                filedata += ('\nThen ' + case['custom_then'].strip())
+            if case['custom_example'] != None:
+                filedata += ('\n\nExample ' + case['custom_example'].strip())
+    f.write(filedata)
+    f.close()
+    print 'Number of feature file created = '+ str(count)
+
+def create_feature_file_tags(suite_ID, project_ID, run_ID, tag_name=None): 
+    client = APIClient(testrail_url)
+    client.user = testrail_username
+    client.password = testrail_password
+    # case = client.send_get('get_case/181')
+    # print(case) 
+    suite = client.send_get('get_suite/' + suite_ID)
+    feature_name = suite['name'].replace(" ", "_")
+    # print suite
+    cases = client.send_get('get_cases/' + project_ID + '&suite_id=' + suite_ID)
+    # print(cases[0])
+    currenttime = datetime.now()
+    curstr = currenttime.__str__().replace("-", "").replace(":", "").replace(" ", "")[0:12]
+    
+    f = None
+    
+    filedata = None
+    section_id_1 = 0
+    section_id_2 = 1
+    count = 0
+    
+    tag_names = {"Installation": 1, "Onboarding": 2, "Android": 3, "IOS": 4, "Parity": 5, "Worksheets": 6, "World Map": 7, "Miscellaneous": 8, "Quest Progress": 9, "Chapters/Buildings": 10, "Quests": 11, "Tasks": 12, "Video": 13, "Game": 14, 
+                 "Interactive Video": 15, "Interstitials": 16, "Sticker Book": 17, "Rewards": 18, "Online": 19, "Offline": 20, "Library": 21, "Parent Zone": 22, "Parent Gating": 23, "Profile Selection": 24, "Profile Picture": 25, "Child Report": 26, 
+                 "OLAP/Analytics": 27, "Splash Screen": 28, "Transitions": 29, "FTUE": 30, "In-App Rating": 31, "Messaging": 32, "Payments": 33, "Subscription": 34, "Child Profile": 35, "Sessions": 36, "Device": 37, "Progress and Sync": 38, 
+                 "Network": 39, "Security": 40, "MCQ": 41, "Classify": 42, "Sort": 43, "Hangman": 44, "Match": 45, "Choose": 46, "Count": 47}
+    
+    for case in cases:
+        flag = False
+        if tag_name == None:
+            flag = True
+        elif tag_names[tag_name] in case['custom_tags']:
+            flag = True
+        
+        if case['custom_autostatus'] != 3 and flag:
+            section_id_1 = section_id_2
+            section_id_2 = case['section_id']
+            
+            if section_id_1 != section_id_2:
+                try:
+                    f.write(filedata)
+                    f.close()
+                except:
+                    print ''
+                
+                f = open(PATH('../features/' + feature_name + '_'  + str(get_section(str(section_id_2))['name']) + '.feature'), "w+")
+                filedata = "@" + str(get_section(str(section_id_2))['name']) + '\nFeature: ' + str(get_section(str(section_id_2))['name']) + '\n'
+                count += 1
+                if case['custom_background'] != None:
+                    filedata += ('\n\nBackground: ' + case['custom_background'].strip())
+            if case['title'] != None:
+                filedata += ('\n\n' + case['title'].strip() + ' testrail details_' + str(case['id']) + '_' + run_ID)     
+            if case['custom_given'] != None:
+                filedata += ('\nGiven ' + case['custom_given'].strip())
+            if case['custom_when'] != None:
+                filedata += ('\nWhen ' + case['custom_when'].strip())    
+            if case['custom_then'] != None:
+                filedata += ('\nThen ' + case['custom_then'].strip())
+            if case['custom_example'] != None:
+                filedata += ('\n\nExample ' + case['custom_example'].strip())
+    f.write(filedata)
+    f.close()
+    print 'Number of feature file created = '+ str(count)
+
+
+def get_run(run_id):
+    client = get_testrail_client()
+    cases = client.send_get('get_case/' + run_id)
+    print cases
+    print type(cases)
+    print '---------------------------------------------------------------------'
+    '''
+    for i in range(len(cases)):
+        print cases[i]
+        print '---------------------------------------------------------------------'
+    '''
+    
+#get_run('4020')
+#create_feature_file_tags('27', '2', '52', 'Onboarding')
 #add_run('new_run_2', 'K3', '59')
