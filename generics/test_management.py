@@ -237,7 +237,7 @@ def create_feature_file(suite_ID, project_ID, run_ID):
             if case['custom_given'] != None:
                 filedata += ('\nGiven ' + case['custom_given'].strip())
             if case['custom_when'] != None:
-                filedata += ('\nWhen ' + case['custom_when'].replace("And", '\n\t\t\tAnd').strip())    
+                filedata += ('\nWhen ' + case['custom_when'].strip())    
             if case['custom_then'] != None:
                 filedata += ('\nThen ' + case['custom_then'].strip())
             if case['custom_example'] != None:
@@ -290,7 +290,7 @@ def create_feature_from_run(suite_ID, project_ID, run_ID):
             if case['custom_given'] != None:
                 filedata += ('\nGiven ' + case['custom_given'].strip())
             if case['custom_when'] != None:
-                filedata += ('\nWhen ' + case['custom_when'].replace("And", '\n\t\t\tAnd').strip())    
+                filedata += ('\nWhen ' + case['custom_when'].strip())    
             if case['custom_then'] != None:
                 filedata += ('\nThen ' + case['custom_then'].strip())
             if case['custom_example'] != None:
