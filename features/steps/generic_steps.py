@@ -129,12 +129,22 @@ class GenericStep():
     @step('Library scene is loaded')
     def library_scene_loaded(self):
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
-        self.base_class.tap_and_hold('LibraryButton', 7)
+        self.base_class.tap('LibraryButton')
         self.access = ParentalAccess(self.obj.altdriver, self.obj.driver)
         #wait for the question to load
         sleep(3)
         self.access.parental_access('ParentGatePanel/Question')
         self.base_class.wait_for_scene('Library')
+        
+    @step('ParentZone scene is loaded')
+    def ParentZone_scene_loaded(self):
+        self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+        self.base_class.tap('ParentButton')
+        self.access = ParentalAccess(self.obj.altdriver, self.obj.driver)
+        #wait for the question to load
+        sleep(3)
+        self.access.parental_access('ParentGatePanel/Question')
+        self.base_class.wait_for_scene('ParentZone')
         
     @step('question is loaded: "{object_name}"')
     def question_is_loaded(self, object_name):
