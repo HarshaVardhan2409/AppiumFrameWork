@@ -25,7 +25,7 @@ def launch_app(platform):
         #print value
         #altdriver.wait_for_element('arrowIndicator').mobile_tap()
         #print altdriver.wait_for_element('Item 1: UAE/Item Label').get_text()
-        #print altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
+        print altdriver.wait_for_element('object_name').get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
         '''
         altdriver.wait_for_current_scene_to_be('GameMapScreen')
         sleep(10)

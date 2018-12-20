@@ -10,6 +10,9 @@ PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
+sys.path.append(PATH('../app/'))
+from parental_access import ParentalAccess
+
 sys.path.append(PATH('../'))
 from base_setup import BaseSetup
 
@@ -110,7 +113,29 @@ class GenericStep():
     def scene_loaded(self, scene_name):
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
         self.base_class.wait_for_scene(scene_name)
-
+        
+    @step('Onboarding scene is loaded')
+    def onboarding_scene_loaded(self):
+        self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+        self.base_class.wait_for_scene('OnboardingIntroScene')
+        self.base_class.tap('Button')
+        self.base_class.wait_for_scene('Onboarding')
+        
+    @step('GameMapScreen scene is loaded')
+    def gamemap_scene_loaded(self):
+        self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+        self.base_class.wait_for_scene('GameMapScreen')
+        
+    @step('Library scene is loaded')
+    def library_scene_loaded(self):
+        self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+        self.base_class.tap_and_hold('LibraryButton', 7)
+        self.access = ParentalAccess(self.obj.altdriver, self.obj.driver)
+        #wait for the question to load
+        sleep(3)
+        self.access.parental_access('ParentGatePanel/Question')
+        self.base_class.wait_for_scene('Library')
+        
     @step('question is loaded: "{object_name}"')
     def question_is_loaded(self, object_name):
             self.base_class.verify_question(object_name)
