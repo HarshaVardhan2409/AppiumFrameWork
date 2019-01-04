@@ -145,7 +145,7 @@ class BaseClass():
         self.altdriver.wait_for_element(object_name)
         sleep(0.5)
         try:
-            self.altdriver.wait_for_element(object_name).tap()
+            self.altdriver.wait_for_element(object_name).mobile_tap()
         except:
             self.altdriver.wait_for_element(object_name).mobile_tap()
             
@@ -209,6 +209,10 @@ class BaseClass():
     def click_back(self):
         sleep(1)
         self.driver.press_keycode(4)
+        
+    def home_button(self):
+        sleep(1)
+        self.driver.press_keycode(3)   
             
     def check_status(self, object_name):
         print '-----------------------------------------------------------------'

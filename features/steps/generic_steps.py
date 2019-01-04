@@ -5,6 +5,7 @@ import random
 import subprocess
 import os
 from behave.textutil import text
+from behave.runner import Context
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -35,7 +36,7 @@ class GenericStep():
     
     case = None
     run = None
-    '''    
+       
     @step('game is launched with text')
     def game_is_launched_with_text(self):
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
@@ -93,8 +94,7 @@ class GenericStep():
     
     @step('start scene is loaded')
     def start_scene_is_loaded(self):
-        self.base_class.wait_for_scene(generics_lib.get_data(self.path, self.game_name, "start_screen"))
-    '''    
+        self.base_class.wait_for_scene(generics_lib.get_data(self.path, self.game_name, "start_screen"))   
     
        
     @step('launch app with apppackage: "{appPackage}" appactivity: "{appActivity}"')
@@ -127,7 +127,7 @@ class GenericStep():
         self.base_class.wait_for_scene('GameMapScreen')
         
     @step('Library scene is loaded')
-    def library_scene_loaded(self):
+    def library_scene_loaded(self):    
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
         self.base_class.tap('LibraryButton')
         self.access = ParentalAccess(self.obj.altdriver, self.obj.driver)
@@ -230,6 +230,15 @@ class GenericStep():
     @step('navigate back')
     def navigate_back(self):
         self.base_class.click_back()
+        
+    @then('verify the element when screen is loaded')
+    def verfiy_element_on_load(self):
+        for row in self.table:
+            self.base_class.wait_for_element_display(row['object_name'])  
+            
+    @step('press device home button')
+    def press_home_button(self):
+        self.base_class.home_button()         
         
     
     @then('update the result to testrail')
