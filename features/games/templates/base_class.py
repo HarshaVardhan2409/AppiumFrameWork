@@ -45,6 +45,9 @@ class BaseClass():
     def wait_for_scene(self, scene_name):
         self.altdriver.wait_for_current_scene_to_be(scene_name)
         
+    def wait_for_element_not_present(self, object_name):
+        self.altdriver.wait_for_element_to_not_be_present(object_name)
+        
     def verify_scene(self, scene_name):
         print 'entered verified'
         self.wait_for_scene(str(scene_name))
@@ -151,7 +154,11 @@ class BaseClass():
         try:
             self.altdriver.wait_for_element(object_name).tap()
         except:
-            self.altdriver.wait_for_element(object_name).mobile_tap()
+            print ''
+        try:
+            self.altdriver.find_element(object_name).mobile_tap()
+        except:
+            print ''
             
     def text_tap(self,object_name, text):
         self.altdriver.wait_for_element(object_name)

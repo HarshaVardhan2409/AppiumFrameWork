@@ -129,6 +129,7 @@ class GenericStep():
             print '1st'
             self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
             self.base_class.verify_scene('GameMapScreen')
+            self.base_class.wait_for_element_not_present('Interstitial')
             print '2nd'
         except:
             print '3rd'
@@ -169,12 +170,12 @@ class GenericStep():
             And custom wait: "3"
             And tap on element: "NextButton"
             Then scene is loaded: "GameMapScreen"
-            And custom wait: "30"
+            And wait for object not to be present: "Interstitial"
             And tap on element: "Avatar(Clone)"
             And tap on element: "LetsStartButton"
-            Then custom wait: "30"
             And scene is loaded: "GameMapScreen"
             ''')
+            self.base_class.wait_for_element_not_present('Interstitial')
         
     @step('Library scene is loaded')
     def library_scene_loaded(self):    
@@ -185,21 +186,27 @@ class GenericStep():
         sleep(3)
         self.access.parental_access('ParentGatePanel/Question')
         self.base_class.wait_for_scene('Library')
+        self.base_class.wait_for_element_not_present('Interstitial')
         
     @step('ParentZone scene is loaded')
     def ParentZone_scene_loaded(self):
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
-        self.base_class.tap('ParentButton')
+        self.base_class.tap('ParentButton/FillImage')
         self.access = ParentalAccess(self.obj.altdriver, self.obj.driver)
         #wait for the question to load
         sleep(3)
         self.access.parental_access('ParentGatePanel/Question')
         self.base_class.wait_for_scene('ParentZone')
+        self.base_class.wait_for_element_not_present('Interstitial')
         
     @step('question is loaded: "{object_name}"')
     def question_is_loaded(self, object_name):
             self.base_class.verify_question(object_name)
             self.base_class.wait_for_element_display(object_name)
+            
+    @step('wait for object not to be present: "{object_name}"')
+    def object_not_present(self, object_name):
+        self.base_class.wait_for_element_not_present(object_name)
             
     @step('verify the text: "{expected_text}" for element: "{element_name}"')
     def verify_the_text(self, element_name, expected_text):
@@ -285,9 +292,9 @@ class GenericStep():
     def verify_orientation_potrait(self):
         self.base_class.verify_orientation('portrait')
         
-    @step('verify orientation is lamdscape')
+    @step('verify orientation is landscape')
     def verify_orientation_landscape(self):
-        self.base_class.verify_orientation('lamdscape')
+        self.base_class.verify_orientation('landscape')
 
     @then('verify the element when screen is loaded')
     def verfiy_element_on_load(self):
