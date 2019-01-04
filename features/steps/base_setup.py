@@ -35,6 +35,7 @@ class BaseSetup():
         self.port = generics_lib.get_data(constants.CONFIG_PATH, 'appium_server', 'port')
         self.driver = webdriver.Remote('http://'+self.ip_address+':'+self.port+'/wd/hub', self.desired_caps)
         self.driver.implicitly_wait(15)
+        
         self.altdriver = AltrunUnityDriver(self.driver, self.platform)
 
     def teardown(self):

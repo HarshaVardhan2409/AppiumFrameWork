@@ -226,3 +226,7 @@ class BaseClass():
         '''
         return value1
             
+    def verify_orientation(self, expected_orientation):
+        actual_orientation = self.driver.orientation
+        assert lower(expected_orientation) in lower(actual_orientation)
+        

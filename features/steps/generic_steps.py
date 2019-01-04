@@ -124,7 +124,57 @@ class GenericStep():
     @step('GameMapScreen scene is loaded')
     def gamemap_scene_loaded(self):
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
-        self.base_class.wait_for_scene('GameMapScreen')
+        self.path = PATH('../../config/config.json')
+        try:
+            self.obj.launch_app(generics_lib.get_data(self.path, 'app_config', "app_package"), generics_lib.get_data(self.path, 'app_config', "app_activity"), 'True')
+            print '1st'
+            self.base_class.verify_scene('GameMapScreen')
+            print '2nd'
+        except:
+            print '3rd'
+            try:
+                self.obj.teardown()
+            except:
+                print 'not launched'
+            print '4th'
+            self.execute_steps(u'''
+            Given launch the app
+            Given scene is loaded: "OnboardingIntroScene"
+            When tap on element: "Button"
+            Then scene is loaded: "Onboarding"
+            When custom wait: "3"
+            And tap on element: "MobilePanel/InputFieldPrefab"
+            And enter the: "different mobile number": "1552009999" in element: "MobilePanel/InputFieldPrefab"
+            And tap on element: "NextButton"
+            And enter the: "nick name": "jimmy" in element: "GradeSelection(Clone)/Background/InputFieldPrefab"
+            And tap on text element: "Text" with text: "Grade 3"
+            And tap on element: "NextButton"
+            Then verify the element:
+            | object_name            |
+            | OTPVerification(Clone) |
+            When enter the: "otp": "1234" in element: "InputFieldPrefab"
+            Then verify the element:
+            | object_name             |
+            | LocationAndEmail(Clone) |
+            And tap on element: "LocationPanel/InputField"
+            And tap on element: "LocateMeButton"
+            And tap on element with text: "Allow"
+            And tap on element: "EmailPanel/InputFieldPrefab"
+            And tap on element with text: "@"
+            And tap on element with text: "OK"
+            And tap on element: "NextButton"
+            Then verify the element:
+            | object_name                |
+            | OnBoardingCompleted(Clone) |
+            And custom wait: "3"
+            And tap on element: "NextButton"
+            Then scene is loaded: "GameMapScreen"
+            And custom wait: "30"
+            And tap on element: "Avatar(Clone)"
+            And tap on element: "LetsStartButton"
+            Then custom wait: "30"
+            And scene is loaded: "GameMapScreen"
+            ''')
         
     @step('Library scene is loaded')
     def library_scene_loaded(self):
@@ -231,8 +281,11 @@ class GenericStep():
     def navigate_back(self):
         self.base_class.click_back()
         
-    
-    @then('update the result to testrail')
-    def update_result_to_testrail(self):
-        print ''
+    @step('verify orientation is portrait')
+    def verify_orientation_potrait(self):
+        self.base_class.verify_orientation('portrait')
         
+    @step('verify orientation is lamdscape')
+    def verify_orientation_landscape(self):
+        self.base_class.verify_orientation('lamdscape')
+

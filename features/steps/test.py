@@ -13,11 +13,13 @@ def launch_app(platform):
         desired_caps['newCommandTimeout'] = 300
         desired_caps['noReset'] = True
         desired_caps['appPackage'] = "com.byjus.k3"
-        desired_caps['appActivity'] = "com.byjus.k5.MainActivity"
+        desired_caps['appActivity'] = "com.byjus.unity.support.activities.MainActivity"
         driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
         altdriver = AltrunUnityDriver(driver, platform)
-        altdriver.wait_for_current_scene_to_be('Onboarding')
+        altdriver.wait_for_current_scene_to_be('GameMapScreen')
         sleep(20)
+        print '==================================================================='
+        print driver.orientation
         value = altdriver.wait_for_element('InputFieldPrefab/Text').get_text()
         print 'd'+value+'b'
         print type(value)

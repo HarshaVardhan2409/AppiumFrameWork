@@ -19,13 +19,14 @@ def start_execution(feature_file=None):
         
     if feature_file == None:
         subprocess.Popen(
-            'behave -D APP_PATH=sys.argv[4] -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234',
+            'behave -D APP_PATH=C:\\Users\\Administrator.TNPLIND0007\\Downloads\\k3_app.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234',
             shell=False)
     else:
         subprocess.Popen(
-            'behave -D APP_PATH=sys.argv[4] -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 '+feature_file,
+            'behave -D APP_PATH=C:\\Users\\Administrator.TNPLIND0007\\Downloads\\k3_new.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 -f allure_behave.formatter:AllureFormatter -o ../execution_data/reports '+feature_file,
             shell=False)
-# -f allure_behave.formatter:AllureFormatter -o ../execution_data/reports 
+# -f allure_behave.formatter:AllureFormatter -o ../execution_data/reports sys.argv[4]
 
-create_feature(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
-#start_execution(str(sys.argv[4]))
+#create_feature(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
+#start_execution('--tags=@smoke2 Account_creation.feature')
+start_execution('Account_creation.feature InstallationOnboarding.feature Library.feature chapterandquestflow.feature parentzone.feature')
