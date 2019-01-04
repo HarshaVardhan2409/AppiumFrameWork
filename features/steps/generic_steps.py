@@ -296,9 +296,4 @@ class GenericStep():
             
     @step('press device home button')
     def press_home_button(self):
-        self.base_class.home_button()         
-        
-    
-    @then('update the result to testrail')
-    def update_result_to_testrail(self):
-        print ''
+        self.base_class.home_button()
