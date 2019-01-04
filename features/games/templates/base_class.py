@@ -5,6 +5,7 @@ from string import lower
 from selenium.webdriver.common.by import By
 from altunityrunner import AltrunUnityDriver
 from appium import webdriver
+from __builtin__ import str
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -45,7 +46,10 @@ class BaseClass():
         self.altdriver.wait_for_current_scene_to_be(scene_name)
         
     def verify_scene(self, scene_name):
-        assert scene_name in self.altdriver.get_current_scene()
+        print 'entered verified'
+        self.wait_for_scene(str(scene_name))
+        print 'wait completed'
+        assert str(scene_name) in self.altdriver.get_current_scene()
         
     def verify_the_element_on_screen(self, element_name):
             self.altdriver.wait_for_element(element_name)

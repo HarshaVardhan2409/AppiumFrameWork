@@ -23,7 +23,7 @@ def start_execution(feature_file=None):
             shell=False)
     else:
         subprocess.Popen(
-            'behave -D APP_PATH=C:\\Users\\Administrator.TNPLIND0007\\Downloads\\k3_new.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 -f allure_behave.formatter:AllureFormatter -o ../execution_data/reports '+feature_file,
+            'behave -D APP_PATH=C:\\Users\\Administrator.TNPLIND0007\\Downloads\\k3_app.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 -f allure_behave.formatter:AllureFormatter -o ../execution_data/reports '+feature_file,
             shell=False)
 # -f allure_behave.formatter:AllureFormatter -o ../execution_data/reports sys.argv[4]
 

@@ -123,11 +123,11 @@ class GenericStep():
         
     @step('GameMapScreen scene is loaded')
     def gamemap_scene_loaded(self):
-        self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
         self.path = PATH('../../config/config.json')
         try:
             self.obj.launch_app(generics_lib.get_data(self.path, 'app_config', "app_package"), generics_lib.get_data(self.path, 'app_config', "app_activity"), 'True')
             print '1st'
+            self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
             self.base_class.verify_scene('GameMapScreen')
             print '2nd'
         except:
