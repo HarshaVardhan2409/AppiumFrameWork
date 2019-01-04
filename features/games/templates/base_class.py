@@ -145,7 +145,7 @@ class BaseClass():
         self.altdriver.wait_for_element(object_name)
         sleep(0.5)
         try:
-            self.altdriver.wait_for_element(object_name).mobile_tap()
+            self.altdriver.wait_for_element(object_name).tap()
         except:
             self.altdriver.wait_for_element(object_name).mobile_tap()
             
