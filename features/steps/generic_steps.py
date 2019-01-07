@@ -248,6 +248,11 @@ class GenericStep():
     @step('tap and hold element: "{object_name}" for duration: "{duration}"')
     def tap_and_hold(self, object_name, duration):
         self.base_class.tap_and_hold(object_name, duration)
+
+    @step('tap on the element: "{object_name}" with component property title: "{title}"')
+    def tap_on_title(self, object_name, title):
+        self.base_class.tap_title(object_name, title)
+    
         
     @step('enter the: "{name}": "{text}" in element: "{object_name}"')
     def enter_text(self, name, text, object_name):

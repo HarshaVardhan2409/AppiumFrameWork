@@ -162,7 +162,6 @@ class BaseClass():
             
     def text_tap(self,object_name, text):
         self.altdriver.wait_for_element(object_name)
-        
         elements = self.altdriver.find_elements(object_name)
         for element in elements:
             object_text = ''
@@ -180,7 +179,26 @@ class BaseClass():
                     except:
                         element.mobile_tap()
             except:
-                print "'ascii' codec can't decode"
+                print "ascii' codec can't decode"
+                
+                
+    def tap_title(self, object_name, title):
+        self.altdriver.wait_for_element(object_name)       
+        elements = self.altdriver.find_elements(object_name)
+        for element in elements:
+            object_title = ''
+            try:
+                object_title = element.get_component_property("Byjus.K123.Tasks.TaskCardView", "title")
+            except:
+                print 'No title property'
+            try:
+                if title in object_title:
+                    try:
+                        element.tap()
+                    except:
+                        element.mobile_tap()
+            except:
+                print " "
                     
     def tap_element_text(self, text):
         if '@' == text:
