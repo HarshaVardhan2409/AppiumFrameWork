@@ -154,11 +154,12 @@ class BaseClass():
         try:
             self.altdriver.wait_for_element(object_name).tap()
         except:
-            print ''
-        try:
             self.altdriver.find_element(object_name).mobile_tap()
-        except:
-            print ''
+
+    def mobiletap(self, object_name):
+        self.altdriver.wait_for_element(object_name)
+        sleep(0.5)
+        self.altdriver.find_element(object_name).mobile_tap()
             
     def text_tap(self,object_name, text):
         self.altdriver.wait_for_element(object_name)

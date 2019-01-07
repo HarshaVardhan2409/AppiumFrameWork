@@ -244,6 +244,12 @@ class GenericStep():
     def tap(self, object_name):
         self.base_class.tap(object_name)
 
+    '''
+    object which does not contain on_Click() method, the below step should be used
+    '''
+    @step('tap on element location: "{object_name}"')
+    def mobiletap(self, object_name):
+        self.base_class.mobiletap(object_name)
 
     @step('tap and hold element: "{object_name}" for duration: "{duration}"')
     def tap_and_hold(self, object_name, duration):
