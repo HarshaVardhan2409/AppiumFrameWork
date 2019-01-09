@@ -1,15 +1,3 @@
-# -- RERUN: 13 failing scenarios during last test run.
-Account_creation.feature:89
-Account_creation.feature:179
-Account_creation.feature:214
-Account_creation.feature:258
-Account_creation.feature:279
-Account_creation.feature:298
-Account_creation.feature:323
-InstallationOnboarding.feature:10
-InstallationOnboarding.feature:16
-Library.feature:53
-chapterandquestflow.feature:29
-chapterandquestflow.feature:64
-chapterandquestflow.feature:76
+# -- RERUN: 1 failing scenarios during last test run.
+Interstitials.feature:64
 

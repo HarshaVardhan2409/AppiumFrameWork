@@ -25,6 +25,7 @@ execution_data/
 .project
 .pydevproject
 *.feature
+*.featureset
 .installed.cfg
 *.egg
 MANIFEST

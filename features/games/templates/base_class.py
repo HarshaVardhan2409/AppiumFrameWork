@@ -89,8 +89,12 @@ class BaseClass():
             count = count + 1
             if count == 20:
                 break
+    
+    def wait_for_element_contains_text(self, object_name, text):
+        self.altdriver.wait_for_element_with_text(object_name, text)
         
     def verify_text(self, object_name, expected_text):
+        self.wait_for_element_contains_text(object_name, expected_text)
         actual_text = self.get_text(object_name)
         value = self.check_status(object_name)
         count = 0

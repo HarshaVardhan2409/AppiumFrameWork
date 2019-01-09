@@ -307,7 +307,7 @@ class GenericStep():
     def verify_orientation_landscape(self):
         self.base_class.verify_orientation('landscape')
 
-    @then('verify the element when screen is loaded')
+    @step('verify the element on screen')
     def verfiy_element_on_load(self):
         for row in self.table:
             self.base_class.wait_for_element_display(row['object_name'])  

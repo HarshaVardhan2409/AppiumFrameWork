@@ -23,11 +23,12 @@ def start_execution(feature_file=None):
             shell=False)
     else:
         subprocess.Popen(
-            'behave -D APP_PATH=C:\\Users\\Administrator.TNPLIND0007\\Downloads\\k3_app.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 -f allure_behave.formatter:AllureFormatter -o ../execution_data/reports '+feature_file,
+            'behave -D APP_PATH=C:\\Users\\Administrator.TNPLIND0007\\Downloads\\k3_app.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 '+feature_file,
             shell=False)
         
-# -f allure_behave.formatter:AllureFormatter -o ../execution_data/reports sys.argv[4]
+        
+# -f allure_behave.formatter:AllureFormatter -o ../execution_data/reports sys.argv[4]--processes 2 --parallel-element scenario 
 
 #create_feature(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
-#start_execution('--tags=@quest4 chapterandquestflow.feature')
-start_execution('Account_creation.feature InstallationOnboarding.feature Library.feature chapterandquestflow.feature parentzone.feature')
+start_execution('--tags=@smoke Interstitials.feature')
+#start_execution('Account_creation.feature InstallationOnboarding.feature Library.feature chapterandquestflow.feature parentzone.feature')

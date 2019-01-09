@@ -23,7 +23,7 @@ def launch_app(platform):
         value = altdriver.wait_for_element('InputFieldPrefab/Text').get_text()
         print 'd'+value+'b'
         print type(value)
-        #value = altdriver.wait_for_element('CountryIcon').get_component_property("UnityEngine.RectTransform", "localRotation")
+        value = altdriver.wait_for_element('CountryIcon').get_component_property("UnityEngine.RectTransform", "localRotation")
         #print value
         #altdriver.wait_for_element('arrowIndicator').mobile_tap()
         #print altdriver.wait_for_element('Item 1: UAE/Item Label').get_text()
