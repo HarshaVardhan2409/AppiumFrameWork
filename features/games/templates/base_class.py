@@ -117,6 +117,18 @@ class BaseClass():
                 break
         assert expected_text in actual_text
         
+        
+    def verify_text_of_component(self, component_name, component_property, object_name, expected_text):
+        elements = self.altdriver.find_elements(object_name)
+        for i in range(len(elements)):
+            try:
+                actual_text = elements[i].get_text()
+            except:
+                actual_text = elements[i].get_component_property(component_name, component_property)
+            if expected_text in actual_text:
+                break
+        assert expected_text in actual_text   
+        
     def enter_text(self, object_name, text):
         self.tap(object_name)
         #wait time for keypad to load

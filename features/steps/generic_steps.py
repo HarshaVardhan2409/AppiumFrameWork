@@ -222,6 +222,11 @@ class GenericStep():
         for row in self.table:
             self.base_class.verify_text_for_duplicate_objects(str(row['object_name']), str(row['text']))
             
+    @step('verify the text associated with component of the elements')
+    def verify_text_for_the_component(self):
+         for row in self.table:
+            self.base_class.verify_text_of_component(str(row['component_name']),str(row['component_property']),str(row['object_name']), str(row['text']))     
+            
     @step('verify the element')
     def verify_element(self):
             for row in self.table:
