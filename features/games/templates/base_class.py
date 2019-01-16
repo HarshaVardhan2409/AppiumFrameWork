@@ -104,7 +104,7 @@ class BaseClass():
             if count >=20:
                 break
         assert 'rue' in value
-        assert expected_text in actual_text
+        assert lower(expected_text) in lower(actual_text)
         
     def verify_text_for_duplicate_objects(self, object_name, expected_text):
         elements = self.altdriver.find_elements(object_name)

@@ -121,6 +121,50 @@ class GenericStep():
         self.base_class.tap('Button')
         self.base_class.wait_for_scene('Onboarding')
         
+    @step('GameMapScreen is loaded with test credentials: "{number}"')
+    def gamemapscreen_testcredentials(self, number):
+        self.path = PATH('../../config/config.json')
+        try:
+            self.obj.launch_app(generics_lib.get_data(self.path, 'app_config', "app_package"), generics_lib.get_data(self.path, 'app_config', "app_activity"), 'True')
+            print '1st'
+            self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+            self.base_class.verify_scene('GameMapScreen')
+            self.base_class.wait_for_element_not_present('Interstitial')
+            self.base_class.verify_scene('GameMapScreen')
+            self.base_class.verify_text_for_duplicate_objects('Text', 'utomation')
+        except:
+            print '3rd'
+            try:
+                self.obj.teardown()
+            except:
+                print 'not launched'
+            print '4th'
+            self.execute_steps(u'''
+            Given launch the app
+            Given scene is loaded: "OnboardingIntroScene"
+            When tap on element: "Button"
+            Then scene is loaded: "Onboarding"
+            When custom wait: "3"
+            And tap on element: "MobilePanel/InputFieldPrefab"
+            ''')
+            self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+            self.base_class.enter_text_app('MobilePanel/InputFieldPrefab', number)
+            self.execute_steps(u'''
+            When tap on element: "NextButton"
+            Then verify the element:
+            | object_name            |
+            | OTPVerification(Clone) |
+            When enter the: "otp": "1234" in element: "InputFieldPrefab"
+            And scene is loaded: "GameMapScreen"
+            And wait for object not to be present: "Interstitial"
+            And tap on element: "Avatar(Clone)"
+            And tap on element: "LetsStartButton"
+            And scene is loaded: "GameMapScreen"
+            And verify text lines in multiple text boxes for object with same names:
+            | object_name | text |
+            | Text | utomation |
+            ''')
+            
     @step('GameMapScreen scene is loaded')
     def gamemap_scene_loaded(self):
         self.path = PATH('../../config/config.json')
@@ -175,7 +219,6 @@ class GenericStep():
             And tap on element: "LetsStartButton"
             And scene is loaded: "GameMapScreen"
             ''')
-            self.base_class.wait_for_element_not_present('Interstitial')
         
     @step('Library scene is loaded')
     def library_scene_loaded(self):    
@@ -199,10 +242,11 @@ class GenericStep():
         self.base_class.wait_for_scene('ParentZone')
         self.base_class.wait_for_element_not_present('Interstitial')
         
-    @step('question is loaded: "{object_name}"')
-    def question_is_loaded(self, object_name):
-            self.base_class.verify_question(object_name)
-            self.base_class.wait_for_element_display(object_name)
+    @step('question is loaded')
+    def question_is_loaded(self):
+        for row in self.table:
+            self.base_class.verify_question(row["object_name"])
+            self.base_class.wait_for_element_display(row["object_name"])
             
     @step('wait for object not to be present: "{object_name}"')
     def object_not_present(self, object_name):
