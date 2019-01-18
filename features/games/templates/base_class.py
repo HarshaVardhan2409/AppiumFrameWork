@@ -94,7 +94,7 @@ class BaseClass():
         self.altdriver.wait_for_element_with_text(object_name, text)
         
     def verify_text(self, object_name, expected_text):
-        self.wait_for_element_contains_text(object_name, expected_text)
+        self.altdriver.wait_for_element(object_name)
         actual_text = self.get_text(object_name)
         value = self.check_status(object_name)
         count = 0
@@ -112,7 +112,10 @@ class BaseClass():
             try:
                 actual_text = elements[i].get_text()
             except:
-                actual_text = elements[i].get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
+                try:
+                    actual_text = elements[i].get_component_property("TMPro.TextMeshPro", "enabled", "Unity.TextMeshPro")
+                except:
+                    actual_text = elements[i].get_component_property("TMPro.TextMeshProUGUI", "enabled", "Unity.TextMeshPro")
             if expected_text in actual_text:
                 break
         assert expected_text in actual_text
@@ -161,7 +164,10 @@ class BaseClass():
         try:
             text = self.altdriver.wait_for_element(object_name).get_text()
         except:
-            text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
+            try:
+                text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshPro", "enabled", "Unity.TextMeshPro")
+            except:
+                text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshProUGUI", "enabled", "Unity.TextMeshPro")
         return text
         
     def tap(self, object_name):
@@ -186,7 +192,10 @@ class BaseClass():
                 try:
                     object_text = element.get_text()
                 except:
-                    object_text = element.get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
+                    try:
+                        object_text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshPro", "enabled", "Unity.TextMeshPro")
+                    except:
+                        object_text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshProUGUI", "enabled", "Unity.TextMeshPro")
             except:
                 print 'No text property'
             try:
@@ -267,7 +276,10 @@ class BaseClass():
         try:
             value1 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.UI.Text", "enabled")
         except:
-            value1 = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshPro", "enabled", "Unity.TextMeshPro")
+            try:
+                value1 = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshPro", "enabled", "Unity.TextMeshPro")
+            except:
+                value1 = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshProUGUI", "enabled", "Unity.TextMeshPro")
         '''    
         try:
             value2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.UI.Text", "isActiveAndEnabled")
