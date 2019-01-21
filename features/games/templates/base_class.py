@@ -104,7 +104,7 @@ class BaseClass():
             if count >=20:
                 break
         assert 'rue' in value
-        assert lower(expected_text) in lower(actual_text)
+        assert expected_text in actual_text
         
     def verify_text_for_duplicate_objects(self, object_name, expected_text):
         elements = self.altdriver.find_elements(object_name)
@@ -113,9 +113,9 @@ class BaseClass():
                 actual_text = elements[i].get_text()
             except:
                 try:
-                    actual_text = elements[i].get_component_property("TMPro.TextMeshPro", "enabled", "Unity.TextMeshPro")
+                    actual_text = elements[i].get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
                 except:
-                    actual_text = elements[i].get_component_property("TMPro.TextMeshProUGUI", "enabled", "Unity.TextMeshPro")
+                    actual_text = elements[i].get_component_property("TMPro.TextMeshProUGUI", "text", "Unity.TextMeshPro")
             if expected_text in actual_text:
                 break
         assert expected_text in actual_text
@@ -165,9 +165,9 @@ class BaseClass():
             text = self.altdriver.wait_for_element(object_name).get_text()
         except:
             try:
-                text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshPro", "enabled", "Unity.TextMeshPro")
+                text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
             except:
-                text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshProUGUI", "enabled", "Unity.TextMeshPro")
+                text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshProUGUI", "text", "Unity.TextMeshPro")
         return text
         
     def tap(self, object_name):
@@ -193,17 +193,19 @@ class BaseClass():
                     object_text = element.get_text()
                 except:
                     try:
-                        object_text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshPro", "enabled", "Unity.TextMeshPro")
+                        object_text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
                     except:
-                        object_text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshProUGUI", "enabled", "Unity.TextMeshPro")
+                        object_text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshProUGUI", "text", "Unity.TextMeshPro")
             except:
                 print 'No text property'
             try:
                 if text in object_text:
                     try:
                         element.tap()
+                        break
                     except:
                         element.mobile_tap()
+                        break
             except:
                 print "ascii' codec can't decode"
                 
@@ -291,4 +293,13 @@ class BaseClass():
     def verify_orientation(self, expected_orientation):
         actual_orientation = self.driver.orientation
         assert lower(expected_orientation) in lower(actual_orientation)
+        
+    def testing(self, object_name, expected_text):
+        elements = self.altdriver.find_elements(object_name)
+        for i in range(len(elements)):
+            actual_value = elements[i].get_component_property('UnityEngine.UI.LibraryItem', 'text')
+            if expected_text in actual_value:
+                break
+        
+        
         
