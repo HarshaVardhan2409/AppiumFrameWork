@@ -365,7 +365,6 @@ class GenericStep():
     def press_home_button(self):
         self.base_class.home_button()
         
-    @step('verify the element games')
-    def verify_element_games(self):
-            for row in self.table:
-                self.base_class.testing(row['object_name'], row['text'])
+    @step('select the game: "{text}" with element: "{object_name}"')
+    def verify_element_games(self, text, object_name):
+        self.base_class.select_game(text, object_name)

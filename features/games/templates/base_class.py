@@ -193,9 +193,9 @@ class BaseClass():
                     object_text = element.get_text()
                 except:
                     try:
-                        object_text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
+                        object_text = element.get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
                     except:
-                        object_text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshProUGUI", "text", "Unity.TextMeshPro")
+                        object_text = element.get_component_property("TMPro.TextMeshProUGUI", "text", "Unity.TextMeshPro")
             except:
                 print 'No text property'
             try:
@@ -294,12 +294,27 @@ class BaseClass():
         actual_orientation = self.driver.orientation
         assert lower(expected_orientation) in lower(actual_orientation)
         
-    def testing(self, object_name, expected_text):
-        elements = self.altdriver.find_elements(object_name)
+    def select_game(self, expected_text, object_name):
+        i = 0
+        while i < 12:
+            i += 1
+            try:
+                print object_name
+                print expected_text
+                self.verify_text_for_duplicate_objects(object_name, expected_text)
+                break
+            except:
+                self.scroll_verify('Content', 0.5, 0.5, 0.8, 0.3)
+                sleep(1)
+        self.text_tap(object_name, expected_text)
+        '''
         for i in range(len(elements)):
-            actual_value = elements[i].get_component_property('UnityEngine.UI.LibraryItem', 'text')
+            print elements[i].get_component_property('Byjus.K123.LibraryScreen.LibraryItem', 'itemName', 'text')
+            print type(elements[i].get_component_property('Byjus.K123.LibraryScreen.LibraryItem', 'itemName', 'text'))
+        for i in range(len(elements)):
+            actual_value = elements[i].get_component_property('UnityEngine.UI.LibraryItem.Data', 'text')
             if expected_text in actual_value:
                 break
-        
+        '''
         
         
