@@ -20,7 +20,7 @@ class ClassificationStep(GenericStep):
     
     classification = None
     
-    @when('drag and drop the draggables to bucket and verify position')
+    @step('drag and drop the draggables to bucket and verify position')
     def drag_and_drop_the_draggables_to_bucket(self):
         
         self.classification = Classification(self.obj.altdriver, self.obj.driver)
