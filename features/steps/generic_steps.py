@@ -157,8 +157,6 @@ class GenericStep():
             When enter the: "otp": "1234" in element: "InputFieldPrefab"
             And scene is loaded: "GameMapScreen"
             And wait for object not to be present: "Interstitial"
-            And tap on element: "Avatar(Clone)"
-            And tap on element: "LetsStartButton"
             And scene is loaded: "GameMapScreen"
             And verify text lines in multiple text boxes for object with same names:
             | object_name | text |
