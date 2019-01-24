@@ -29,6 +29,6 @@ def start_execution(feature_file=None):
         
 # -f allure_behave.formatter:AllureFormatter -o ../execution_data/reports sys.argv[4]--processes 2 --parallel-element scenario 
 
-create_feature(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
-#start_execution('G3EQ28.feature')
+#create_feature(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
+start_execution('G3EQ28.feature')
 #start_execution('-f allure_behave.formatter:AllureFormatter -o ../execution_data/reports Account_creation.feature InstallationOnboarding.feature Library.feature chapterandquestflow.feature parentzone.feature')
