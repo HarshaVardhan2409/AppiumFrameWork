@@ -20,7 +20,7 @@ class McqStep(GenericStep):
     
     mcq = None
     
-    @when('select the option and verify')
+    @step('select the option and verify')
     def select_the_option_and_verify(self):
         self.mcq = MCQ(self.obj.altdriver, self.obj.driver)
         #wait for initial load of elements

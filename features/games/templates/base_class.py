@@ -5,7 +5,6 @@ from string import lower
 from selenium.webdriver.common.by import By
 from altunityrunner import AltrunUnityDriver
 from appium import webdriver
-from __builtin__ import str
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -301,20 +300,24 @@ class BaseClass():
             try:
                 print object_name
                 print expected_text
-                self.verify_text_for_duplicate_objects(object_name, expected_text)
+                self.verify_text_for_game_objects(object_name, expected_text)
                 break
             except:
                 self.scroll_verify('Content', 0.5, 0.5, 0.8, 0.3)
                 sleep(1)
-        self.text_tap(object_name, expected_text)
-        '''
+                
+    def verify_text_for_game_objects(self, object_name, expected_text):
+        elements = self.altdriver.find_elements(object_name)
         for i in range(len(elements)):
-            print elements[i].get_component_property('Byjus.K123.LibraryScreen.LibraryItem', 'itemName', 'text')
-            print type(elements[i].get_component_property('Byjus.K123.LibraryScreen.LibraryItem', 'itemName', 'text'))
-        for i in range(len(elements)):
-            actual_value = elements[i].get_component_property('UnityEngine.UI.LibraryItem.Data', 'text')
-            if expected_text in actual_value:
+            actual_text = elements[i].get_text()
+            actual_text = actual_text.split(' ')
+            expected_text = str(expected_text)
+            actual_text = actual_text[0]
+            if expected_text in actual_text:
+                print 'found........................................................................'
+                sleep(0.5)
+                elements[i].tap()
                 break
-        '''
+        assert expected_text in actual_text
         
         
