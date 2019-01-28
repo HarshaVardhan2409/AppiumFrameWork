@@ -1,5 +1,6 @@
 import os
 import sys
+from time import sleep
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -32,7 +33,7 @@ class ParentalAccess(BaseClass):
             for i in range(len(keys)):
                 try:
                     if ans[j] == keys[i].get_text():
-                        keys[i].mobile_tap()
+                        keys[i].tap()
                 except:
                     break
 
