@@ -36,7 +36,7 @@ class BaseSetup():
         self.driver = webdriver.Remote('http://'+self.ip_address+':'+self.port+'/wd/hub', self.desired_caps)
         self.driver.implicitly_wait(15)
         
-        self.altdriver = AltrunUnityDriver(self.driver, self.platform)
+        self.altdriver = AltrunUnityDriver(self.driver, self.platform, 13000, val)
 
     def teardown(self):
         self.altdriver.stop()
