@@ -99,7 +99,7 @@ class BaseClass():
             sleep(0.3)
             value2 = self.get_object_location(object_name)
             count = count + 1
-            if count == 20:
+            if count == 40:
                 break
     
     def wait_for_element_contains_text(self, object_name, text):
