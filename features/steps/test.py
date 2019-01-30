@@ -120,4 +120,20 @@ def text_tap(object_name, text, altdriver):
                     element.mobile_tap()
     
 #launch_app('android')
+'''
+text = "The <color=#7030A0>-ad</color> word family crate has: l<color=#7030A0>ad</color> and gl<color=#7030A0>ad</color>. The <color=#7030A0>-ank</color> word family crate has: pl<color=#7030A0>ank</color>"
 
+text3 = text.replace('<', '+@')
+
+text3 = text3.replace('>', '+')
+#print text3
+text4 = text3.split('+')
+blank = ''
+#print text4
+
+for i in range(len(text4)):
+    if '@' not in text4[i]:
+        blank =  blank + text4[i]
+        
+print blank
+'''

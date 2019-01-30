@@ -180,6 +180,17 @@ class BaseClass():
                 text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
             except:
                 text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshProUGUI", "text", "Unity.TextMeshPro")
+        if text != None:
+            if '</color>' in text:
+                text1 = text.replace('<', '+@')
+                text1 = text1.replace('>', '+')
+                text2 = text1.split('+')
+                text = ''
+                #print text4
+                
+                for i in range(len(text2)):
+                    if '@' not in text2[i]:
+                        text =  text + text2[i]
         return text
         
     def tap(self, object_name):
