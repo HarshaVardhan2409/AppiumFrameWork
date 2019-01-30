@@ -80,16 +80,28 @@ class BaseClass():
     
     def wait_for_element_display(self, object_name):
         value1 = self.get_object_location(object_name)
-        rotation1 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localRotation")
-        rotation1 = literal_eval(rotation1)
-        scale1 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localScale")
-        scale1 = json.loads(scale1)
-        #wait time for element to appear on screen
-        sleep(2)
-        rotation2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localRotation")
-        rotation2 = literal_eval(rotation2)
-        scale2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localScale")
-        scale2 = json.loads(scale2)
+        try:
+            rotation1 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localRotation")
+            rotation1 = literal_eval(rotation1)
+            scale1 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localScale")
+            scale1 = json.loads(scale1)
+            #wait time for element to appear on screen
+            sleep(2)
+            rotation2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localRotation")
+            rotation2 = literal_eval(rotation2)
+            scale2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localScale")
+            scale2 = json.loads(scale2)
+        except:
+            rotation1 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.Transform", "localRotation")
+            rotation1 = literal_eval(rotation1)
+            scale1 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.Transform", "localScale")
+            scale1 = json.loads(scale1)
+            #wait time for element to appear on screen
+            sleep(2)
+            rotation2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.Transform", "localRotation")
+            rotation2 = literal_eval(rotation2)
+            scale2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.Transform", "localScale")
+            scale2 = json.loads(scale2)
         value2 = self.get_object_location(object_name)
         
         count = 0
@@ -98,6 +110,16 @@ class BaseClass():
                ((scale1['x'] == scale2['x']) and (scale1['y'] == scale2['y']))):
             sleep(0.3)
             value2 = self.get_object_location(object_name)
+            try:
+                rotation2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localRotation")
+                rotation2 = literal_eval(rotation2)
+                scale2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localScale")
+                scale2 = json.loads(scale2)
+            except:
+                rotation2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.Transform", "localRotation")
+                rotation2 = literal_eval(rotation2)
+                scale2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.Transform", "localScale")
+                scale2 = json.loads(scale2)
             count = count + 1
             if count == 40:
                 break
@@ -108,6 +130,10 @@ class BaseClass():
     def verify_text(self, object_name, expected_text):
         self.altdriver.wait_for_element(object_name)
         actual_text = self.get_text(object_name)
+        print '---------'
+        text = actual_text.split()
+        actual_text = " ".join(text)
+        print '---------'
         value = self.check_status(object_name)
         count = 0
         while 'rue' not in value:

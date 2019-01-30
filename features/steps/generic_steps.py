@@ -242,9 +242,9 @@ class GenericStep():
         
     @step('question is loaded')
     def question_is_loaded(self):
-        for row in self.table:
-            self.base_class.wait_for_element_display(row["object_name"])
-            break
+        #for row in self.table:
+            #self.base_class.wait_for_element_display(row["object_name"])
+            #break
         for row in self.table:
             self.base_class.verify_question(row["object_name"])
             
