@@ -22,9 +22,12 @@ class McqStep(GenericStep):
     
     @step('select the option and verify')
     def select_the_option_and_verify(self):
+        for row in self.table:
+            self.base_class.wait_for_element_display(row['option'])
+            break
         self.mcq = MCQ(self.obj.altdriver, self.obj.driver)
         #wait for initial load of elements
-        sleep(6)
+        sleep(2)
         for row in self.table:
             #wait time for options to load
             #sleep(1)

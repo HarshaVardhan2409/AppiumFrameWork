@@ -2,8 +2,10 @@ from altunityrunner.runner import AltrunUnityDriver
 from appium import webdriver
 from time import sleep
 import sys
+from ast import literal_eval
 
 from appium.webdriver.connectiontype import ConnectionType
+import json
 
 def launch_app(platform):
     desired_caps = {}
@@ -20,14 +22,31 @@ def launch_app(platform):
         sleep(20)
         print '==================================================================='
         print driver.orientation
-        value = altdriver.wait_for_element('InputFieldPrefab/Text').get_text()
-        print 'd'+value+'b'
+        #value = altdriver.wait_for_element('InputFieldPrefab/Text').get_text()
+        #print 'd'+value+'b'
+        #print type(value)
+        value = altdriver.wait_for_element('LibraryButton').get_component_property("UnityEngine.RectTransform", "localRotation")
+        print value
         print type(value)
-        value = altdriver.wait_for_element('CountryIcon').get_component_property("UnityEngine.RectTransform", "localRotation")
-        #print value
+        t = literal_eval(value)
+        print t
+        print type(t)
+        print t[0]
+        print type(t[0])
         #altdriver.wait_for_element('arrowIndicator').mobile_tap()
         #print altdriver.wait_for_element('Item 1: UAE/Item Label').get_text()
-        print altdriver.wait_for_element('object_name').get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
+        value2 = altdriver.wait_for_element('LibraryButton').get_component_property("UnityEngine.RectTransform", "localScale")
+        print value2
+        print type(value2)
+        d = json.loads(value2)
+        print d 
+        print type(d)
+        print d['x']
+        print type(d['x'])
+        print d['y']
+        print type(d['y'])
+        print d['z']
+        print type(d['z'])
         '''
         altdriver.wait_for_current_scene_to_be('GameMapScreen')
         sleep(10)

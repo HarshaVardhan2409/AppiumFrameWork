@@ -1,19 +1,21 @@
-from time import sleep
-import sys
+from ast import literal_eval
 import os
 from string import lower
-from selenium.webdriver.common.by import By
+import sys
+from time import sleep
+
 from altunityrunner import AltrunUnityDriver
 from appium import webdriver
+from selenium.webdriver.common.by import By
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
 sys.path.append(PATH('../../../generics/'))
-import generics_lib
 import constants
-
+import generics_lib
+import json
 
 class BaseClass():
     '''
@@ -78,11 +80,22 @@ class BaseClass():
     
     def wait_for_element_display(self, object_name):
         value1 = self.get_object_location(object_name)
+        rotation1 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localRotation")
+        rotation1 = literal_eval(rotation1)
+        scale1 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localScale")
+        scale1 = json.loads(scale1)
         #wait time for element to appear on screen
         sleep(2)
+        rotation2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localRotation")
+        rotation2 = literal_eval(rotation2)
+        scale2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localScale")
+        scale2 = json.loads(scale2)
         value2 = self.get_object_location(object_name)
+        
         count = 0
-        while int(value1['x']) == int(value2['x']) and int(value1['y']) == int(value2['y']):
+        while ((int(value1['x']) == int(value2['x']) and int(value1['y']) == int(value2['y'])) and 
+               ((rotation1[0] == rotation2[0]) and (rotation1[1] == rotation2[1]) and (rotation1[3] == rotation2[3])) and
+               ((scale1['x'] == scale2['x']) and (scale1['y'] == scale2['y']))):
             sleep(0.3)
             value2 = self.get_object_location(object_name)
             count = count + 1

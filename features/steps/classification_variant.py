@@ -22,10 +22,12 @@ class ClassificationStep(GenericStep):
     
     @step('drag and drop the draggables to bucket and verify position')
     def drag_and_drop_the_draggables_to_bucket(self):
-        
+        for row in self.table:
+            self.base_class.wait_for_element_display(row['draggable'])
+            break
         self.classification = Classification(self.obj.altdriver, self.obj.driver)
         #wait time for elemnts to be loaded
-        sleep(6)
+        sleep(2)
         for row in self.table:
             #wait time for elements to appear on the screen
             sleep(1)

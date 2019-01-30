@@ -22,9 +22,12 @@ class HangmanStep(GenericStep):
     
     @step('select option and verify')
     def select_the_option_and_verify(self):
+        for row in self.table:
+            self.base_class.wait_for_element_display(row['option'])
+            break
         self.hangman = Hangman(self.obj.altdriver, self.obj.driver)
         #wait for initial load of elements
-        sleep(6)
+        sleep(2)
         for row in self.table:
             #wait time for options to load
             sleep(1)
@@ -37,11 +40,14 @@ class HangmanStep(GenericStep):
             
     @step('choose the option and verify')
     def choose_the_option_and_verify(self):
+        for row in self.table:
+            self.base_class.wait_for_element_display(row['option'])
+            break
         self.hangman = Hangman(self.obj.altdriver, self.obj.driver)
         start_position = None
         end_position = None
         #wait for initial load of elements
-        sleep(6)
+        sleep(2)
         for row in self.table:
             start_position = self.hangman.get_object_location(row['animation_object'])
         for row in self.table:
@@ -49,6 +55,8 @@ class HangmanStep(GenericStep):
             sleep(1)
             self.hangman.tap_option(row['option'])
         for row in self.table:
+            #wait time for animation to happen
+            sleep(3)
             end_position = self.hangman.get_object_location(row['animation_object'])
             break
         self.hangman.verify_object_location(start_position, end_position, row['acceptable'])

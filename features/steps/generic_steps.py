@@ -243,8 +243,11 @@ class GenericStep():
     @step('question is loaded')
     def question_is_loaded(self):
         for row in self.table:
-            self.base_class.verify_question(row["object_name"])
             self.base_class.wait_for_element_display(row["object_name"])
+            break
+        for row in self.table:
+            self.base_class.verify_question(row["object_name"])
+            
             
     @step('wait for object not to be present: "{object_name}"')
     def object_not_present(self, object_name):
