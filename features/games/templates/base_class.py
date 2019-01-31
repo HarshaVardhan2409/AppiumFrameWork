@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from ast import literal_eval
 import os
 from string import lower
@@ -130,9 +132,10 @@ class BaseClass():
     def verify_text(self, object_name, expected_text):
         self.altdriver.wait_for_element(object_name)
         actual_text = self.get_text(object_name)
+        actual_text = str(actual_text)
         print '---------'
-        text = actual_text.split()
-        actual_text = " ".join(text)
+        #text = actual_text.split()
+        #actual_text = " ".join(text)
         print '---------'
         value = self.check_status(object_name)
         count = 0
@@ -142,6 +145,18 @@ class BaseClass():
             if count >=20:
                 break
         assert 'rue' in value
+        print '-----------------------------'
+        print actual_text
+        print type(actual_text)
+        
+        if '”' in actual_text:
+            actual_text = actual_text.replace('”', '"')
+        if '“' in actual_text:
+            actual_text = actual_text.replace('“', '"')
+        if '’' in actual_text:
+            actual_text = actual_text.replace('’', "'")
+        print '----------------================='
+        print actual_text
         assert expected_text in actual_text
         
     def verify_text_for_duplicate_objects(self, object_name, expected_text):
@@ -345,6 +360,7 @@ class BaseClass():
         
     def select_game(self, expected_text, object_name):
         i = 0
+        sleep(2)
         while i < 12:
             i += 1
             try:

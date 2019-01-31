@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from altunityrunner.runner import AltrunUnityDriver
 from appium import webdriver
 from time import sleep
@@ -6,6 +8,7 @@ from ast import literal_eval
 
 from appium.webdriver.connectiontype import ConnectionType
 import json
+from decimal import Decimal
 
 def launch_app(platform):
     desired_caps = {}
@@ -138,3 +141,19 @@ for i in range(len(text4)):
 print blank
 '''
 
+'''
+text = 'Tap the letters in the correct order to spell a word that rhymes with â€œtap.â€?'
+print '---------'
+text2 = text.split()
+text = " ".join(text2)
+print '---------'
+text = str(text)
+if 'â€œ' in text:
+    text = text.replace('â€œ', '"')
+if 'â€' in text:
+    text = text.replace('â€', '"')
+if 'â€™' in text:
+    text = text.replace('â€™', "'")
+
+print text
+'''

@@ -27,7 +27,7 @@ class HangmanStep(GenericStep):
             break
         self.hangman = Hangman(self.obj.altdriver, self.obj.driver)
         #wait for initial load of elements
-        sleep(2)
+        sleep(3.5)
         for row in self.table:
             #wait time for options to load
             sleep(1)
@@ -47,7 +47,7 @@ class HangmanStep(GenericStep):
         start_position = None
         end_position = None
         #wait for initial load of elements
-        sleep(2)
+        sleep(3.5)
         for row in self.table:
             start_position = self.hangman.get_object_location(row['animation_object'])
         for row in self.table:

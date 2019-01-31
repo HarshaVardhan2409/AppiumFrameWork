@@ -27,7 +27,7 @@ class McqStep(GenericStep):
             break
         self.mcq = MCQ(self.obj.altdriver, self.obj.driver)
         #wait for initial load of elements
-        sleep(2)
+        sleep(3.5)
         for row in self.table:
             #wait time for options to load
             #sleep(1)

@@ -27,7 +27,7 @@ class ClassificationStep(GenericStep):
             break
         self.classification = Classification(self.obj.altdriver, self.obj.driver)
         #wait time for elemnts to be loaded
-        sleep(2)
+        sleep(3.5)
         for row in self.table:
             #wait time for elements to appear on the screen
             sleep(1)
