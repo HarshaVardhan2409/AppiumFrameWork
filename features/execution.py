@@ -30,8 +30,16 @@ def start_execution(feature_file=None):
         
 # -f allure_behave.formatter:AllureFormatter -o ../execution_data/reports sys.argv[4]--processes 2 --parallel-element scenario 
 
+suite_id = str(sys.argv[1]).split(',')
+suite_len = len(suite_id)
+run_id = str(sys.argv[3]).split(',')
+run_len = len(run_id)
+if suite_len == run_len:
+    for i in range(suite_len):
+        create_feature(suite_id[i], str(sys.argv[2]), run_id[i])
+else:
+    print 'Invalid number of suites or runs'
 
-create_feature(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
 #start_execution('--tags=@smoke Hangman_Batch_g3eq03-hangman.feature')
 #create_feature(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
 #start_execution('--tags=@smoke mcq_batch1_G3MQ39.feature')
