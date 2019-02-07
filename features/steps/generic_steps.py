@@ -263,7 +263,7 @@ class GenericStep():
     @step('enter the: "{name}": "{text}" in element: "{object_name}"')
     def enter_text(self, name, text, object_name):
         if "mobile number" in name:
-            self.tap(object_name)
+            self.base_class.tap(object_name)
             try:
                 self.base_class.tap_element_text(text)
             except:
