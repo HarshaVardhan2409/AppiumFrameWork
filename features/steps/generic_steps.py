@@ -86,6 +86,7 @@ class GenericStep():
             Then scene is loaded: "Onboarding"
             When custom wait: "3"
             And tap on element: "MobilePanel/InputFieldPrefab"
+            And tap on element with text: "NONE OF THE ABOVE"
             ''')
             self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
             self.base_class.enter_text_app('MobilePanel/InputFieldPrefab', number)
@@ -127,6 +128,7 @@ class GenericStep():
             Then scene is loaded: "Onboarding"
             When custom wait: "3"
             And tap on element: "MobilePanel/InputFieldPrefab"
+            And tap on element with text: "NONE OF THE ABOVE"
             And enter the: "different mobile number": "1552009999" in element: "MobilePanel/InputFieldPrefab"
             And tap on element: "NextButton"
             And enter the: "nick name": "jimmy" in element: "GradeSelection(Clone)/Background/InputFieldPrefab"
@@ -261,6 +263,11 @@ class GenericStep():
     @step('enter the: "{name}": "{text}" in element: "{object_name}"')
     def enter_text(self, name, text, object_name):
         if "mobile number" in name:
+            self.tap(object_name)
+            try:
+                self.base_class.tap_element_text(text)
+            except:
+                print 'SIM not available'
             text = str(random.randint(1000000000,9999999999))
             if 'different' in name:
                 text = str(random.randint(1000000000,9999999999))
@@ -279,7 +286,13 @@ class GenericStep():
         
     @step('tap on element with text: "{text}"')
     def tap_element_text(self, text):
-        self.base_class.tap_element_text(text)
+        if "NONE OF" in text:
+            try:
+                self.base_class.tap_element_text(text)
+            except:
+                print 'SIM not available'
+        else:
+            self.base_class.tap_element_text(text)
         
     @step('custom wait: "{time}"')
     def wait(self, time):
