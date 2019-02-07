@@ -59,6 +59,7 @@ class BaseClass():
         
     def verify_the_element_on_screen(self, element_name):
             self.altdriver.wait_for_element(element_name)
+            sleep(2)
             
     def get_object_location(self, object_name):
         x = self.altdriver.wait_for_element(object_name).x

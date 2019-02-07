@@ -30,7 +30,7 @@ def start_execution(feature_file=None):
         
 # -f allure_behave.formatter:AllureFormatter -o ../execution_data/reports sys.argv[4]--processes 2 --parallel-element scenario 
 
-
+'''
 suite_id = str(sys.argv[1]).split(',')
 suite_len = len(suite_id)
 run_id = str(sys.argv[3]).split(',')
@@ -40,7 +40,8 @@ if suite_len == run_len:
         create_feature(suite_id[i], str(sys.argv[2]), run_id[i])
 else:
     print 'Invalid number of suites or runs'
-#start_execution('stickerbook.feature')
+'''
+start_execution('--tags=@smoke Account_creation.feature')
 #create_feature(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
 #start_execution('--tags=@smoke mcq_batch1_G3MQ39.feature')
 #start_execution('-f allure_behave.formatter:AllureFormatter -o ../execution_data/reports Account_creation.feature InstallationOnboarding.feature Library.feature chapterandquestflow.feature parentzone.feature')
