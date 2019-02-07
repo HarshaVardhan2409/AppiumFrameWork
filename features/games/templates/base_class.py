@@ -134,8 +134,8 @@ class BaseClass():
         actual_text = self.get_text(object_name)
         actual_text = str(actual_text)
         print '---------'
-        #text = actual_text.split()
-        #actual_text = " ".join(text)
+        text = actual_text.split()
+        actual_text = " ".join(text)
         print '---------'
         value = self.check_status(object_name)
         count = 0
@@ -222,7 +222,7 @@ class BaseClass():
             except:
                 text = self.altdriver.wait_for_element(object_name).get_component_property("TMPro.TextMeshProUGUI", "text", "Unity.TextMeshPro")
         if text != None:
-            if '</color>' in text:
+            if '</' in text:
                 text1 = text.replace('<', '+@')
                 text1 = text1.replace('>', '+')
                 text2 = text1.split('+')
@@ -300,7 +300,7 @@ class BaseClass():
         
     def scroll_verify(self, object_name, start_xvalue, end_xvalue, start_yvalue, end_yvalue):
         start_position = self.get_object_location(object_name)
-        generics_lib.scroll(self.driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue)
+        generics_lib.scroll(self.driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue, 600)
         end_position = self.get_object_location(object_name)
         self.verify_object_location(start_position, end_position, 'true')
         
@@ -386,4 +386,6 @@ class BaseClass():
                 break
         assert expected_text in actual_text
         
+    def draw(self, start_x, end_x, start_y, end_y):
+        generics_lib.scroll(self.driver, start_x, end_x, start_y, end_y, 2600)
         

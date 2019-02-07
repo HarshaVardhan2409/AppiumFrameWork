@@ -27,8 +27,8 @@ class Classification(BaseClass):
         self.altdriver.wait_for_element_where_name_contains(draggable_name).tap()
         try:
             drag_name=draggable_name+"/Animatable/Sprite_Base"
-        #drag_name=draggable_name
-        #print drag_name
+            #drag_name=draggable_name
+            #print drag_name
             self.altdriver.find_element_where_name_contains(drag_name).mobile_dragToElement(
             self.altdriver.find_element_where_name_contains(bucket_name) )
         except:

@@ -37,66 +37,6 @@ class GenericStep():
     case = None
     run = None
        
-    @step('game is launched with text')
-    def game_is_launched_with_text(self):
-        self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
-        
-        for row in self.table:
-            self.game_name = row["game_name"]
-            
-        if 'classification' in self.game_name:
-            self.path = constants.classification_path
-        elif 'mcq' in self.game_name:
-            self.path = constants.mcq_path
-            
-        text_field = generics_lib.get_data(self.path, self.game_name, "text_field")
-        game_code = generics_lib.get_data(self.path, self.game_name, "game_code")
-        load_button = generics_lib.get_data(self.path, self.game_name, "load_game")
-        
-        self.base_class.wait_for_scene(generics_lib.get_data(self.path, self.game_name, "launch_screen"))
-        self.base_class.start_game_with_text(text_field, game_code, load_button)
-        
-    @step('game is launched with text and url')
-    def game_is_launched_with_text_url(self):
-        self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
-        
-        for row in self.table:
-            self.game_name = row["game_name"]
-            
-        if 'classification' in self.game_name:
-            self.path = constants.classification_path
-        elif 'mcq' in self.game_name:
-            self.path = constants.mcq_path
-            
-        text_field = generics_lib.get_data(self.path, self.game_name, "text_field")
-        text = generics_lib.get_data(self.path, self.game_name, "template_name")
-        url_field = generics_lib.get_data(self.path, self.game_name, "url_field")
-        bundle_url = generics_lib.get_data(self.path, self.game_name, "bundle_url")
-        load_button = generics_lib.get_data(self.path, self.game_name, "load_game")
-        
-        self.base_class.wait_for_scene(generics_lib.get_data(self.path, self.game_name, "launch_screen"))
-        self.base_class.start_game_with_text_url(text_field, text, url_field, bundle_url, load_button)
-    
-    @step('game is launched')
-    def game_is_launched(self):
-        self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
-        
-        for row in self.table:
-            self.game_name = row["game_name"]
-            
-        if 'classification' in self.game_name:
-            self.path = constants.classification_path
-        elif 'mcq' in self.game_name:
-            self.path = constants.mcq_path
-            
-        self.base_class.wait_for_scene(generics_lib.get_data(self.path, self.game_name, "launch_screen"))
-        self.base_class.start_game(generics_lib.get_data(self.path, self.game_name, "launch_game"))
-    
-    @step('start scene is loaded')
-    def start_scene_is_loaded(self):
-        self.base_class.wait_for_scene(generics_lib.get_data(self.path, self.game_name, "start_screen"))   
-    
-       
     @step('launch app with apppackage: "{appPackage}" appactivity: "{appActivity}"')
     def launch_app_activity(self, appPackage, appActivity):
         self.obj.launch_app(appPackage, appActivity, 'True')
@@ -218,6 +158,15 @@ class GenericStep():
             And scene is loaded: "GameMapScreen"
             ''')
         
+    @step('stickerbook scene is loaded')
+    def sticker_scene_loaded(self):
+        self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+        self.base_class.tap('Stickerbook')
+        self.base_class.wait_for_scene('stickerbook')
+        self.base_class.wait_for_element_not_present('Interstitial')
+        self.base_class.wait_for_element_display('final-page')
+        sleep(4)
+               
     @step('Library scene is loaded')
     def library_scene_loaded(self):    
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
@@ -247,8 +196,7 @@ class GenericStep():
             #break
         for row in self.table:
             self.base_class.verify_question(row["object_name"])
-            
-            
+                
     @step('wait for object not to be present: "{object_name}"')
     def object_not_present(self, object_name):
         self.base_class.wait_for_element_not_present(object_name)
@@ -269,7 +217,7 @@ class GenericStep():
             
     @step('verify the text associated with component of the elements')
     def verify_text_for_the_component(self):
-         for row in self.table:
+        for row in self.table:
             self.base_class.verify_text_of_component(str(row['component_name']),str(row['component_property']),str(row['object_name']), str(row['text']))     
             
     @step('verify the element')
@@ -369,3 +317,9 @@ class GenericStep():
     @step('select the game: "{text}" with element: "{object_name}"')
     def verify_element_games(self, text, object_name):
         self.base_class.select_game(text, object_name)
+        
+    @step('draw on sticker book from start_x: "{start_xvalue}" end_x: "{end_xvalue}" start_y: "{start_yvalue}" end_y: "{end_yvalue}"')
+    def stickerbook_draw(self, start_xvalue, end_xvalue, start_yvalue, end_yvalue):
+        self.base_class.draw(float(start_xvalue), float(end_xvalue), float(start_yvalue), float(end_yvalue))
+
+

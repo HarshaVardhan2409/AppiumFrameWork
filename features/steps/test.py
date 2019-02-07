@@ -25,9 +25,23 @@ def launch_app(platform):
         sleep(20)
         print '==================================================================='
         print driver.orientation
+        altdriver.wait_for_element('Stickerbook').tap()
+        altdriver.wait_for_current_scene_to_be('stickerbook')
+        sleep(15)
+        directory = 'C:\\Users\\Vinayaka\\Downloads\\test1.png'
+        driver.save_screenshot(directory)
+        print ' draw '
+        sleep(10)
+        directory = 'C:\\Users\\Vinayaka\\Downloads\\test2.png'
+        driver.save_screenshot(directory)
+        print 'erase'
+        sleep(10)
+        directory = 'C:\\Users\\Vinayaka\\Downloads\\test3.png'
+        driver.save_screenshot(directory)
         #value = altdriver.wait_for_element('InputFieldPrefab/Text').get_text()
         #print 'd'+value+'b'
         #print type(value)
+        '''
         value = altdriver.wait_for_element('LibraryButton').get_component_property("UnityEngine.RectTransform", "localRotation")
         print value
         print type(value)
@@ -36,8 +50,10 @@ def launch_app(platform):
         print type(t)
         print t[0]
         print type(t[0])
+        '''
         #altdriver.wait_for_element('arrowIndicator').mobile_tap()
         #print altdriver.wait_for_element('Item 1: UAE/Item Label').get_text()
+        '''
         value2 = altdriver.wait_for_element('LibraryButton').get_component_property("UnityEngine.RectTransform", "localScale")
         print value2
         print type(value2)
@@ -50,6 +66,7 @@ def launch_app(platform):
         print type(d['y'])
         print d['z']
         print type(d['z'])
+        '''
         '''
         altdriver.wait_for_current_scene_to_be('GameMapScreen')
         sleep(10)
