@@ -265,7 +265,7 @@ class GenericStep():
         if "mobile number" in name:
             self.base_class.tap(object_name)
             try:
-                self.base_class.tap_element_text(text)
+                self.base_class.tap_element_text('NONE OF THE ABOVE')
             except:
                 print 'SIM not available'
             text = str(random.randint(1000000000,9999999999))
