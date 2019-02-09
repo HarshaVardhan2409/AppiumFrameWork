@@ -22,20 +22,24 @@ def launch_app(platform):
         driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
         altdriver = AltrunUnityDriver(driver, platform)
         altdriver.wait_for_current_scene_to_be('GameMapScreen')
-        sleep(20)
+        sleep(10)
         print '==================================================================='
         print driver.orientation
-        altdriver.wait_for_element('Stickerbook').tap()
-        altdriver.wait_for_current_scene_to_be('stickerbook')
-        sleep(15)
+        print 'navigate to video'
+        #altdriver.wait_for_element('Stickerbook').tap()
+        #altdriver.wait_for_current_scene_to_be('stickerbook')
+        sleep(100)
+        print 'taking'
         directory = 'C:\\Users\\Vinayaka\\Downloads\\test1.png'
         driver.save_screenshot(directory)
-        print ' draw '
+        print ' tap wrong answer '
         sleep(10)
+        print 'taking'
         directory = 'C:\\Users\\Vinayaka\\Downloads\\test2.png'
         driver.save_screenshot(directory)
-        print 'erase'
-        sleep(10)
+        print 'tap correct answer'
+        sleep(1)
+        print 'taking'
         directory = 'C:\\Users\\Vinayaka\\Downloads\\test3.png'
         driver.save_screenshot(directory)
         #value = altdriver.wait_for_element('InputFieldPrefab/Text').get_text()

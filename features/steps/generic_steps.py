@@ -57,9 +57,8 @@ class GenericStep():
     @step('Onboarding scene is loaded')
     def onboarding_scene_loaded(self):
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
-        self.base_class.wait_for_scene('OnboardingIntroScene')
-        self.base_class.tap('Button')
         self.base_class.wait_for_scene('Onboarding')
+        self.base_class.tap('Button')
         
     @step('GameMapScreen is loaded with test credentials: "{number}"')
     def gamemapscreen_testcredentials(self, number):
@@ -81,11 +80,8 @@ class GenericStep():
             print '4th'
             self.execute_steps(u'''
             Given launch the app
-            Given scene is loaded: "OnboardingIntroScene"
-            When tap on element: "Button"
-            Then scene is loaded: "Onboarding"
+            And Onboarding scene is loaded
             When custom wait: "3"
-            And tap on element: "MobilePanel/InputFieldPrefab"
             And tap on element with text: "NONE OF THE ABOVE"
             ''')
             self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
@@ -123,11 +119,8 @@ class GenericStep():
             print '4th'
             self.execute_steps(u'''
             Given launch the app
-            Given scene is loaded: "OnboardingIntroScene"
-            When tap on element: "Button"
-            Then scene is loaded: "Onboarding"
+            And Onboarding scene is loaded
             When custom wait: "3"
-            And tap on element: "MobilePanel/InputFieldPrefab"
             And tap on element with text: "NONE OF THE ABOVE"
             And enter the: "different mobile number": "1552009999" in element: "MobilePanel/InputFieldPrefab"
             And tap on element: "NextButton"
@@ -288,6 +281,7 @@ class GenericStep():
     def tap_element_text(self, text):
         if "NONE OF" in text:
             try:
+                self.base_class.tap("InputFieldPrefab/Text")
                 self.base_class.tap_element_text(text)
             except:
                 print 'SIM not available'
@@ -331,8 +325,5 @@ class GenericStep():
     def verify_element_games(self, text, object_name):
         self.base_class.select_game(text, object_name)
         
-    @step('draw on sticker book from start_x: "{start_xvalue}" end_x: "{end_xvalue}" start_y: "{start_yvalue}" end_y: "{end_yvalue}"')
-    def stickerbook_draw(self, start_xvalue, end_xvalue, start_yvalue, end_yvalue):
-        self.base_class.draw(float(start_xvalue), float(end_xvalue), float(start_yvalue), float(end_yvalue))
 
 

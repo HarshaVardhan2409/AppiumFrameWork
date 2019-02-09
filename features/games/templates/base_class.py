@@ -386,7 +386,5 @@ class BaseClass():
                 elements[i].tap()
                 break
         assert expected_text in actual_text
-        
-    def draw(self, start_x, end_x, start_y, end_y):
-        generics_lib.scroll(self.driver, start_x, end_x, start_y, end_y, 2600)
+
         

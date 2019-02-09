@@ -50,8 +50,10 @@ def compare_images(image_1, image_2):
     if n_m != 0.0:
         percentage = n_m/n_0
         print str(int(percentage)) + '%'
+        return int(percentage)
     else:
         print '0%'
+        return 0
     
 def compare(img1, img2):
     # normalize to compensate for exposure difference, this may be unnecessary
@@ -75,3 +77,4 @@ def normalize(arr):
     rng = arr.max()-arr.min()
     amin = arr.min()
     return (arr-amin)*255/rng
+
