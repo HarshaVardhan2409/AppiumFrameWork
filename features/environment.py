@@ -41,7 +41,7 @@ def before_all(context):
         os.mkdir(constants.PATH('..\\execution_data\\app_logs\\'))
         os.mkdir(constants.PATH('..\\execution_data\\reports\\'))
         os.mkdir(constants.PATH('..\\execution_data\\screenshots\\'))
-        os.mkdir(constants.PATH('..\\compare_images'))
+        os.mkdir(constants.PATH('..\\compare_images\\'))
     except:
         print "execution directory present"
     
@@ -54,8 +54,8 @@ def before_all(context):
     os.mkdir(constants.PATH('../execution_data/reports/'))
     shutil.rmtree(constants.PATH('../execution_data/screenshots/'))
     os.mkdir(constants.PATH('../execution_data/screenshots/'))
-    shutil.rmtree(constants.PATH('../compare_images'))
-    os.mkdir(constants.PATH('../compare_images'))
+    shutil.rmtree(constants.PATH('../compare_images/'))
+    os.mkdir(constants.PATH('../compare_images/'))
     
     '''
     port forwarding for android and ios
