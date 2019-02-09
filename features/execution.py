@@ -17,11 +17,11 @@ def start_execution(feature_file=None):
         
     if feature_file == None:
         subprocess.Popen(
-            'behave -D APP_PATH=C:\\Users\\Vinayaka\\Downloads\\k3_app.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234',
+            'behave -D APP_PATH=C:\\Users\\Vinayaka\\Downloads\\k3_new_09.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234',
             shell=False)
     else:
         subprocess.Popen(
-            'behave -D APP_PATH=C:\\Users\\Vinayaka\\Downloads\\k3_app.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 '+feature_file,
+            'behave -D APP_PATH=C:\\Users\\Vinayaka\\Downloads\\k3_new_09.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 '+feature_file,
             shell=False)
         
         
@@ -38,7 +38,7 @@ if suite_len == run_len:
         create_feature(suite_id[i], str(sys.argv[2]), run_id[i])
 else:
     print 'Invalid number of suites or runs'
-
+    
 #start_execution('Hangman_New_g3eq96-mcq1.feature')
 #create_feature(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
 #start_execution('--tags=@smoke mcq_batch1_G3MQ39.feature')

@@ -83,6 +83,8 @@ class BaseClass():
     
     def wait_for_element_display(self, object_name):
         value1 = self.get_object_location(object_name)
+        rotation1 = None
+        rotation2 = None
         try:
             print 'entering try'
             rotation1 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localRotation")
@@ -127,6 +129,8 @@ class BaseClass():
                 rotation2 = literal_eval(rotation2)
                 scale2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.Transform", "localScale")
                 scale2 = json.loads(scale2)
+            if 'dict' in str(type(rotation2)):
+                rotation2 = (rotation2['x'], rotation2['y'], rotation2['z'])
             count = count + 1
             if count == 40:
                 break
