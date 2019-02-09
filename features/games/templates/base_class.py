@@ -84,6 +84,7 @@ class BaseClass():
     def wait_for_element_display(self, object_name):
         value1 = self.get_object_location(object_name)
         try:
+            print 'entering try'
             rotation1 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localRotation")
             rotation1 = literal_eval(rotation1)
             scale1 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localScale")
@@ -95,6 +96,7 @@ class BaseClass():
             scale2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.RectTransform", "localScale")
             scale2 = json.loads(scale2)
         except:
+            print 'entering except'
             rotation1 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.Transform", "localRotation")
             rotation1 = literal_eval(rotation1)
             scale1 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.Transform", "localScale")
@@ -106,10 +108,12 @@ class BaseClass():
             scale2 = self.altdriver.wait_for_element(object_name).get_component_property("UnityEngine.Transform", "localScale")
             scale2 = json.loads(scale2)
         value2 = self.get_object_location(object_name)
-        
+        if 'dict' in str(type(rotation2)):
+            rotation1 = (rotation1['x'], rotation1['y'], rotation1['z'])
+            rotation2 = (rotation2['x'], rotation2['y'], rotation2['z'])
         count = 0
         while ((int(value1['x']) == int(value2['x']) and int(value1['y']) == int(value2['y'])) and 
-               ((rotation1[0] == rotation2[0]) and (rotation1[1] == rotation2[1]) and (rotation1[3] == rotation2[3])) and
+               ((rotation1[0] == rotation2[0]) and (rotation1[1] == rotation2[1]) and (rotation1[2] == rotation2[2])) and
                ((scale1['x'] == scale2['x']) and (scale1['y'] == scale2['y']))):
             sleep(0.3)
             value2 = self.get_object_location(object_name)
