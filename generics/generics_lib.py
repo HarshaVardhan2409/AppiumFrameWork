@@ -8,6 +8,7 @@ import sys
 from matplotlib.pyplot import imread
 from scipy.linalg import norm
 from scipy import sum, average
+from skimage.measure import compare_ssim
 
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -78,3 +79,16 @@ def normalize(arr):
     amin = arr.min()
     return (arr-amin)*255/rng
 
+def compare_video_images(file1, file2):
+    img_a = to_grayscale(imread(file1).astype(float))
+    img_b = to_grayscale(imread(file2).astype(float))
+    
+    img_1 = normalize(img_a)
+    img_2 = normalize(img_b)
+    # score: {-1:1} measure of the structural similarity between the images
+    score, diff = compare_ssim(img_1, img_2, full=True)
+    score = int(score * 100)
+    print(score)
+    return score
+
+#compare_video_images("C:\\Users\\Vinayaka\\Downloads\\correct1.png", "C:\\Users\\Vinayaka\\Downloads\\correct1.png")

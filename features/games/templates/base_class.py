@@ -132,7 +132,7 @@ class BaseClass():
             if 'dict' in str(type(rotation2)):
                 rotation2 = (rotation2['x'], rotation2['y'], rotation2['z'])
             count = count + 1
-            if count == 40:
+            if count == 20:
                 break
     
     def wait_for_element_contains_text(self, object_name, text):

@@ -17,6 +17,6 @@ class MCQ(BaseClass):
 
     def tap_option(self, option):
         try:
-            self.altdriver.wait_for_element_where_name_contains(option).mobile_tap()
+            self.altdriver.wait_for_element(option).mobile_tap()
         except:
-            self.altdriver.wait_for_element_where_name_contains(option).tap()
+            self.altdriver.wait_for_element(option).tap()

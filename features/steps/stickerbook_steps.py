@@ -30,14 +30,27 @@ class StickerBookSteps(GenericStep):
         self.stickerbook = StickerBook(self.obj.altdriver, self.obj.driver)
     
         for row in self.table:
-            generics_lib.takescreenshot(self.obj.driver, PATH('../../compare_images/image_1.png'))
+            generics_lib.takescreenshot(self.obj.driver, PATH('../../compare_images/sticker_1.png'))
             self.base_class.tap('OpenDoodle')
             self.base_class.tap(row['object_name'])
             self.base_class.tap('CloseDoodleArrow/Image')
-            sleep(1)
+            sleep(0.5)
             self.stickerbook.stickerbook_draw(float(row['start_x']), float(row['end_x']), float(row['start_y']), float(row['end_y']))
-            generics_lib.takescreenshot(self.obj.driver, PATH('../../compare_images/image_2.png'))
-            assert generics_lib.compare_images(PATH('../../compare_images/image_1.png'), PATH('../../compare_images/image_2.png')) > 50
+            generics_lib.takescreenshot(self.obj.driver, PATH('../../compare_images/sticker_2.png'))
+            assert generics_lib.compare_images(PATH('../../compare_images/sticker_1.png'), PATH('../../compare_images/sticker_2.png')) > 50
+        
+    @step('drag sticker to the book and verify')
+    def drag_sticker(self):
+        self.stickerbook = StickerBook(self.obj.altdriver, self.obj.driver)
+        for row in self.table:
+            self.stickerbook.drag_object_and_verify(row['object_name'], row['nick_name'], float(row['end_x']), float(row['end_y']))
+            
+    @step('drag sticker to delete and verify')
+    def delete_object_and_verify(self):
+        self.stickerbook = StickerBook(self.obj.altdriver, self.obj.driver)
+        for row in self.table:
+            self.stickerbook.delete_object_and_verify(row['object_name'], row['nick_name'])
+        
         
         
         

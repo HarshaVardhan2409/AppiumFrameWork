@@ -27,14 +27,13 @@ class McqStep(GenericStep):
             break
         self.mcq = MCQ(self.obj.altdriver, self.obj.driver)
         #wait for initial load of elements
-        sleep(5)
+        sleep(4)
         for row in self.table:
             #wait time for options to load
-            sleep(1)
             start_position = self.mcq.get_object_location(row['animation_object'])
             self.mcq.tap_option(row["option"])
             #wait time for animation to happen
-            sleep(3)
+            sleep(4)
             end_position = self.mcq.get_object_location(row['animation_object'])
             self.mcq.verify_object_location(start_position, end_position, row["acceptable"])
 
