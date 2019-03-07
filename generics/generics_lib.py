@@ -13,7 +13,7 @@ from skimage.measure import compare_ssim
 from selenium.webdriver.common.action_chains import ActionChains
 
     
-def scroll(driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue, duration):
+def scroll(driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue, duration=0):
     dSize = (driver.get_window_size())
     start_x = (dSize['width']*start_xvalue)
     end_x = (dSize['width']*end_xvalue)

@@ -16,15 +16,51 @@ def launch_app(platform):
         desired_caps['platformName'] = 'android'
         desired_caps['deviceName'] = 'device'
         desired_caps['newCommandTimeout'] = 300
-        desired_caps['noReset'] = True
+        #desired_caps['noReset'] = True
         desired_caps['appPackage'] = "com.byjus.k3"
         desired_caps['appActivity'] = "com.byjus.unity.support.activities.MainActivity"
         driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
         altdriver = AltrunUnityDriver(driver, platform)
-        altdriver.wait_for_current_scene_to_be('GameMapScreen')
-        sleep(10)
+        altdriver.wait_for_current_scene_to_be('Onboarding')
         print '==================================================================='
         print driver.orientation
+        #altdriver.wait_for_element_to_not_be_present('Interstitial')
+        sleep(10)
+        #driver.find_element_by_image('C:\\Users\\Vinayaka\\Downloads\\country.PNG').click()
+        #print altdriver.find_element('Building_1(Clone)').get_component_property('Byjus.K123.GameMapScreen.BuildingView', 'buildingNames')
+        '''
+        altdriver.wait_for_element('fan_03').mobile_tap()
+        altdriver.wait_for_current_scene_to_be('Quests')
+        altdriver.wait_for_element_to_not_be_present('Interstitial')
+        sleep(8)
+        dSize = (driver.get_window_size())
+        width = int(dSize['width']) - 20
+        x_value = 0
+        direction = 'right'
+        value = 0
+        while x_value > width or x_value < 20:
+            elements = altdriver.find_elements_where_name_contains('QuestItem')
+            act_text = ''
+            for i in range(len(elements)):
+                try:
+                    act_text = elements[i].get_component_property('Byjus.K123.Quests.QuestListViewItem', 'questNickname')
+                except:
+                    print 'property not present'
+                if 'g3mq61' in act_text:
+                    x_value = int(elements[i].x)
+                    if value == json.loads(altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']:
+                        direction = 'left'
+                    if x_value > width or x_value < 20: 
+                        if direction == 'left':
+                            scroll(driver, 0.3, 0.6, 0.5, 0.5, 1200)
+                        elif direction == 'right':
+                            scroll(driver, 0.6, 0.3, 0.5, 0.5, 1200)
+                        value = json.loads(altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
+                    elif x_value < width or x_value > 20:
+                        elements[i].tap()
+                    break
+        '''        
+        '''
         print 'navigate to video'
         #altdriver.wait_for_element('Stickerbook').tap()
         #altdriver.wait_for_current_scene_to_be('stickerbook')
@@ -42,6 +78,7 @@ def launch_app(platform):
         print 'taking'
         directory = 'C:\\Users\\Vinayaka\\Downloads\\test3.png'
         driver.save_screenshot(directory)
+        '''
         #value = altdriver.wait_for_element('InputFieldPrefab/Text').get_text()
         #print 'd'+value+'b'
         #print type(value)
@@ -142,6 +179,18 @@ def text_tap(object_name, text, altdriver):
                     element.tap()
                 except:
                     element.mobile_tap()
+                    
+def scroll(driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue, duration):
+    dSize = (driver.get_window_size())
+    print 'width--------------------'
+    print dSize['width']
+    print 'height--------------------'
+    print dSize['height']
+    start_x = (dSize['width']*start_xvalue)
+    end_x = (dSize['width']*end_xvalue)
+    start_y = (dSize['height']*start_yvalue)
+    end_y = (dSize['height']*end_yvalue)
+    driver.swipe(start_x, start_y, end_x, end_y, duration)
     
 #launch_app('android')
 '''

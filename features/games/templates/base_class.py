@@ -76,9 +76,9 @@ class BaseClass():
         assert object_name in name
     
     def verify_object_location(self, start_position, end_position, check_status):
-        if 'false' in check_status:
+        if 'false' in lower(check_status):
             assert int(start_position['x']) == int(end_position['x']) and int(start_position['y']) == int(end_position['y'])
-        elif 'true' in check_status:
+        elif 'true' in lower(check_status):
             assert int(start_position['x']) != int(end_position['x']) or int(start_position['y']) != int(end_position['y'])
     
     def wait_for_element_display(self, object_name):
@@ -192,7 +192,11 @@ class BaseClass():
                 actual_text = elements[i].get_component_property(component_name, component_property)
             if expected_text in actual_text:
                 break
-        assert expected_text in actual_text   
+        assert expected_text in actual_text
+        
+    def get_component_property(self, object_name, component_name, component_property):
+        text = self.altdriver.wait_for_element(object_name).get_component_property(component_name, component_property)  
+        return text
         
     def enter_text(self, object_name, text):
         self.tap(object_name)
@@ -312,6 +316,9 @@ class BaseClass():
         generics_lib.scroll(self.driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue, 600)
         end_position = self.get_object_location(object_name)
         self.verify_object_location(start_position, end_position, 'true')
+    
+    def scroll(self, start_xvalue, end_xvalue, start_yvalue, end_yvalue):
+        generics_lib.scroll(self.driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue, 600)
         
     def tap_and_hold(self, object_name, duration):
         self.altdriver.wait_for_element(object_name).mobile_tap(int(duration))

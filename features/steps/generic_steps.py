@@ -36,6 +36,10 @@ class GenericStep():
     
     case = None
     run = None
+    
+    @step('launch app with apppackage: "{appPackage}" appactivity: "{appActivity}" with no reset: "{status}"')
+    def launch_app_activity_status(self, appPackage, appActivity, status):
+        self.obj.launch_app(appPackage, appActivity, status)
        
     @step('launch app with apppackage: "{appPackage}" appactivity: "{appActivity}"')
     def launch_app_activity(self, appPackage, appActivity):
@@ -87,7 +91,8 @@ class GenericStep():
             self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
             self.base_class.enter_text_app('MobilePanel/InputFieldPrefab', number)
             self.execute_steps(u'''
-            When tap on element: "NextButton"
+            When tap on element: "Toggler"
+            And tap on element: "NextButton"
             Then verify the element:
             | object_name            |
             | OTPVerification(Clone) |
@@ -98,9 +103,10 @@ class GenericStep():
             And verify text lines in multiple text boxes for object with same names:
             | object_name | text |
             | Text | utomation |
+            And custom wait: "3"
             ''')
             
-    @step('GameMapScreen scene is loaded')
+    @step('GameMapScreen is loaded')
     def gamemap_scene_loaded(self):
         self.path = PATH('../../config/config.json')
         try:
@@ -123,6 +129,7 @@ class GenericStep():
             When custom wait: "3"
             And tap on element with text: "NONE OF THE ABOVE"
             And enter the: "different mobile number": "1552009999" in element: "MobilePanel/InputFieldPrefab"
+            And tap on element: "Toggler"
             And tap on element: "NextButton"
             And enter the: "nick name": "jimmy" in element: "GradeSelection(Clone)/Background/InputFieldPrefab"
             And tap on text element: "Text" with text: "Grade 3"
@@ -134,7 +141,7 @@ class GenericStep():
             Then verify the element:
             | object_name             |
             | LocationAndEmail(Clone) |
-            And tap on element: "LocationPanel/InputField"
+            And tap on element: "LocationDetector/InputField"
             And tap on element: "LocateMeButton"
             And tap on element with text: "Allow"
             And tap on element: "EmailPanel/InputFieldPrefab"
@@ -151,6 +158,7 @@ class GenericStep():
             And tap on element: "Avatar(Clone)"
             And tap on element: "LetsStartButton"
             And scene is loaded: "GameMapScreen"
+            And custom wait: "3"
             ''')
         
     @step('stickerbook scene is loaded')
@@ -199,27 +207,28 @@ class GenericStep():
     @step('verify the text: "{expected_text}" for element: "{element_name}"')
     def verify_the_text(self, element_name, expected_text):
         self.base_class.verify_text(str(element_name), str(expected_text))
-            
+
     @step('verify text lines in multiple text boxes')
     def verify_the_multiple_texts(self):
         for row in self.table:
             self.base_class.verify_text(str(row['object_name']), str(row['text']))
-            
+
     @step('verify text lines in multiple text boxes for object with same names')
     def verify_text_for_same_name_objects(self):
         for row in self.table:
             self.base_class.verify_text_for_duplicate_objects(str(row['object_name']), str(row['text']))
-            
+
     @step('verify the text associated with component of the elements')
     def verify_text_for_the_component(self):
         for row in self.table:
             self.base_class.verify_text_of_component(str(row['component_name']),str(row['component_property']),str(row['object_name']), str(row['text']))     
-            
+
     @step('verify the element')
     def verify_element(self):
-            for row in self.table:
-                self.base_class.verify_the_element_on_screen(row['object_name'])
-            
+        self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+        for row in self.table:
+            self.base_class.verify_the_element_on_screen(row['object_name'])
+
     @step('capture the app logs for: "{package_name}"')
     def capture_logs(self, package_name):
         data = None
@@ -232,7 +241,7 @@ class GenericStep():
             subprocess.Popen('adb logcat | findstr ' + str(package_name) + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
         except:
             subprocess.Popen('adb logcat | grep ' + str(package_name) + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
-        
+
     @step('tap on element: "{object_name}"')
     def tap(self, object_name):
         self.base_class.tap(object_name)
@@ -251,16 +260,12 @@ class GenericStep():
     @step('tap on the element: "{object_name}" with component property title: "{title}"')
     def tap_on_title(self, object_name, title):
         self.base_class.tap_title(object_name, title)
-    
-        
+
+
     @step('enter the: "{name}": "{text}" in element: "{object_name}"')
     def enter_text(self, name, text, object_name):
         if "mobile number" in name:
             self.base_class.tap(object_name)
-            try:
-                self.base_class.tap_element_text('NONE OF THE ABOVE')
-            except:
-                print 'SIM not available'
             text = str(random.randint(1000000000,9999999999))
             if 'different' in name:
                 text = str(random.randint(1000000000,9999999999))
@@ -293,8 +298,12 @@ class GenericStep():
         sleep(int(time))
         
     @step('scroll screen with start_x: "{start_xvalue}" end_x: "{end_xvalue}" start_y: "{start_yvalue}" end_y: "{end_yvalue}" and verify element: "{object_name}"')
-    def scroll(self, start_xvalue, end_xvalue, start_yvalue, end_yvalue, object_name):
+    def scrollverify(self, start_xvalue, end_xvalue, start_yvalue, end_yvalue, object_name):
         self.base_class.scroll_verify(object_name, float(start_xvalue), float(end_xvalue), float(start_yvalue), float(end_yvalue))
+
+    @step('scroll screen with start_x: "{start_xvalue}" end_x: "{end_xvalue}" start_y: "{start_yvalue}" end_y: "{end_yvalue}"')
+    def scroll(self, start_xvalue, end_xvalue, start_yvalue, end_yvalue):
+        self.base_class.scroll(float(start_xvalue), float(end_xvalue), float(start_yvalue), float(end_yvalue))
         
     @step('verify native app for "{text}"')
     def verify_native_text(self, text):
@@ -325,5 +334,7 @@ class GenericStep():
     def verify_element_games(self, text, object_name):
         self.base_class.select_game(text, object_name)
         
-
+    @step('uninstall the app')
+    def uninstall_app(self):
+        self.obj.driver.remove_app('com.byjus.k3')
 
