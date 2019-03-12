@@ -317,6 +317,12 @@ class BaseClass():
         end_position = self.get_object_location(object_name)
         self.verify_object_location(start_position, end_position, 'true')
     
+    def scroll_verify_for_false(self, object_name, start_xvalue, end_xvalue, start_yvalue, end_yvalue):
+        start_position = self.get_object_location(object_name)
+        generics_lib.scroll(self.driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue, 600)
+        end_position = self.get_object_location(object_name)
+        self.verify_object_location(start_position, end_position, 'false')
+    
     def scroll(self, start_xvalue, end_xvalue, start_yvalue, end_yvalue):
         generics_lib.scroll(self.driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue, 600)
         

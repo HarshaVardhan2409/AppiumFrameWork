@@ -29,6 +29,7 @@ compare_images/
 *.featureset
 .installed.cfg
 *.egg
+test.py
 MANIFEST
 
 # PyInstaller

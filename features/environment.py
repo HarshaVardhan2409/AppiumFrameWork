@@ -24,6 +24,9 @@ obj = BaseSetup()
 
 def before_all(context):
     BaseSetup.app_path = str(context.config.userdata['APP_PATH'])
+    #BaseSetup.udid = str(context.config.userdata['UDID'])
+    #BaseSetup.port = str(context.config.userdata['PORT'])
+    
     device_type = str(context.config.userdata['DEVICE_TYPE']).lower()
     machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
     BaseSetup.platform = device_type
@@ -60,14 +63,19 @@ def before_all(context):
     '''
     port forwarding for android and ios
     '''
+    
+    """
+    
     if 'android' in device_type:
-        subprocess.Popen('adb forward tcp:13000 tcp:13000', shell=True)
+        subprocess.Popen('adb -s G5AXB731C368SNZ forward tcp:13002 tcp:13000', shell=True)
+        subprocess.Popen('adb -s ZY222W8BKG forward tcp:13001 tcp:13000', shell=True)
     elif 'ios' in device_type:
         subprocess.Popen('iproxy forward tcp:13000 tcp:13000', shell=True)
-        
+    """    
     '''
     starting appium server
     '''
+    #subprocess.Popen('appium -p ' + str(context.config.userdata['PORT']), shell=True)
     subprocess.Popen('appium', shell=True)
     sleep(40)
     context.obj = obj
@@ -79,6 +87,7 @@ def before_feature(context, feature):
     '''
     capturing the logs for every feature files
     '''
+    
     if 'android' in device_type:
         subprocess.Popen('adb logcat -c', shell=True)
         package_name = generics_lib.get_data(constants.CONFIG_PATH, 'app_config', 'logs')
@@ -86,7 +95,7 @@ def before_feature(context, feature):
             subprocess.Popen('adb logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
         else:
             subprocess.Popen('adb logcat | grep ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
-
+    
 def before_scenario(context, scenario):
     data = None
     data = str(context.scenario)
@@ -99,12 +108,13 @@ def before_scenario(context, scenario):
     '''
     capturing the logs for every scenario files
     '''
+    
     if 'android' in device_type:
         subprocess.Popen('adb logcat -c', shell=True)
         package_name = generics_lib.get_data(constants.CONFIG_PATH, 'app_config', 'logs')
         if 'windows' in machine_type:
             subprocess.Popen('adb logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
-
+    
 def after_scenario(context, scenario):
     
     machine_type = str(context.config.userdata['DEVICE_TYPE']).lower()
@@ -150,10 +160,12 @@ def after_all(context):
     '''
     closing the appium server
     '''
+    
     if 'windows' in machine_type:
         # Use below code to Stop appium server on the local windows machine
         subprocess.Popen('Taskkill /IM adb.exe /F',shell=True)
         subprocess.Popen('Taskkill /IM node.exe /F',shell=True)
+        print ''
         
     else:
         # Use below code to stop appium server on the local mac machine

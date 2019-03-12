@@ -21,8 +21,11 @@ class BaseSetup():
     desired_caps = None
     ip_address = None
     port = None
-    
+    udid = None
     def install_app(self):
+        print '------------------------------------'
+        print self.udid
+        print self.port
         self.desired_caps = {}
         if ("android" in self.platform.lower()):
             self.setup_android()
@@ -45,6 +48,7 @@ class BaseSetup():
     def setup_android(self):
         self.desired_caps['platformName'] = 'android'
         self.desired_caps['deviceName'] = 'device'
+        #self.desired_caps['udid'] = self.udid
         self.desired_caps['app'] = self.app_path
         self.desired_caps['newCommandTimeout'] = 300
 
@@ -61,6 +65,7 @@ class BaseSetup():
         if 'android' in self.platform:
             self.desired_caps['platformName'] = 'android'
             self.desired_caps['deviceName'] = 'device'
+            #self.desired_caps['udid'] = self.udid
             self.desired_caps['newCommandTimeout'] = 300
             if 'rue' in noreset_status:
                 noreset_status = True

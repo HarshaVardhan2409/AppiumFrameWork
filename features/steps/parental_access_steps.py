@@ -26,3 +26,10 @@ class ParentAccessSteps(GenericStep):
         #wait for the question to load
         sleep(3)
         self.access.parental_access(object_name)
+        
+    @step('wrong parental access: "{object_name}"')
+    def wrong_parental_access(self, object_name):
+        self.access = ParentalAccess(self.obj.altdriver, self.obj.driver)
+        #wait for the question to load
+        sleep(3)
+        self.access.wrong_parental_access(object_name)

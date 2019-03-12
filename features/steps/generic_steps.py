@@ -300,7 +300,11 @@ class GenericStep():
     @step('scroll screen with start_x: "{start_xvalue}" end_x: "{end_xvalue}" start_y: "{start_yvalue}" end_y: "{end_yvalue}" and verify element: "{object_name}"')
     def scrollverify(self, start_xvalue, end_xvalue, start_yvalue, end_yvalue, object_name):
         self.base_class.scroll_verify(object_name, float(start_xvalue), float(end_xvalue), float(start_yvalue), float(end_yvalue))
-
+        
+    @step('scroll screen with start_x: "{start_xvalue}" end_x: "{end_xvalue}" start_y: "{start_yvalue}" end_y: "{end_yvalue}" and verify element: "{object_name}" for no movement')
+    def scrollverifymovement(self, start_xvalue, end_xvalue, start_yvalue, end_yvalue, object_name):
+        self.base_class.scroll_verify_for_false(object_name, float(start_xvalue), float(end_xvalue), float(start_yvalue), float(end_yvalue))
+        
     @step('scroll screen with start_x: "{start_xvalue}" end_x: "{end_xvalue}" start_y: "{start_yvalue}" end_y: "{end_yvalue}"')
     def scroll(self, start_xvalue, end_xvalue, start_yvalue, end_yvalue):
         self.base_class.scroll(float(start_xvalue), float(end_xvalue), float(start_yvalue), float(end_yvalue))

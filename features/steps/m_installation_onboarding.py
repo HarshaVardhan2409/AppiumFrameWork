@@ -72,7 +72,7 @@ class InstallationOnboarding(GenericStep):
         ''')
         
     @step('taps on get started button')
-    def logged_in(self):
+    def get_started(self):
         self.execute_steps(u'''
         When Onboarding scene is loaded
         ''')

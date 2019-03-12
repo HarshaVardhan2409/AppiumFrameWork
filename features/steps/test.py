@@ -9,6 +9,7 @@ from ast import literal_eval
 from appium.webdriver.connectiontype import ConnectionType
 import json
 from decimal import Decimal
+import subprocess
 
 def launch_app(platform):
     desired_caps = {}
@@ -226,4 +227,17 @@ if 'â€™' in text:
     text = text.replace('â€™', "'")
 
 print text
+'''
+
+
+'''
+import subprocess
+tee=subprocess.Popen('adb devices', shell=True, stdout=subprocess.PIPE)
+stdout = tee.communicate()[0]
+sttt=str('STDOUT:{}'.format(stdout))
+nam=sttt.split()
+val= len(sttt.split())
+for i in range(val):
+    if(nam[i]=='device'):
+        print(nam[i-1])
 '''
