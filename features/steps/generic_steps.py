@@ -334,6 +334,10 @@ class GenericStep():
     def press_home_button(self):
         self.base_class.home_button()
         
+    @step('put the app on background')
+    def put_app_on_background(self):
+        self.base_class.put_app_background()
+        
     @step('select the game: "{text}" with element: "{object_name}"')
     def verify_element_games(self, text, object_name):
         self.base_class.select_game(text, object_name)

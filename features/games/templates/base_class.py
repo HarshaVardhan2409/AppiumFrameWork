@@ -313,13 +313,15 @@ class BaseClass():
         
     def scroll_verify(self, object_name, start_xvalue, end_xvalue, start_yvalue, end_yvalue):
         start_position = self.get_object_location(object_name)
-        generics_lib.scroll(self.driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue, 600)
+        generics_lib.scroll(self.driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue, 800)
+        sleep(0.5)
         end_position = self.get_object_location(object_name)
         self.verify_object_location(start_position, end_position, 'true')
     
     def scroll_verify_for_false(self, object_name, start_xvalue, end_xvalue, start_yvalue, end_yvalue):
         start_position = self.get_object_location(object_name)
         generics_lib.scroll(self.driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue, 600)
+        sleep(0.5)
         end_position = self.get_object_location(object_name)
         self.verify_object_location(start_position, end_position, 'false')
     
@@ -355,8 +357,12 @@ class BaseClass():
         
     def home_button(self):
         sleep(1)
-        self.driver.press_keycode(3)   
-            
+        self.driver.press_keycode(3)
+        
+    def put_app_background(self):
+        sleep(1)    
+        self.driver.background_app(5)
+
     def check_status(self, object_name):
         print '-----------------------------------------------------------------'
         value1 = None

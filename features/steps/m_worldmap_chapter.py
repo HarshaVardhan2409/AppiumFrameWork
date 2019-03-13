@@ -7,6 +7,7 @@ import subprocess
 import os
 from behave.textutil import text
 from behave.runner import Context
+from appium.webdriver.common.touch_action import TouchAction
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -78,6 +79,7 @@ class WorldMapChapters(GenericStep):
             And custom wait: "3"
             ''')
 
+    @step('user should not be able to dismiss the avatar screen by tapping on any area of the black overlay')
     @step('avatar selection screen should appear on top of that')
     def avtar_screen(self):
         self.execute_steps(u'''
@@ -151,3 +153,80 @@ class WorldMapChapters(GenericStep):
         self.quest = Quests(self.obj.altdriver, self.obj.driver)
         self.quest.check_avatar_highlighted('Avatar(Clone)', 'piglet')
 
+    @step('tap on any area of the black overlay')
+    def tap_on_background(self):
+        action = TouchAction(self.obj.driver)
+        dSize = (self.obj.driver.get_window_size())
+        x = (dSize['width']*0.5)
+        y = (dSize['height']*0.1)
+        action.tap(x=x, y=y)
+        
+    @step('user kills app')
+    def kill_app(self):
+        self.execute_steps(u'''
+            When close the app
+            ''')
+
+    @step('user relaunches app')
+    def relaunch_app(self):
+        self.execute_steps(u'''
+            When launch app with apppackage: "com.byjus.k3" appactivity: "com.byjus.unity.support.activities.MainActivity"
+            ''')
+        
+    @step('screen title should be "Hey xxxx, pick your favourite"')
+    def verify_title(self):
+        self.execute_steps(u'''
+            Then verify the text: "Hey Jimmy, pick your favourite" for element: "AvatarBoothPanel/Title"
+            ''')
+
+    @step('user puts the app on resents and relaunches')
+    def recent_apps(self):
+        self.execute_steps(u'''
+            When put the app on background
+            ''')
+
+    @step('user goes to home screen')
+    def press_home_button(self):
+        self.obj.driver.press_keycode(3)
+
+    @step('user relaunches app from background')
+    def relaunch_background(self):
+        self.obj.driver.activate_app('com.byjus.k3')
+        
+    @step('user should be able to see following attributes in chapter screen : Profile Selection icon, Chapter List, Sticker book icon, Library icon, Parent Zone icon')
+    def verify_worldmap_elements(self):
+        self.execute_steps(u'''
+            Then verify the element:
+            | object_name |
+            | ProfileIcon |
+            | Buildings   |
+            | Stickerbook |
+            | LibraryButton |
+            | ParentButton |
+            ''')
+    @step('user swipes horizontally to left or right on chapter list')
+    def swipe_chapter_screen(self):
+        self.execute_steps(u'''
+        When scroll screen with start_x: "0.9" end_x: "0.1" start_y: "0.5" end_y: "0.5" and verify element: "Building_1(Clone)"
+        ''')
+        
+    @step('app should show all the chapters available in that grade')
+    def verify_chapters(self):
+        self.execute_steps(u'''
+            Then verify the element:
+            | object_name |
+            | Building_1(Clone) |
+            | Building_2(Clone) |
+            | Building_3(Clone) |
+            | Building_4(Clone) |
+            ''')
+
+    @step('app should switch from portrait to landscape mode')
+    def landscape_on_gamemapscreen(self):
+        self.execute_steps(u'''
+        Then scene is loaded: "GameMapScreen"
+        And wait for object not to be present: "Interstitial"
+        And verify orientation is landscape
+        ''')
+        
+        
