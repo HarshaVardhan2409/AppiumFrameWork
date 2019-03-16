@@ -17,16 +17,21 @@ def launch_app(platform):
         desired_caps['platformName'] = 'android'
         desired_caps['deviceName'] = 'device'
         desired_caps['newCommandTimeout'] = 300
-        #desired_caps['noReset'] = True
+        desired_caps['noReset'] = True
         desired_caps['appPackage'] = "com.byjus.k3"
         desired_caps['appActivity'] = "com.byjus.unity.support.activities.MainActivity"
         driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-        altdriver = AltrunUnityDriver(driver, platform)
-        altdriver.wait_for_current_scene_to_be('Onboarding')
+        altdriver = AltrunUnityDriver(driver, platform, requestEnd='#')
+        altdriver.wait_for_current_scene_to_be('ProfileSelectionScene')
+#         altdriver.wait_for_element_to_not_be_present('Interstitial')
         print '==================================================================='
         print driver.orientation
         #altdriver.wait_for_element_to_not_be_present('Interstitial')
-        sleep(10)
+#         sleep(30)
+        elements = altdriver.find_elements('Profile(Clone)')
+        for ele in elements:
+            print ele
+        
         #driver.find_element_by_image('C:\\Users\\Vinayaka\\Downloads\\country.PNG').click()
         #print altdriver.find_element('Building_1(Clone)').get_component_property('Byjus.K123.GameMapScreen.BuildingView', 'buildingNames')
         '''

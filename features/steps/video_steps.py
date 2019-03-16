@@ -30,3 +30,8 @@ class VideoSteps(GenericStep):
         self.video = Video(self.obj.altdriver, self.obj.driver)
         self.video.verify_video(float(duration))
 
+    @step('forward the video to end')
+    def forward_video_end(self):
+        self.video = Video(self.obj.altdriver, self.obj.driver)
+        self.video.forward_video_end()
+

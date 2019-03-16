@@ -20,7 +20,7 @@ sys.path.append(PATH('../games/templates/'))
 from base_class import BaseClass
 
 sys.path.append(PATH('../app/'))
-from quests import Quests
+from buildings import Buildings
 
 sys.path.append(PATH('./'))
 from generic_steps import GenericStep
@@ -36,7 +36,7 @@ class WorldMapChapters(GenericStep):
 
     @step('user completes the account creation process till avatar selection')
     def account_creation(self):
-        self.quest = Quests(self.obj.altdriver, self.obj.driver)
+        self.quest = Buildings(self.obj.altdriver, self.obj.driver)
         self.execute_steps(u'''
             When Onboarding scene is loaded
             When custom wait: "3"
@@ -97,7 +97,7 @@ class WorldMapChapters(GenericStep):
     @step('tap again on selected avatar')
     @step('select any avatar')
     def select_avatar(self):
-        self.quest = Quests(self.obj.altdriver, self.obj.driver)
+        self.quest = Buildings(self.obj.altdriver, self.obj.driver)
         self.quest.select_avatar('Avatar(Clone)', 'pooh')
 
     @step('tap on "Get Set Go" button')
@@ -114,7 +114,7 @@ class WorldMapChapters(GenericStep):
 
     @step('no avatar should be selected by default')
     def avatar_not_selected(self):
-        self.quest = Quests(self.obj.altdriver, self.obj.driver)
+        self.quest = Buildings(self.obj.altdriver, self.obj.driver)
         self.quest.check_avatar_selected('Tick', 'false')
 
 
@@ -135,22 +135,22 @@ class WorldMapChapters(GenericStep):
     @step('user should not be able to deselect the selected avatar')
     @step('user selected avatar should be highlighted with green color tick')
     def avatar_selected(self):
-        self.quest = Quests(self.obj.altdriver, self.obj.driver)
+        self.quest = Buildings(self.obj.altdriver, self.obj.driver)
         self.quest.check_avatar_selected('Tick', 'true')
         
     @step('tap on different avatar other than selected avatar')
     def select_diff_avatar(self):
-        self.quest = Quests(self.obj.altdriver, self.obj.driver)
+        self.quest = Buildings(self.obj.altdriver, self.obj.driver)
         self.quest.select_avatar('Avatar(Clone)', 'piglet')
         
     @step('whole screen should be greyed out')
     def whole_screen_grey(self):
-        self.quest = Quests(self.obj.altdriver, self.obj.driver)
+        self.quest = Buildings(self.obj.altdriver, self.obj.driver)
         self.quest.check_avatar_highlighted('Avatar(Clone)', 'pooh')
         
     @step('previously selected avatar should get dehighlighted')
     def diff_avatar(self):
-        self.quest = Quests(self.obj.altdriver, self.obj.driver)
+        self.quest = Buildings(self.obj.altdriver, self.obj.driver)
         self.quest.check_avatar_highlighted('Avatar(Clone)', 'piglet')
 
     @step('tap on any area of the black overlay')
@@ -229,4 +229,19 @@ class WorldMapChapters(GenericStep):
         And verify orientation is landscape
         ''')
         
-        
+    @step('app should show a black overlay screen')
+    @step('app should open profile selection screen on top of that')
+    def profile_screen(self):
+        self.execute_steps(u'''
+            Then verify the element:
+            | object_name |
+            | Building_1(Clone) |
+            | ProfileContext(Clone) |
+            ''')
+    @step('user taps on profile icon')
+    def tap_profile(self):
+        self.execute_steps(u'''
+            When tap on element: "ProfileIcon/Frame"
+            ''')
+    
+    

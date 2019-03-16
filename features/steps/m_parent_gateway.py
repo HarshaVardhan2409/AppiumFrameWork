@@ -19,7 +19,7 @@ sys.path.append(PATH('../games/templates/'))
 from base_class import BaseClass
 
 sys.path.append(PATH('../app/'))
-from quests import Quests
+from buildings import Buildings
 
 sys.path.append(PATH('./'))
 from generic_steps import GenericStep
