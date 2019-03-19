@@ -16,7 +16,7 @@ import generics_lib
 
 class Video(BaseClass):
     
-    def forward_video(self, duration=0):
+    def forward_video(self, duration):
         self.action = TouchAction(self.driver)
         sleep(3)
         dSize = (self.driver.get_window_size())
@@ -24,30 +24,31 @@ class Video(BaseClass):
         y = (dSize['height']*0.8)
         self.action.tap(x = x, y = y).perform()
         while float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.')) == 0.0:
-            sleep(1)
             self.action.tap(x = x, y = y).perform()
             self.action.tap(x = x, y = y).perform()
+        sleep(3)
+        flag = True
+        while flag == True:
             try:
-                self.driver.implicitly_wait(5)
+                self.driver.implicitly_wait(1)
                 self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration")
                 self.driver.implicitly_wait(20)
+                flag = False
             except:
-                self.driver.implicitly_wait(20)
                 self.action.tap(x = x, y = y).perform()
-        #sleep(6)
-        #self.action.tap(x = x, y = y).perform()
-        #self.driver.find_element(By.ID, "com.byjus.k3:id/exo_pause").click()
-        #sleep(2)
+                flag = True
+#         duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.'))
+
         element = self.driver.find_element(By.ID, "com.byjus.k3:id/exo_progress")
+        
         location =  element.location
         size = element.size
-
+        self.driver.find_element(By.ID, "com.byjus.k3:id/exo_pause").click()
         x = (location['x'] + (size['width']))
         y = (location['y'] + (size['height']/2))
         x2 = location['x']
         current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
         total_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.'))
-        print total_duration
         percentage = 0
         default = 0
         value = 0
@@ -83,7 +84,13 @@ class Video(BaseClass):
                 if diff == 1 or diff == 2:
                     break
                 else:
-                    current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
+                    try:
+                        self.driver.implicitly_wait(5)
+                        current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
+                        self.driver.implicitly_wait(20)
+                    except:
+                        self.driver.implicitly_wait(20)
+                        break
         else:
             print 'Given duration is out of total duration.........'
 
@@ -164,22 +171,18 @@ class Video(BaseClass):
         while float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.')) == 0.0:
             self.action.tap(x = x, y = y).perform()
             self.action.tap(x = x, y = y).perform()
+        sleep(3)
+        flag = True
+        while flag == True:
             try:
-                self.driver.implicitly_wait(8)
+                self.driver.implicitly_wait(1)
                 self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration")
                 self.driver.implicitly_wait(20)
+                flag = False
             except:
-                self.driver.implicitly_wait(20)
                 self.action.tap(x = x, y = y).perform()
+                flag = True
         duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.'))
-        print '++++++++++++++++++++++++========================='
-        print duration
-        #sleep(6)
-        #self.action.tap(x = x, y = y).perform()
-        #self.driver.find_element(By.ID, "com.byjus.k3:id/exo_pause").click()
-        #sleep(2)
-        sleep(6)
-        self.action.tap(x = x, y = y).perform()
 
         element = self.driver.find_element(By.ID, "com.byjus.k3:id/exo_progress")
         location =  element.location
@@ -190,7 +193,6 @@ class Video(BaseClass):
         x2 = location['x']
         current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
         total_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.'))
-        print total_duration
         percentage = 0
         default = 0
         value = 0
@@ -235,3 +237,4 @@ class Video(BaseClass):
                         break
         else:
             print 'Given duration is out of total duration.........'
+

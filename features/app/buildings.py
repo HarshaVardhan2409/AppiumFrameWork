@@ -44,9 +44,9 @@ class Buildings(BaseClass):
         width = int(dSize['width']) - 20
         x_value = 0
         direction = 'right'
-        value = 0
+        value = 10
         count = 0
-        while x_value > width or x_value < 20 or count > 40:
+        while (x_value > width or x_value < 20) and count <20:
             count += 1
             elements = self.altdriver.find_elements_where_name_contains(object_name)
             act_text = ''
@@ -71,26 +71,78 @@ class Buildings(BaseClass):
                         elif direction == 'right':
                             generics_lib.scroll(self.driver, 0.6, 0.3, 0.5, 0.5, 1200)
                         value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
+                        sleep(0.5)
                     elif x_value < width or x_value > 20:
+                        count = 20
                         elements[i].tap()
                     break
-                '''
-                else:
+        
+            if value == json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']:
+                direction = 'left'
+            if direction == 'left':
+                generics_lib.scroll(self.driver, 0.3, 0.6, 0.5, 0.5, 1200)
+            elif direction == 'right':
+                generics_lib.scroll(self.driver, 0.6, 0.3, 0.5, 0.5, 1200)
+            value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
+            sleep(0.5)
+        assert x_value < width and x_value > 0    
+        
+    def scroll_verify_quest(self, quest_nickname):
+        dSize = (self.driver.get_window_size())
+        width = int(dSize['width']) - 20
+        x_value = 0
+        direction = 'right'
+        value = 10
+        count = 0
+        while (x_value > width or x_value < 20) and count < 20:
+            count += 1
+            elements = self.altdriver.find_elements_where_name_contains('Task Name')
+            act_text = ''
+            for i in range(len(elements)):
+                try:
+                    try:
+                        act_text = elements[i].get_text()
+                    except:
+                        try:
+                            act_text = elements[i].get_component_property("TMPro.TextMeshPro", "text", "Unity.TextMeshPro")
+                        except:
+                            act_text = elements[i].get_component_property("TMPro.TextMeshProUGUI", "text", "Unity.TextMeshPro")
+                except:
+                    print 'property not present'
+                
+                if quest_nickname in act_text:
+                    x_value = int(elements[i].x)
                     if value == json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']:
+                        direction = 'left'
+                    if x_value > width or x_value < 20: 
                         if direction == 'left':
-                                generics_lib.scroll(self.driver, 0.3, 0.6, 0.5, 0.5, 1200)
+                            generics_lib.scroll(self.driver, 0.3, 0.6, 0.5, 0.5, 1200)
                         elif direction == 'right':
                             generics_lib.scroll(self.driver, 0.6, 0.3, 0.5, 0.5, 1200)
                         value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
-                '''
+                        sleep(0.5)
+                    elif x_value < width or x_value > 20:
+                        count = 20
+                    break
+            if value == json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']:
+                direction = 'left'
+            if direction == 'left':
+                generics_lib.scroll(self.driver, 0.3, 0.6, 0.5, 0.5, 1200)
+            elif direction == 'right':
+                generics_lib.scroll(self.driver, 0.6, 0.3, 0.5, 0.5, 1200)
+            value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
+            sleep(0.5)
+        assert x_value < width and x_value > 0
+           
     def select_building(self, object_name, building_name):
         dSize = (self.driver.get_window_size())
         width = int(dSize['width']) - 50
         x_value = 0
         direction = 'right'
         value = 10
-        print object_name
-        while x_value > width or x_value < 50:
+        count = 0
+        while (x_value > width or x_value < 50) and count < 20:
+            count += 1
             elements = self.altdriver.find_elements_by_component('Byjus.K123.GameMapScreen.BuildingView')
             act_text = ''
             for i in range(len(elements)):
@@ -110,10 +162,47 @@ class Buildings(BaseClass):
                         elif direction == 'right':
                             generics_lib.scroll(self.driver, 0.7, 0.2, 0.5, 0.5, 1200)
                         value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
-                        sleep(1)
+                        sleep(0.5)
                     elif x_value < width or x_value > 50:
+                        count = 20
                         elements[i].mobile_tap()
                     break
+        assert x_value < width and x_value > 0
+        
+        
+    def scroll_verify_building(self, building_name):
+        dSize = (self.driver.get_window_size())
+        width = int(dSize['width']) - 50
+        x_value = 0
+        direction = 'right'
+        value = 10
+        count = 0
+        while (x_value > width or x_value < 50) and count < 20:
+            count += 1
+            elements = self.altdriver.find_elements_by_component('Byjus.K123.GameMapScreen.BuildingView')
+            act_text = ''
+            for i in range(len(elements)):
+                try:
+                    act_text = elements[i].get_component_property('Byjus.K123.GameMapScreen.BuildingView', 'buildingNames')
+                except:
+                    print 'property not present'
+                if building_name in act_text:
+                    x_value = int(elements[i].x)
+                    print elements[i].toJSON()
+                    print x_value
+                    if value == json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']:
+                        direction = 'left'
+                    if x_value > width or x_value < 50: 
+                        if direction == 'left':
+                            generics_lib.scroll(self.driver, 0.2, 0.7, 0.5, 0.5, 1200)
+                        elif direction == 'right':
+                            generics_lib.scroll(self.driver, 0.7, 0.2, 0.5, 0.5, 1200)
+                        value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
+                        sleep(0.5)
+                    elif x_value < width or x_value > 50:
+                        count = 20
+                    break
+        assert x_value < width and x_value > 0
 
     def check_avatar_selected(self, object_name, exp_status):
         elements = self.altdriver.find_elements(object_name)
@@ -153,7 +242,9 @@ class Buildings(BaseClass):
         x_value = 0
         direction = 'right'
         value = 0
-        while x_value > width or x_value < 20:
+        count = 0
+        while (x_value > width or x_value < 20) and count < 20:
+            count += 1
             elements = self.altdriver.find_elements(object_name)
             act_text = ''
             for i in range(len(elements)):
@@ -173,7 +264,9 @@ class Buildings(BaseClass):
                         value = json.loads(self.altdriver.wait_for_element('AvatarBoothPanel').get_component_property("UnityEngine.RectTransform", "localPosition"))['x']
                     elif x_value < width or x_value > 20:
                         elements[i].tap()
+                        count = 20
                     break
+        assert x_value < width and x_value > 0
                 
     def scroll_verify_all_buildings(self):
         dSize = (self.driver.get_window_size())
@@ -184,7 +277,9 @@ class Buildings(BaseClass):
         ele = self.altdriver.find_elements_by_component('Byjus.K123.GameMapScreen.BuildingView')
         for i in range(len(ele)):
             building_name = ele[i].get_component_property('Byjus.K123.GameMapScreen.BuildingView', 'buildingNames')
-            while x_value > width or x_value < 20:
+            count = 0
+            while (x_value > width or x_value < 20) and count < 20:
+                count += 1
                 elements = self.altdriver.find_elements_by_component('Byjus.K123.GameMapScreen.BuildingView')
                 act_text = ''
                 for i in range(len(elements)):
@@ -205,6 +300,11 @@ class Buildings(BaseClass):
                                 generics_lib.scroll(self.driver, 0.7, 0.2, 0.5, 0.5, 1200)
                             value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
                             sleep(1)
+                        elif x_value < width or x_value > 50:
+                            count = 20
+                            
+        assert x_value < width and x_value > 0
+        
 
     def select_task(self, object_name, task_number):
         dSize = (self.driver.get_window_size())
@@ -221,7 +321,9 @@ class Buildings(BaseClass):
             name = elements[(task_number-1)].get_component_property("Byjus.K123.Tasks.TaskCardView", "title")
         except:
             print 'No title property'
-        while x_value > width or x_value < 10:
+        count = 0
+        while (x_value > width or x_value < 10) and count < 20:
+            count += 1
             elements = self.altdriver.find_elements_where_name_contains(object_name)
             elements.reverse()
             act_text = ''
@@ -242,7 +344,10 @@ class Buildings(BaseClass):
                         elif direction == 'right':
                             generics_lib.scroll(self.driver, 0.6, 0.3, 0.9, 0.9, 1800)
                         value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
-                        sleep(3)
+                        sleep(2)
                     elif x_value < width or x_value > 10:
                         elements[i].tap()
+                        count = 20
                     break
+                
+        assert x_value < width and x_value > 0

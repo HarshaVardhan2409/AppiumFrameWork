@@ -59,9 +59,25 @@ class BuildingSteps(GenericStep):
         self.base_class.wait_for_element_not_present('Interstitial')
         self.base_class.wait_for_element_display('BackButton')
 
-
-    @step('tap on task "{task_number}"')
-    def select_task(self, task_number):
+    @step('tap on task video "{task_number}"')
+    def select_task_video(self, task_number):
         self.buildings = Buildings(self.obj.altdriver, self.obj.driver)
-        self.buildings.select_task('TaskCard_', int(task_number))
+        self.buildings.select_task('TaskCard_Video', int(task_number))
+        
+    @step('tap on task game "{task_number}"')
+    def select_task_game(self, task_number):
+        self.buildings = Buildings(self.obj.altdriver, self.obj.driver)
+        self.buildings.select_task('TaskCard_Games', int(task_number))
+
+    @step('scroll and verify the buildings')
+    def verify_specific_building(self):
+        self.buildings = Buildings(self.obj.altdriver, self.obj.driver)
+        for row in self.table:
+            self.buildings.scroll_verify_building(row['building_name'])
+
+    @step('scroll and verify the quests')
+    def verify_specific_quest(self):
+        self.buildings = Buildings(self.obj.altdriver, self.obj.driver)
+        for row in self.table:
+            self.buildings.scroll_verify_quest(row['quest_name'])
 
