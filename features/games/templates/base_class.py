@@ -414,4 +414,16 @@ class BaseClass():
                 break
         assert expected_text in actual_text
 
-        
+    def verify_presence_of_hint(self,object_name):
+    # try:
+        self.altdriver.wait_for_element(object_name)
+        #except:
+        try:
+            glow_range = float(self.altdriver.wait_for_element(object_name).get_component_property("Byjus.K123.Common.SpriteGlow", "alphaRange"))
+            
+            #glow_range = self.altdriver.wait_for_element(object_name).get_component_property("Byjus.K123.Templates.MCQ.SpriteOuterGlow", "alphaRange")
+            print glow_range
+            #self.assertNotEqual(glow_range, 0)
+        except:
+            print "hint not displayed"
+        assert glow_range > 0

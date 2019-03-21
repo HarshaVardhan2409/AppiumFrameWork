@@ -40,7 +40,7 @@ class WorldMapChapters(GenericStep):
         self.execute_steps(u'''
             When Onboarding scene is loaded
             When custom wait: "3"
-            And tap on element with text: "NONE OF THE ABOVE"
+            And tap on element with text: "None of the above"
             And enter the: "different mobile number": "1552009999" in element: "MobilePanel/InputFieldPrefab"
             And tap on element: "Toggler"
             And tap on element: "NextButton"

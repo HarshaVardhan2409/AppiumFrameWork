@@ -86,7 +86,7 @@ class GenericStep():
             Given launch the app
             And Onboarding scene is loaded
             When custom wait: "3"
-            And tap on element with text: "NONE OF THE ABOVE"
+            And tap on element with text: "None of the above"
             ''')
             self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
             self.base_class.enter_text_app('MobilePanel/InputFieldPrefab', number)
@@ -127,7 +127,7 @@ class GenericStep():
             Given launch the app
             And Onboarding scene is loaded
             When custom wait: "3"
-            And tap on element with text: "NONE OF THE ABOVE"
+            And tap on element with text: "None of the above"
             And enter the: "different mobile number": "1552009999" in element: "MobilePanel/InputFieldPrefab"
             And tap on element: "Toggler"
             And tap on element: "NextButton"
@@ -284,11 +284,14 @@ class GenericStep():
         
     @step('tap on element with text: "{text}"')
     def tap_element_text(self, text):
-        if "NONE OF" in text:
+        if "None of the" in text:
             try:
                 self.base_class.tap("InputFieldPrefab/Text")
+                self.obj.driver.implicitly_wait(5)
                 self.base_class.tap_element_text(text)
+                self.obj.driver.implicitly_wait(20)
             except:
+                self.obj.driver.implicitly_wait(20)
                 print 'SIM not available'
         else:
             self.base_class.tap_element_text(text)
@@ -346,3 +349,9 @@ class GenericStep():
     def uninstall_app(self):
         self.obj.driver.remove_app('com.byjus.k3')
 
+    @step('verify hint') 
+    def verfiy_hint(self):
+        for row in self.table:
+            self.base_class.verify_presence_of_hint(row['object_name'])
+            
+            

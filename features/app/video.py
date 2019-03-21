@@ -18,32 +18,19 @@ class Video(BaseClass):
     
     def forward_video(self, duration):
         self.action = TouchAction(self.driver)
-        sleep(3)
+        self.wait_video_controls()
         dSize = (self.driver.get_window_size())
         x = (dSize['width']*0.8)
         y = (dSize['height']*0.8)
-        self.action.tap(x = x, y = y).perform()
+        self.wait_video_controls()
         while float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.')) == 0.0:
             self.action.tap(x = x, y = y).perform()
             self.action.tap(x = x, y = y).perform()
-        sleep(3)
-        flag = True
-        while flag == True:
-            try:
-                self.driver.implicitly_wait(1)
-                self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration")
-                self.driver.implicitly_wait(20)
-                flag = False
-            except:
-                self.action.tap(x = x, y = y).perform()
-                flag = True
-#         duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.'))
-
+        self.wait_video_controls()
+        self.driver.find_element(By.ID, "com.byjus.k3:id/exo_pause").click()
         element = self.driver.find_element(By.ID, "com.byjus.k3:id/exo_progress")
-        
         location =  element.location
         size = element.size
-        self.driver.find_element(By.ID, "com.byjus.k3:id/exo_pause").click()
         x = (location['x'] + (size['width']))
         y = (location['y'] + (size['height']/2))
         x2 = location['x']
@@ -61,36 +48,28 @@ class Video(BaseClass):
             dur = (minutes + seconds) * change
             value = default + dur
             percentage = x2 + value
+            self.wait_video_controls()
             self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
             x2 = percentage
-            
-            self.action.tap(x = x, y = y).perform()
+            self.wait_video_controls()
             current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
             first = (minutes + seconds)
             while current_duration != duration:
+                self.wait_video_controls()
+                current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
                 second = ((int(str(current_duration).split('.')[0])*60) + (int(str("%.2f" % current_duration).split('.')[1])))
                 if current_duration < duration:
                     diff = first - second
                     percentage = x2 + (change * diff)
                     self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
                     x2 = percentage
-                    self.action.tap(x = x, y = y).perform()
                 elif current_duration > duration:
                     diff = second - first
                     percentage = x2 - (change * diff)
                     self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
                     x2 = percentage
-                    self.action.tap(x = x, y = y).perform()
-                if diff == 1 or diff == 2:
+                if diff < 5:
                     break
-                else:
-                    try:
-                        self.driver.implicitly_wait(5)
-                        current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
-                        self.driver.implicitly_wait(20)
-                    except:
-                        self.driver.implicitly_wait(20)
-                        break
         else:
             print 'Given duration is out of total duration.........'
 
@@ -162,32 +141,22 @@ class Video(BaseClass):
 
     def forward_video_end(self):
         self.action = TouchAction(self.driver)
-        sleep(3)
+        self.wait_video_controls()
         dSize = (self.driver.get_window_size())
         x = (dSize['width']*0.8)
         y = (dSize['height']*0.8)
         duration = 0
-        self.action.tap(x = x, y = y).perform()
+        self.wait_video_controls()
         while float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.')) == 0.0:
             self.action.tap(x = x, y = y).perform()
             self.action.tap(x = x, y = y).perform()
-        sleep(3)
-        flag = True
-        while flag == True:
-            try:
-                self.driver.implicitly_wait(1)
-                self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration")
-                self.driver.implicitly_wait(20)
-                flag = False
-            except:
-                self.action.tap(x = x, y = y).perform()
-                flag = True
+        self.wait_video_controls()
+        self.driver.find_element(By.ID, "com.byjus.k3:id/exo_pause").click()
         duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.'))
-
+        
         element = self.driver.find_element(By.ID, "com.byjus.k3:id/exo_progress")
         location =  element.location
         size = element.size
-
         x = (location['x'] + (size['width']))
         y = (location['y'] + (size['height']/2))
         x2 = location['x']
@@ -205,36 +174,48 @@ class Video(BaseClass):
             dur = (minutes + seconds) * change
             value = default + dur
             percentage = x2 + value
+            self.wait_video_controls()
             self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
             x2 = percentage
-            
-            self.action.tap(x = x, y = y).perform()
+            self.wait_video_controls()
             current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
             first = (minutes + seconds)
             while current_duration != duration:
+                self.wait_video_controls()
+                current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
                 second = ((int(str(current_duration).split('.')[0])*60) + (int(str("%.2f" % current_duration).split('.')[1])))
                 if current_duration < duration:
                     diff = first - second
                     percentage = x2 + (change * diff)
                     self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
                     x2 = percentage
-                    self.action.tap(x = x, y = y).perform()
                 elif current_duration > duration:
                     diff = second - first
                     percentage = x2 - (change * diff)
                     self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
                     x2 = percentage
-                    self.action.tap(x = x, y = y).perform()
-                if diff == 1 or diff == 2:
+                if diff < 5:
+                    self.wait_video_controls()
+                    self.driver.find_element(By.ID, "com.byjus.k3:id/exo_play").click()
                     break
-                else:
-                    try:
-                        self.driver.implicitly_wait(5)
-                        current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
-                        self.driver.implicitly_wait(20)
-                    except:
-                        self.driver.implicitly_wait(20)
-                        break
         else:
             print 'Given duration is out of total duration.........'
+
+    def wait_video_controls(self):
+        self.action = TouchAction(self.driver)
+        dSize = (self.driver.get_window_size())
+        x = (dSize['width']*0.8)
+        y = (dSize['height']*0.2)
+        flag = True
+        count = 0
+        while flag == True and count < 20:
+            count += 1
+            try:
+                self.driver.implicitly_wait(1)
+                self.action.tap(x = x, y = y).perform()
+                self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration")
+                self.driver.implicitly_wait(20)
+                flag = False
+            except:
+                flag = True
 

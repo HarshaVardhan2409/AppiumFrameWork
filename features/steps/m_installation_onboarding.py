@@ -52,7 +52,7 @@ class InstallationOnboarding(GenericStep):
         self.execute_steps(u'''
         Given Onboarding scene is loaded
         When custom wait: "3"
-        And tap on element with text: "NONE OF THE ABOVE"
+        And tap on element with text: "None of the above"
         And enter the: "number": "4444555502" in element: "MobilePanel/InputFieldPrefab"
         And tap on element: "Toggler"
         And tap on element: "NextButton"
@@ -80,7 +80,7 @@ class InstallationOnboarding(GenericStep):
     @step('user enters an existing mobile number')
     def enter_existing_number(self):
         self.execute_steps(u'''
-        When tap on element with text: "NONE OF THE ABOVE"
+        When tap on element with text: "None of the above"
         And enter the: "test number": "4444555502" in element: "MobilePanel/InputFieldPrefab"
         And tap on element: "Toggler"
         And tap on element: "NextButton"
@@ -89,7 +89,7 @@ class InstallationOnboarding(GenericStep):
     @step('user enters a new mobile number')
     def enter_new_number(self):
         self.execute_steps(u'''
-        Given tap on element with text: "NONE OF THE ABOVE"
+        Given tap on element with text: "None of the above"
         And enter the: "different mobile number": "4444555502" in element: "MobilePanel/InputFieldPrefab"
         And tap on element: "Toggler"
         And tap on element: "NextButton"
