@@ -152,8 +152,11 @@ class Video(BaseClass):
             self.action.tap(x = x, y = y).perform()
         self.wait_video_controls()
         self.driver.find_element(By.ID, "com.byjus.k3:id/exo_pause").click()
-        duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.'))
-        
+        duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.')) - (0.05)
+        if duration > 5.3:
+            duration = duration - 0.03
+        if '.9' in str(duration):
+            duration = duration - 0.40    
         element = self.driver.find_element(By.ID, "com.byjus.k3:id/exo_progress")
         location =  element.location
         size = element.size
@@ -166,6 +169,7 @@ class Video(BaseClass):
         default = 0
         value = 0
         change = 0
+        count = 0
         if duration <= total_duration:
             minutes = (int(str(duration).split('.')[0])*60)
             seconds = (int(str("%.2f" % duration).split('.')[1]))
@@ -180,23 +184,41 @@ class Video(BaseClass):
             self.wait_video_controls()
             current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
             first = (minutes + seconds)
-            while current_duration != duration:
+            if current_duration == duration or str(current_duration) in str(duration):
+                self.wait_video_controls()
+                print "====================================="
+                print 'clicked play.................'
+                self.driver.find_element(By.ID, "com.byjus.k3:id/exo_play").click()
+                sleep(10)
+            while current_duration != duration and count < 20:
+                count += 1
                 self.wait_video_controls()
                 current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
                 second = ((int(str(current_duration).split('.')[0])*60) + (int(str("%.2f" % current_duration).split('.')[1])))
                 if current_duration < duration:
+                    print 'entering current less than duration'
                     diff = first - second
                     percentage = x2 + (change * diff)
                     self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
                     x2 = percentage
                 elif current_duration > duration:
+                    print 'entering current more than duration'
                     diff = second - first
                     percentage = x2 - (change * diff)
                     self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
                     x2 = percentage
-                if diff < 5:
+                self.wait_video_controls()
+                current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
+                self.wait_video_controls()
+                print "Duration................."
+                print current_duration
+                print duration
+                if current_duration == duration or str(current_duration) in str(duration):
                     self.wait_video_controls()
+                    print "====================================="
+                    print 'clicked play...............'
                     self.driver.find_element(By.ID, "com.byjus.k3:id/exo_play").click()
+                    sleep(10)
                     break
         else:
             print 'Given duration is out of total duration.........'

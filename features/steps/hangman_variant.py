@@ -43,7 +43,7 @@ class HangmanStep(GenericStep):
         for row in self.table:
             self.base_class.wait_for_element_display(row['option'])
             break
-        sleep(15)
+        sleep(5)
         self.hangman = Hangman(self.obj.altdriver, self.obj.driver)
         start_position = None
         end_position = None
@@ -68,7 +68,7 @@ class HangmanStep(GenericStep):
         for row in self.table:
             self.base_class.wait_for_element_display(row['option'])
             break
-        sleep(15)
+        sleep(5)
         self.hangman = Hangman(self.obj.altdriver, self.obj.driver)
         start_position = None
         end_position = None

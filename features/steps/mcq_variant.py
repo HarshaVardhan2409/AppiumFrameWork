@@ -32,8 +32,10 @@ class McqStep(GenericStep):
             #wait time for options to load
             start_position = self.mcq.get_object_location(row['animation_object'])
             self.mcq.tap_option(row["option"])
-            #wait time for animation to happen
-            sleep(4)
+            if 'rue' in row["option"]:
+                sleep(6)
+            else:
+                sleep(4)
             end_position = self.mcq.get_object_location(row['animation_object'])
             self.mcq.verify_object_location(start_position, end_position, row["acceptable"])
 

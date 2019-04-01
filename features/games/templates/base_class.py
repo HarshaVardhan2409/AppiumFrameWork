@@ -58,7 +58,7 @@ class BaseClass():
         assert str(scene_name) in self.altdriver.get_current_scene()
         
     def verify_the_element_on_screen(self, element_name):
-            self.altdriver.wait_for_element(element_name)
+            self.altdriver.wait_for_element(element_name, timeout=30)
             sleep(2)
             
     def get_object_location(self, object_name):

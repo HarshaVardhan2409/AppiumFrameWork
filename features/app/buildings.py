@@ -171,6 +171,7 @@ class Buildings(BaseClass):
         
         
     def scroll_verify_building(self, building_name):
+        building_name = str(lower(building_name.replace(' ', '-').replace('&', 'and')))
         dSize = (self.driver.get_window_size())
         width = int(dSize['width']) - 50
         x_value = 0
@@ -186,7 +187,7 @@ class Buildings(BaseClass):
                     act_text = elements[i].get_component_property('Byjus.K123.GameMapScreen.BuildingView', 'buildingNames')
                 except:
                     print 'property not present'
-                if building_name in act_text:
+                if building_name == act_text:
                     x_value = int(elements[i].x)
                     print elements[i].toJSON()
                     print x_value
@@ -349,5 +350,12 @@ class Buildings(BaseClass):
                         elements[i].tap()
                         count = 20
                     break
-                
         assert x_value < width and x_value > 0
+        
+    def get_sticker_names(self):
+        elements = self.altdriver.find_elements('giftbox_sticker_pop(Clone)')
+        sticker_names = []
+        for i in range(len(elements)):
+            sticker_names.append(elements[i].get_component_property('Byjus.K123.Rewards.RewardSticker', 'nickName'))
+        return sticker_names            
+            

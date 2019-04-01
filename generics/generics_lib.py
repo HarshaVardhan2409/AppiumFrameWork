@@ -9,6 +9,8 @@ from matplotlib.pyplot import imread
 from scipy.linalg import norm
 from scipy import sum, average
 from skimage.measure import compare_ssim
+from PIL import Image
+from PIL import ImageChops
 
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -38,6 +40,8 @@ def takescreenshot(driver, path):
     driver.save_screenshot(path)
     
 def compare_images(image_1, image_2):
+    resize_image(image_1)
+    resize_image(image_2)
     file1 = image_1
     file2 = image_2
 
@@ -80,6 +84,8 @@ def normalize(arr):
     return (arr-amin)*255/rng
 
 def compare_video_images(file1, file2):
+    resize_image(file1)
+    resize_image(file2)
     img_a = to_grayscale(imread(file1).astype(float))
     img_b = to_grayscale(imread(file2).astype(float))
     
@@ -91,4 +97,13 @@ def compare_video_images(file1, file2):
     print(score)
     return score
 
-#compare_video_images("C:\\Users\\Vinayaka\\Downloads\\correct1.png", "C:\\Users\\Vinayaka\\Downloads\\correct1.png")
+def resize_image(image_path):
+    img = Image.open(image_path)
+    img = img.resize((280 ,180), Image.ANTIALIAS)
+    if '.png' not in image_path:
+        image_path = image_path.replace('.jpg', '.png')
+    img.save(image_path)
+
+# compare_video_images("C:\\Users\\Vinayaka\\Downloads\\re\\colour_1.png", "C:\\Users\\Vinayaka\\Downloads\\re\\colour_2.png")
+
+

@@ -10,6 +10,7 @@ from appium.webdriver.connectiontype import ConnectionType
 import json
 from decimal import Decimal
 import subprocess
+from numpy.core.defchararray import lower
 
 def launch_app(platform):
     desired_caps = {}
@@ -246,3 +247,4 @@ for i in range(val):
     if(nam[i]=='device'):
         print(nam[i-1])
 '''
+
