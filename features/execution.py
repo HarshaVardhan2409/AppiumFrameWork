@@ -40,7 +40,7 @@ else:
 
 
 
-# start_execution('--tags=@smoke Complete_Building.feature')
+# start_execution('--tags=@smoke3 final_quest.feature')
 # start_execution('check_stickers.feature')
 #start_execution(['worldmap.feature'], ['G5AXB731C368SNZ'], ['4225'])
 #create_feature(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))

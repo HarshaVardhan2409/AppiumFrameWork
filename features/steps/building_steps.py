@@ -26,7 +26,8 @@ class BuildingSteps(GenericStep):
     def quests_progression(self):
         self.buildings = Buildings(self.obj.altdriver, self.obj.driver)
         for row in self.table:
-            self.buildings.verify_quest_progression(row['object_name'], row['text'], row['total_tasks'], row['completed_tasks'])
+            self.buildings.scroll_verify_quest(row['quest_name'])
+            self.buildings.verify_quest_progression('QuestItem ', row['quest_name'], row['total_tasks'], row['completed_tasks'])
     
     @step('select the quest with element: "{object_name}" and quest nickname: "{quest_nickname}"')
     def select_tasks(self, object_name, quest_nickname):

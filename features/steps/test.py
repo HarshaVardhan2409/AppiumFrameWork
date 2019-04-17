@@ -4,6 +4,7 @@ from altunityrunner.runner import AltrunUnityDriver
 from appium import webdriver
 from time import sleep
 import sys
+import os
 from ast import literal_eval
 
 from appium.webdriver.connectiontype import ConnectionType
@@ -22,16 +23,22 @@ def launch_app(platform):
         desired_caps['appPackage'] = "com.byjus.k3"
         desired_caps['appActivity'] = "com.byjus.unity.support.activities.MainActivity"
         driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+        print driver.find_element_by_image('C:\\Users\\Vinayaka\\Pictures\\disney.jpg ').is_displayed()
         altdriver = AltrunUnityDriver(driver, platform, requestEnd='#')
-        altdriver.wait_for_current_scene_to_be('ProfileSelectionScene')
+        driver.implicitly_wait(20)
+        
+        altdriver.wait_for_current_scene_to_be('Onboarding')
 #         altdriver.wait_for_element_to_not_be_present('Interstitial')
         print '==================================================================='
         print driver.orientation
+#         driver.find_element_by_image('C:\\Users\\Vinayaka\\Pictures\\drop.PNG ').click()
+        sleep(10)
+        print driver.find_element_by_image('C:\\Users\\Vinayaka\\Pictures\\internet.jpg ').is_displayed()
         #altdriver.wait_for_element_to_not_be_present('Interstitial')
 #         sleep(30)
-        elements = altdriver.find_elements('Profile(Clone)')
-        for ele in elements:
-            print ele
+#         elements = altdriver.find_elements('Profile(Clone)')
+#         for ele in elements:
+#             print ele
         
         #driver.find_element_by_image('C:\\Users\\Vinayaka\\Downloads\\country.PNG').click()
         #print altdriver.find_element('Building_1(Clone)').get_component_property('Byjus.K123.GameMapScreen.BuildingView', 'buildingNames')
@@ -199,7 +206,7 @@ def scroll(driver, start_xvalue, end_xvalue, start_yvalue, end_yvalue, duration)
     end_y = (dSize['height']*end_yvalue)
     driver.swipe(start_x, start_y, end_x, end_y, duration)
     
-#launch_app('android')
+# launch_app('android')
 '''
 text = "The <color=#7030A0>-ad</color> word family crate has: l<color=#7030A0>ad</color> and gl<color=#7030A0>ad</color>. The <color=#7030A0>-ank</color> word family crate has: pl<color=#7030A0>ank</color>"
 
@@ -247,4 +254,3 @@ for i in range(val):
     if(nam[i]=='device'):
         print(nam[i-1])
 '''
-

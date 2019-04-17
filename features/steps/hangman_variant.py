@@ -87,5 +87,15 @@ class HangmanStep(GenericStep):
             end_position = self.hangman.get_object_location(row['animation_object'])
             break
         self.hangman.verify_object_location(start_position, end_position, row['acceptable'])
-
-
+        
+    @step('select the option')
+    def select_the_option(self):
+        for row in self.table:
+            self.base_class.wait_for_element_display(row['option'])
+            break
+        sleep(5)
+        self.hangman = Hangman(self.obj.altdriver, self.obj.driver)
+        for row in self.table:
+            #wait time for options to load
+            self.hangman.tap_option(row['option'])
+            sleep(1)

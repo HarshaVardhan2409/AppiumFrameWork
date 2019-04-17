@@ -45,7 +45,7 @@ def compare_images(image_1, image_2):
     file1 = image_1
     file2 = image_2
 
-    # read images as 2D arrays (convert to grayscale for simplicity)
+    # read a_images as 2D arrays (convert to grayscale for simplicity)
     img1 = to_grayscale(imread(file1).astype(float))
     img2 = to_grayscale(imread(file2).astype(float))
     # compare
@@ -91,7 +91,7 @@ def compare_video_images(file1, file2):
     
     img_1 = normalize(img_a)
     img_2 = normalize(img_b)
-    # score: {-1:1} measure of the structural similarity between the images
+    # score: {-1:1} measure of the structural similarity between the a_images
     score, diff = compare_ssim(img_1, img_2, full=True)
     score = int(score * 100)
     print(score)

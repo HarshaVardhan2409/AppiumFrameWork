@@ -20,7 +20,7 @@ class OnboardingSteps(GenericStep):
     
     onboarding = None
     
-    @step('verify the country images')
+    @step('verify the country a_images')
     def verify_country_images(self):
         self.onboarding = Onboarding(self.obj.altdriver, self.obj.driver)
         #wait dropdown

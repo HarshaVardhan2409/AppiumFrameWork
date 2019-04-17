@@ -184,7 +184,7 @@ class AccountCreation(GenericStep):
             | Item 3: Oman/Item Label         | Oman         |
             | Item 4: Qatar/Item Label        | Qatar        |
             | Item 5: Saudi Arabia/Item Label | Saudi Arabia |
-        And verify the country images:
+        And verify the country a_images:
             | object_name                | image_name  |
             | Dropdown/CountryIcon       | India       |
             | Item 0: Bahrain/Image      | Bahrain     |
@@ -226,8 +226,8 @@ class AccountCreation(GenericStep):
         And verify the element:
             | object_name           |
             | OTPVerification(Clone) |
-        ''') 
-    
+        ''')
+
     @step('user taps edit option in otp screen')
     def tap_on_edit_option(self):
         self.execute_steps(u'''

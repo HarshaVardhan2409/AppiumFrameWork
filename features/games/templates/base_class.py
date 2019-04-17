@@ -44,7 +44,13 @@ class BaseClass():
         self.enter_text(text_field, text)
         self.enter_text(url_field, url)
         self.tap(load_button)
-            
+
+    def tap_image(self, image_name):
+        self.driver.find_element_by_image(PATH('../../../a_image/'+image_name)).click()
+
+    def verify_image(self, image_name):
+        self.driver.find_element_by_image(PATH('../../../a_image/'+image_name)).is_displayed()
+
     def wait_for_scene(self, scene_name):
         self.altdriver.wait_for_current_scene_to_be(scene_name)
         

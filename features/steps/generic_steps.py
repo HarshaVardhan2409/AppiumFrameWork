@@ -41,6 +41,15 @@ class GenericStep():
     def launch_app_activity_status(self, appPackage, appActivity, status):
         self.obj.launch_app(appPackage, appActivity, status)
        
+    @step('relaunch the app')
+    def relaunch(self):
+        self.obj.launch_app("com.byjus.k3", "com.byjus.unity.support.activities.MainActivity", 'True')
+        
+    @step('put the app in background and launch')
+    def background_app(self):
+        self.obj.driver.background_app(5)
+        sleep(2)
+
     @step('launch app with apppackage: "{appPackage}" appactivity: "{appActivity}"')
     def launch_app_activity(self, appPackage, appActivity):
         self.obj.launch_app(appPackage, appActivity, 'True')
@@ -177,7 +186,7 @@ class GenericStep():
         self.access = ParentalAccess(self.obj.altdriver, self.obj.driver)
         #wait for the question to load
         sleep(3)
-        self.access.parental_access('ParentGatePanel/Question')
+        self.access.parental_access('ParentGatePanel/AnswerPanel/Question')
         self.base_class.wait_for_scene('Library')
         self.base_class.wait_for_element_not_present('Interstitial')
         
@@ -188,7 +197,7 @@ class GenericStep():
         self.access = ParentalAccess(self.obj.altdriver, self.obj.driver)
         #wait for the question to load
         sleep(3)
-        self.access.parental_access('ParentGatePanel/Question')
+        self.access.parental_access('ParentGatePanel/AnswerPanel/Question')
         self.base_class.wait_for_scene('ParentZone')
         self.base_class.wait_for_element_not_present('Interstitial')
         
@@ -252,7 +261,15 @@ class GenericStep():
     @step('tap on element location: "{object_name}"')
     def mobiletap(self, object_name):
         self.base_class.mobiletap(object_name)
-
+    
+    @step('offline tap on image "{image_name}"')
+    def image_tap(self, image_name):
+        self.base_class.tap_image(image_name)
+        
+    @step('offline verify image "{image_name}"')
+    def verify_image(self, image_name):
+        self.base_class.verify_image(image_name)
+    
     @step('tap and hold element: "{object_name}" for duration: "{duration}"')
     def tap_and_hold(self, object_name, duration):
         self.base_class.tap_and_hold(object_name, duration)

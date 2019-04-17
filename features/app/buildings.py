@@ -20,6 +20,7 @@ class Buildings(BaseClass):
     
     
     def verify_quest_progression(self, object_name, text, total_tasks, completed_tasks):
+        text = str(lower(text.replace(' ', '-').replace('&', 'and')))
         self.altdriver.wait_for_element_where_name_contains(object_name)
         elements = self.altdriver.find_elements_where_name_contains(object_name)
         act_text = ''
@@ -46,6 +47,7 @@ class Buildings(BaseClass):
         direction = 'right'
         value = 10
         count = 0
+        flag = False
         while (x_value > width or x_value < 20) and count <20:
             count += 1
             elements = self.altdriver.find_elements_where_name_contains(object_name)
@@ -75,8 +77,10 @@ class Buildings(BaseClass):
                     elif x_value < width or x_value > 20:
                         count = 20
                         elements[i].tap()
+                        flag = True
                     break
-        
+            if flag == True:
+                break
             if value == json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']:
                 direction = 'left'
             if direction == 'left':
@@ -94,6 +98,7 @@ class Buildings(BaseClass):
         direction = 'right'
         value = 10
         count = 0
+        flag = False
         while (x_value > width or x_value < 20) and count < 20:
             count += 1
             elements = self.altdriver.find_elements_where_name_contains('Task Name')
@@ -123,7 +128,10 @@ class Buildings(BaseClass):
                         sleep(0.5)
                     elif x_value < width or x_value > 20:
                         count = 20
+                        flag = True
                     break
+            if flag == True:
+                break
             if value == json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']:
                 direction = 'left'
             if direction == 'left':
@@ -141,16 +149,20 @@ class Buildings(BaseClass):
         direction = 'right'
         value = 10
         count = 0
-        while (x_value > width or x_value < 50) and count < 20:
+        while (x_value > width or x_value < 20) and count < 20:
             count += 1
             elements = self.altdriver.find_elements_by_component('Byjus.K123.GameMapScreen.BuildingView')
             act_text = ''
             for i in range(len(elements)):
                 try:
-                    act_text = elements[i].get_component_property('Byjus.K123.GameMapScreen.BuildingView', 'buildingNames')
+                    act_text = elements[i].get_component_property('Byjus.K123.GameMapScreen.BuildingView', 'BuildingTitle')
                 except:
                     print 'property not present'
-                if building_name in act_text:
+                print "act = " + act_text
+                print "build = " + building_name
+                print type(act_text)
+                print type(building_name)
+                if str(building_name) in (act_text):
                     x_value = int(elements[i].x)
                     print elements[i].toJSON()
                     print x_value
@@ -171,7 +183,6 @@ class Buildings(BaseClass):
         
         
     def scroll_verify_building(self, building_name):
-        building_name = str(lower(building_name.replace(' ', '-').replace('&', 'and')))
         dSize = (self.driver.get_window_size())
         width = int(dSize['width']) - 50
         x_value = 0
@@ -184,7 +195,7 @@ class Buildings(BaseClass):
             act_text = ''
             for i in range(len(elements)):
                 try:
-                    act_text = elements[i].get_component_property('Byjus.K123.GameMapScreen.BuildingView', 'buildingNames')
+                    act_text = elements[i].get_component_property('Byjus.K123.GameMapScreen.BuildingView', 'BuildingTitle')
                 except:
                     print 'property not present'
                 if building_name == act_text:
