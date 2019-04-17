@@ -305,11 +305,20 @@ class GenericStep():
             try:
                 self.base_class.tap("InputFieldPrefab/Text")
                 self.obj.driver.implicitly_wait(5)
-                self.base_class.tap_element_text(text)
+                try:
+                    self.base_class.tap_element_text(text)
+                except:
+                    self.base_class.tap_element_text(text.upper())        
                 self.obj.driver.implicitly_wait(20)
             except:
                 self.obj.driver.implicitly_wait(20)
-                print 'SIM not available'
+            print 'SIM not available'
+        elif "Allow" in text:
+            try:
+                self.base_class.tap_element_text(text)
+            except:
+                self.base_class.tap_element_text(text.upper())        
+            self.obj.driver.implicitly_wait(20)
         else:
             self.base_class.tap_element_text(text)
         
