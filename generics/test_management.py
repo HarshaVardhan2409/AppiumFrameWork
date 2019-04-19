@@ -3,6 +3,7 @@ from datetime import datetime
 import os
 import sys
 import urllib2, json, base64
+import glob
 
 import constants
 import generics_lib
@@ -193,7 +194,8 @@ def get_section(section_ID):
     section = client.send_get('get_section/' + section_ID)
     return section
         
-def create_feature_file(suite_ID, project_ID, run_ID): 
+def create_feature_file(suite_ID, project_ID, run_ID):
+    delete_feature_files()
     client = APIClient(testrail_url)
     client.user = testrail_username
     client.password = testrail_password
@@ -246,7 +248,8 @@ def create_feature_file(suite_ID, project_ID, run_ID):
     f.close()
     print 'Number of feature file created = '+ str(count)
 
-def create_feature_from_run(suite_ID, project_ID, run_ID): 
+def create_feature_from_run(suite_ID, project_ID, run_ID):
+    delete_feature_files()
     client = APIClient(testrail_url)
     client.user = testrail_username
     client.password = testrail_password
@@ -299,7 +302,8 @@ def create_feature_from_run(suite_ID, project_ID, run_ID):
     f.close()
     print 'Number of feature file created = '+ str(count)
 
-def create_feature_file_tags(suite_ID, project_ID, run_ID, tag_name=None): 
+def create_feature_file_tags(suite_ID, project_ID, run_ID, tag_name=None):
+    delete_feature_files()
     client = APIClient(testrail_url)
     client.user = testrail_username
     client.password = testrail_password
@@ -362,6 +366,10 @@ def create_feature_file_tags(suite_ID, project_ID, run_ID, tag_name=None):
     f.close()
     print 'Number of feature file created = '+ str(count)
 
+def delete_feature_files():
+    f_files = glob.glob(PATH('../features/*.feature'))
+    for f in f_files:
+        os.remove(f)
 
 def get_run(run_id):
     client = get_testrail_client()

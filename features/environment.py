@@ -2,6 +2,7 @@ from __builtin__ import str
 import os
 import shutil
 import subprocess
+import glob
 import sys
 from time import sleep
 from behave.model_core import Status
@@ -24,17 +25,21 @@ obj = BaseSetup()
 
 def before_all(context):
     BaseSetup.app_path = str(context.config.userdata['APP_PATH'])
-    #BaseSetup.udid = str(context.config.userdata['UDID'])
-    #BaseSetup.port = str(context.config.userdata['PORT'])
-    
+    BaseSetup.udid = str(context.config.userdata['UDID'])
+    BaseSetup.port = str(context.config.userdata['PORT'])
+    BaseSetup.sys_port=str(context.config.userdata['SYSPORT'])
     device_type = str(context.config.userdata['DEVICE_TYPE']).lower()
     machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
     BaseSetup.platform = device_type
     BaseSetup.system_os = machine_type
     BaseClass.platform = device_type
-    
+    print "==================port value======"
+    print BaseSetup.port
+    print "===============port value========="
     test_management.testrail_username = str(context.config.userdata['TESTRAIL_USER'])
     test_management.testrail_password = str(context.config.userdata['TESTRAIL_PASS'])
+    
+    #test_management.create_feature_file('99', '2', '97',test_management.testrail_username,test_management.testrail_password)
     
     '''
     to create the execution directory and other sub directories
@@ -51,33 +56,29 @@ def before_all(context):
     '''
     To clear the previous execution data
     ''' 
-    shutil.rmtree(constants.PATH('../execution_data/app_logs/'))
-    os.mkdir(constants.PATH('../execution_data/app_logs/'))
-    shutil.rmtree(constants.PATH('../execution_data/reports/'))
-    os.mkdir(constants.PATH('../execution_data/reports/'))
-    shutil.rmtree(constants.PATH('../execution_data/screenshots/'))
-    os.mkdir(constants.PATH('../execution_data/screenshots/'))
-    shutil.rmtree(constants.PATH('../compare_images/'))
-    os.mkdir(constants.PATH('../compare_images/'))
+    a_logs = glob.glob(constants.PATH('../execution_data/app_logs/*'))
+    for f in a_logs:
+        os.remove(f)
+    rep = glob.glob(constants.PATH('../execution_data/reports/*'))
+    for f in rep:
+        os.remove(f)
+    scr = glob.glob(constants.PATH('../execution_data/screenshots/*'))
+    for f in scr:
+        os.remove(f)
+    c_image = glob.glob(constants.PATH('../execution_data/compare_images/*'))
+    for f in c_image:
+        os.remove(f)
     
     '''
     port forwarding for android and ios
+    Handled while creating AltrunUnityDriver
     '''
     
-    """
-    
-    if 'android' in device_type:
-        subprocess.Popen('adb -s G5AXB731C368SNZ forward tcp:13002 tcp:13000', shell=True)
-        subprocess.Popen('adb -s ZY222W8BKG forward tcp:13001 tcp:13000', shell=True)
-    elif 'ios' in device_type:
-        subprocess.Popen('iproxy forward tcp:13000 tcp:13000', shell=True)
-    """    
     '''
     starting appium server
     '''
-    #subprocess.Popen('appium -p ' + str(context.config.userdata['PORT']), shell=True)
-    subprocess.Popen('appium', shell=True)
-    sleep(40)
+    subprocess.Popen('appium -p'+BaseSetup.port+' -bp '+str(int(BaseSetup.port)+1000)+' --relaxed-security', shell=True)
+    sleep(10)
     context.obj = obj
     
 def before_feature(context, feature):
@@ -88,14 +89,6 @@ def before_feature(context, feature):
     capturing the logs for every feature files
     '''
     
-    if 'android' in device_type:
-        subprocess.Popen('adb logcat -c', shell=True)
-        package_name = generics_lib.get_data(constants.CONFIG_PATH, 'app_config', 'logs')
-        if 'windows' in machine_type:
-            subprocess.Popen('adb logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
-        else:
-            subprocess.Popen('adb logcat | grep ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
-    
 def before_scenario(context, scenario):
     data = None
     data = str(context.scenario)
@@ -105,15 +98,6 @@ def before_scenario(context, scenario):
     device_type = str(context.config.userdata['DEVICE_TYPE']).lower()
     machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
     
-    '''
-    capturing the logs for every scenario files
-    '''
-    
-    if 'android' in device_type:
-        subprocess.Popen('adb logcat -c', shell=True)
-        package_name = generics_lib.get_data(constants.CONFIG_PATH, 'app_config', 'logs')
-        if 'windows' in machine_type:
-            subprocess.Popen('adb logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
     
 def after_scenario(context, scenario):
     
@@ -132,14 +116,16 @@ def after_scenario(context, scenario):
     data = data[0].split('_')
     data.reverse()
     try:
-            
-        if scenario.status == Status.failed:
-            
+       
+        if scenario.status == Status.failed:    
+           
             directory = constants.PATH('../execution_data/screenshots/failed_caseID_' + data[1] + '_runID_' + data[0] + '.png')
             context.obj.driver.save_screenshot(directory)
-            
+           
             test_management.update_testrail(data[1], data[0] , False, 'Test case failed')
             
+            
+        
         elif scenario.status == Status.skipped:
             test_management.update_testrail(data[1], data[0] , False, 'Test case skipped')
             
@@ -163,8 +149,8 @@ def after_all(context):
     
     if 'windows' in machine_type:
         # Use below code to Stop appium server on the local windows machine
-        subprocess.Popen('Taskkill /IM adb.exe /F',shell=True)
-        subprocess.Popen('Taskkill /IM node.exe /F',shell=True)
+        #subprocess.Popen('Taskkill /IM adb.exe /F',shell=True)
+        #subprocess.Popen('Taskkill /IM node.exe /F',shell=True)
         print ''
         
     else:

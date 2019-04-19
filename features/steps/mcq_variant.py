@@ -38,5 +38,7 @@ class McqStep(GenericStep):
                 sleep(4)
             end_position = self.mcq.get_object_location(row['animation_object'])
             self.mcq.verify_object_location(start_position, end_position, row["acceptable"])
-
-
+            
+    @step('select multiple options: "{option_1}" "{option_2}" "{option_3}" "{option_4}"')
+    def select_multiple_options(self,option_1,option_2,option_3,option_4):
+        self.base_class.multiple_tap(option_1,option_2,option_3,option_4)

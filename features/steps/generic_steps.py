@@ -380,4 +380,17 @@ class GenericStep():
         for row in self.table:
             self.base_class.verify_presence_of_hint(row['object_name'])
             
+    @step('verify HintBulb content') 
+    def verfiy_hint_content(self):
+        self.execute_steps(u'''
+        When verify the element:
+            | object_name |
+            | HintBulbImage |
+        And tap on element: "HintBulbImage"
+        And verify the element:
+            | object_name |
+            | HintPanel |
+            | HintImage |
+        And tap on element: "CloseButton"
+        ''')
             

@@ -9,6 +9,8 @@ from time import sleep
 from altunityrunner import AltrunUnityDriver
 from appium import webdriver
 from selenium.webdriver.common.by import By
+from appium.webdriver.common.multi_action import MultiAction
+from appium.webdriver.common.touch_action import TouchAction
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -433,3 +435,63 @@ class BaseClass():
         except:
             print "hint not displayed"
         assert glow_range > 0
+        
+    def verify_presence_of_hint2(self,object_name):
+        self.altdriver.wait_for_element(object_name)
+        self.altdriver.wait_for_element(object_name).get_component_property("Byjus.K123.Templates.MCQ.SpriteOuterGlow", "glowColor")
+        
+    def get_server_logs(self):
+        print "=========================creating file==================="
+        
+        logs=str(self.driver.get_log('server'))
+        #print logs
+        
+        file = open(PATH('../../../execution_data/reports/server_logs/')+sys.argv[6]+str(self.i)+'.txt','w') 
+        file.write(logs) 
+        file.close() 
+        print "=========================created file==================="
+        self.i=self.i+1
+        print 'success'    
+        
+        
+    def multiple_tap(self,obj1,obj2,obj3,obj4):
+        x_point=self.altdriver.find_element(obj4).x
+        y_point=self.altdriver.find_element(obj4).mobileY
+        TouchAction(self.driver).long_press(None,int(self.altdriver.find_element(obj3).x),int(self.altdriver.find_element(obj3).mobileY),4000)
+        sleep(2)
+                     
+        a1=TouchAction(self.driver)
+        a1.tap(None,int(self.altdriver.find_element(obj3).x),int(self.altdriver.find_element(obj3).mobileY))
+        a2=TouchAction(self.driver)
+        a2.tap(None,int(self.altdriver.find_element(obj2).x),int(self.altdriver.find_element(obj2).mobileY))
+        a3=TouchAction(self.driver)
+        a3.tap(None,int(self.altdriver.find_element(obj1).x),int(self.altdriver.find_element(obj1).mobileY))
+        a4=TouchAction(self.driver)
+        a4.tap(None,int(x_point),int(y_point))
+        ma = MultiAction(self.driver)
+        ma.add(a1,a2,a3,a4)
+        ma.perform()
+     
+    def multiple_drag_and_drop(self,drag1,drag2,buckt): 
+        sleep(9)
+        a1 = TouchAction(self.driver)
+        a1.long_press(None,585,269,2000).move_to(None,580,499)
+        a1.release().perform()
+        
+    def select_batch(self, object_name,expected_text):
+        try:
+            i = 0
+            sleep(2)
+            while i < 12:
+                i += 1
+                try:
+                    print object_name
+                    print expected_text
+                    self.text_tap(object_name, expected_text)
+                    break
+                except:
+                    print "not clicked on element" 
+        except:
+            self.get_server_logs()
+            assert False  
+

@@ -1,15 +1,22 @@
-import subprocess
 import os
+import subprocess
 import sys
-
-
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
+
+
+sys.path.append(PATH('./steps/'))
+from base_setup import BaseSetup
+
+
+
 sys.path.append(PATH('../generics/'))
 import test_management
 
+
+#python execution.py individual --tags=@G3MQ16-MCQ
 def create_feature(suite_ID, project_ID, run_ID):
     test_management.create_feature_file(suite_ID, project_ID, run_ID)
 
@@ -17,34 +24,53 @@ def start_execution(feature_file=None):
         
     if feature_file == None:
         subprocess.Popen(
-            'behave -D APP_PATH=C:\\Users\\Vinayaka\\Downloads\\k3_app.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234',
+            'behave -D APP_PATH=C:\\Users\\Administrator\\Downloads\\\k3_app.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234',
             shell=False)
     else:
         subprocess.Popen(
-            'behave -D APP_PATH=C:\\Users\\Vinayaka\\Downloads\\k3_app.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 '+feature_file,
+            'behave -D APP_PATH=C:\\Users\\Administrator\\Downloads\\\k3_app.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 '+feature_file,
             shell=False)
     
-                
-        
-# -f allure_behave.formatter:AllureFormatter -o ../execution_data/reports sys.argv[4]--processes 2 --parallel-element scenario 
-
-suite_id = str(sys.argv[1]).split(',')
-suite_len = len(suite_id)
-run_id = str(sys.argv[3]).split(',')
-run_len = len(run_id)
-if suite_len == run_len:
-    for i in range(suite_len):
-        create_feature(suite_id[i], str(sys.argv[2]), run_id[i])
-else:
-    print 'Invalid number of suites or runs'
+    
 
 
+def start_execution2(feature_file,sys_port,ports=None):
+    print feature_file[0]
+    processes = None
+    device_list=BaseSetup().get_list_of_devices()
+    for i in range(len(device_list)):
+        processes = subprocess.Popen(
+                   'behave -D APP_PATH=C:\\Users\\Vinayaka\\Downloads\\k3_app.apk -D SYSPORT='+str(sys_port[i])+' -D UDID=' + str(device_list[i]) + ' -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D PORT=' + str(ports[i]) +' -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 ' + feature_file[i],
+                   shell=False)
 
-# start_execution('--tags=@smoke3 final_quest.feature')
-# start_execution('check_stickers.feature')
-#start_execution(['worldmap.feature'], ['G5AXB731C368SNZ'], ['4225'])
-#create_feature(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
-#start_execution('--tags=@smoke mcq_batch1_G3MQ39.feature')
-#start_execution('-f allure_behave.formatter:AllureFormatter -o ../execution_data/reports Account_creation.feature InstallationOnboarding.feature Library.feature chapterandquestflow.feature parentzone.feature')
+
+a=13000
+tcp_port=[]
+print type(tcp_port)
+device_list=BaseSetup().get_list_of_devices()
+for i in range(len(device_list)):
+    tcp_port.append(a+i)
+
+print tcp_port
 
 
+
+b=4225
+appium_port=[]
+print type(tcp_port)
+device_list=BaseSetup().get_list_of_devices()
+
+for i in range(len(device_list)):
+    appium_port.append(b+i*100)
+print appium_port
+
+feature_file=[]
+print '----------'
+print len(sys.argv)
+print sys.argv[len(sys.argv)-1]
+for i in range(1,len(sys.argv)):
+    feature_file.append(sys.argv[i])
+print feature_file
+
+
+start_execution2(feature_file,tcp_port,appium_port)

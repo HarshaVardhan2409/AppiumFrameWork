@@ -38,3 +38,7 @@ class ClassificationStep(GenericStep):
             end_position = self.classification.get_object_location(row["draggable"])
             self.classification.verify_object_location(start_position, end_position, row["acceptable"])
     
+    @step('multiple drag and drop: "{option_1}" "{option_2}" "{option_3}"')
+    def select_multiple_options(self,option_1,option_2,option_3):
+        self.base_class.multiple_drag_and_drop(option_1,option_2,option_3)
+

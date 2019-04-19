@@ -6,6 +6,7 @@ from time import sleep
 import sys
 import os
 from ast import literal_eval
+import shutil
 
 from appium.webdriver.connectiontype import ConnectionType
 import json
@@ -254,3 +255,8 @@ for i in range(val):
     if(nam[i]=='device'):
         print(nam[i-1])
 '''
+    
+
+
+
+
