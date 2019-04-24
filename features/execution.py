@@ -1,16 +1,13 @@
 import os
 import subprocess
 import sys
+
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
-
-
 sys.path.append(PATH('./steps/'))
 from base_setup import BaseSetup
-
-
 
 sys.path.append(PATH('../generics/'))
 import test_management
@@ -20,15 +17,15 @@ import test_management
 def create_feature(suite_ID, project_ID, run_ID):
     test_management.create_feature_file(suite_ID, project_ID, run_ID)
 
-def start_execution(feature_file=None):
+def start_execution(sys_port, feature_file=None, ports=None):
         
     if feature_file == None:
         subprocess.Popen(
-            'behave -D APP_PATH=C:\\Users\\Administrator\\Downloads\\\k3_app.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234',
+            'behave -D APP_PATH=C:\\Users\\Vinayaka\\Downloads\\k3_app.apk -D SYSPORT='+str(sys_port[i])+' -D UDID=' + str(device_list[i]) + ' -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D PORT=' + str(ports[i]) +' -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234',
             shell=False)
     else:
         subprocess.Popen(
-            'behave -D APP_PATH=C:\\Users\\Administrator\\Downloads\\\k3_app.apk -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 '+feature_file,
+            'behave -D APP_PATH=C:\\Users\\Vinayaka\\Downloads\\k3_app.apk -D SYSPORT='+str(sys_port[i])+' -D UDID=' + str(device_list[i]) + ' -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D PORT=' + str(ports[i]) +' -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 '+feature_file,
             shell=False)
     
     
@@ -74,3 +71,4 @@ print feature_file
 
 
 start_execution2(feature_file,tcp_port,appium_port)
+# start_execution(tcp_port, '--tags=@smoke3 final_quest.feature', appium_port)

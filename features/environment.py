@@ -149,8 +149,8 @@ def after_all(context):
     
     if 'windows' in machine_type:
         # Use below code to Stop appium server on the local windows machine
-        #subprocess.Popen('Taskkill /IM adb.exe /F',shell=True)
-        #subprocess.Popen('Taskkill /IM node.exe /F',shell=True)
+#         subprocess.Popen('Taskkill /IM adb.exe /F',shell=True)
+#         subprocess.Popen('Taskkill /IM node.exe /F',shell=True)
         print ''
         
     else:

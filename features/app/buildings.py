@@ -20,13 +20,12 @@ class Buildings(BaseClass):
     
     
     def verify_quest_progression(self, object_name, text, total_tasks, completed_tasks):
-        text = str(lower(text.replace(' ', '-').replace('&', 'and')))
         self.altdriver.wait_for_element_where_name_contains(object_name)
         elements = self.altdriver.find_elements_where_name_contains(object_name)
         act_text = ''
         for i in range(len(elements)):
             try:
-                act_text = elements[i].get_component_property('Byjus.K123.Quests.QuestListViewItem', 'questNickname')
+                act_text = elements[i].get_component_property('Byjus.K123.Quests.QuestListViewItem', 'labelText')
             except:
                 print 'property not present'
             if text in act_text:
