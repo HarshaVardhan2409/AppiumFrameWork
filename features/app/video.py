@@ -135,7 +135,7 @@ class Video(BaseClass):
         directory = PATH('../../compare_images/actual_image.png')
         generics_lib.takescreenshot(self.driver, directory)
         directory2 = PATH('../../compare_images/expected_image.png')
-        score = generics_lib.compare_video_images(directory2, directory)
+        score = generics_lib.pixel_comparision(directory2, directory)
         assert score > 80
 
 

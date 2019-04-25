@@ -394,3 +394,14 @@ class GenericStep():
         And tap on element: "CloseButton"
         ''')
             
+    @step('pixel comparision of images for "image_name"')
+    def pixel_comparision(self, image_name):
+        generics_lib.takescreenshot(self.obj.driver, PATH('../../a_image/actual_'+image_name+'_pixel.png'))
+        generics_lib.pixel_comparision(PATH('../../a_image/'+image_name+'_pixel.png'), PATH('../../a_image/actual_'+image_name+'_pixel.png'))
+    
+
+    @step('color comparision of images for "image_name"')
+    def color_comparision(self, image_name):
+        generics_lib.takescreenshot(self.obj.driver, PATH('../../a_image/actual_'+image_name+'_color.png'))
+        generics_lib.color_comparision(PATH('../../a_image/'+image_name+'_color.png'), PATH('../../a_image/actual_'+image_name+'_color.png'))
+

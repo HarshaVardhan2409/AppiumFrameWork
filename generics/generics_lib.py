@@ -39,7 +39,7 @@ def action_sendkeys_to_elements(driver, text):
 def takescreenshot(driver, path):
     driver.save_screenshot(path)
     
-def compare_images(image_1, image_2):
+def color_comparision(image_1, image_2):
     resize_image(image_1)
     resize_image(image_2)
     file1 = image_1
@@ -83,9 +83,9 @@ def normalize(arr):
     amin = arr.min()
     return (arr-amin)*255/rng
 
-def compare_video_images(file1, file2):
-    resize_image(file1)
-    resize_image(file2)
+def pixel_comparision(file1, file2):
+#     resize_image(file1)
+#     resize_image(file2)
     img_a = to_grayscale(imread(file1).astype(float))
     img_b = to_grayscale(imread(file2).astype(float))
     

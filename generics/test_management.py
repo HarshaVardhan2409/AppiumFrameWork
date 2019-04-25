@@ -230,7 +230,11 @@ def create_feature_file(suite_ID, project_ID, run_ID):
                     print ''
                 
                 f = open(PATH('../features/' + feature_name + '_'  + str(get_section(str(section_id_2))['name']) + '.feature'), "w+")
-                filedata = "@" + str(get_section(str(section_id_2))['name']) + '\nFeature: ' + str(get_section(str(section_id_2))['name']) + '\n'
+                
+                tag = str(get_section(str(section_id_2))['name'])
+                tag_name = tag.split('_')
+                
+                filedata = "@" + tag_name[0] + tag_name[1] + '\nFeature: ' + str(get_section(str(section_id_2))['name']) + '\n'
                 count += 1
                 if case['custom_background'] != None:
                     filedata += ('\n\nBackground: ' + case['custom_background'].strip())
@@ -349,6 +353,7 @@ def create_feature_file_tags(suite_ID, project_ID, run_ID, tag_name=None):
                 
                 f = open(PATH('../features/' + feature_name + '_'  + str(get_section(str(section_id_2))['name']) + '.feature'), "w+")
                 filedata = "@" + str(get_section(str(section_id_2))['name']) + '\nFeature: ' + str(get_section(str(section_id_2))['name']) + '\n'
+                
                 count += 1
                 if case['custom_background'] != None:
                     filedata += ('\n\nBackground: ' + case['custom_background'].strip())

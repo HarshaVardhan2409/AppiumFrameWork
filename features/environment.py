@@ -33,6 +33,20 @@ def before_all(context):
     BaseSetup.platform = device_type
     BaseSetup.system_os = machine_type
     BaseClass.platform = device_type
+    '''
+    closing the appium server
+    '''
+    
+    if 'windows' in machine_type:
+        # Use below code to Stop appium server on the local windows machine
+        subprocess.Popen('Taskkill /IM adb.exe /F',shell=True)
+        subprocess.Popen('Taskkill /IM node.exe /F',shell=True)
+        print ''
+        
+    else:
+        # Use below code to stop appium server on the local mac machine
+        subprocess.Popen('killall node',shell=True)
+        
     print "==================port value======"
     print BaseSetup.port
     print "===============port value========="
@@ -139,20 +153,7 @@ def after_scenario(context, scenario):
         print 'Test case ID or the Test Run ID does not match'
     
 
-def after_all(context):
-    context.obj = obj
+# def after_all(context):
+#     context.obj = obj
+#     machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
     
-    machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
-    '''
-    closing the appium server
-    '''
-    
-    if 'windows' in machine_type:
-        # Use below code to Stop appium server on the local windows machine
-#         subprocess.Popen('Taskkill /IM adb.exe /F',shell=True)
-#         subprocess.Popen('Taskkill /IM node.exe /F',shell=True)
-        print ''
-        
-    else:
-        # Use below code to stop appium server on the local mac machine
-        subprocess.Popen('killall node',shell=True)
