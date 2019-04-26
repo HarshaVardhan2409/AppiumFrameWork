@@ -73,7 +73,7 @@ class GenericStep():
         self.base_class.wait_for_scene('Onboarding')
         self.base_class.tap('Button')
         
-    @step('GameMapScreen is loaded with test credentials: "{number}"')
+    """@step('GameMapScreen is loaded with test credentials: "{number}"')
     def gamemapscreen_testcredentials(self, number):
         self.path = PATH('../../config/config.json')
         try:
@@ -113,7 +113,102 @@ class GenericStep():
             | object_name | text |
             | Text | utomation |
             And custom wait: "3"
-            ''')
+            ''')"""
+    @step('GameMapScreen is loaded with test credentials: "{number}" "{version}"')
+
+    def gamemapscreen_testcredentials_version(self, number,version):
+                #self.path = PATH('../../config/config.json')
+                self.execute_steps(u'''
+                Given launch the app
+                ''')
+                #self.obj.install_app()
+                self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+                try:
+                   print "entered try"
+                   self.base_class.verify_scene('Loading')
+                   self.base_class.verify_the_element_on_screen('loadingbg/Canvas/Text')
+                   versi1=self.base_class.get_text('loadingbg/Canvas/Text')
+                   print "entered app and checking version"
+                   print version
+                   assert str(versi1) in str(version)
+                   self.base_class.verify_scene('GameMapScreen')
+                   self.base_class.wait_for_element_not_present('Interstitial')
+                   self.base_class.verify_scene('GameMapScreen')
+                   #self.base_class.verify_text_for_duplicate_objects('Text', 'utomation')
+                  
+                except:
+                    print "entered except"
+                    self.base_class.wait_for_scene('Onboarding')
+                    try:
+                       self.base_class.tap('Button')
+                    except:
+                        self.execute_steps(u'''
+                        When custom wait: "3"
+                        And tap on element with text: "None of the above"
+                        ''')
+
+                    self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+                    self.base_class.enter_text_app('MobilePanel/InputFieldPrefab', number)
+                    self.execute_steps(u'''
+                    When tap on element: "Toggler"
+                    And tap on element: "NextButton"
+                    Then verify the element:
+                      | object_name            |
+                      | OTPVerification(Clone) |
+                    When enter the: "otp": "1234" in element: "InputFieldPrefab"
+                    ''')
+                    self.obj.install_app()
+                    versi1=self.base_class.get_text('loadingbg/Canvas/Text')
+                    print "entered app and checking version"
+                    print version
+                    assert str(versi1) in str(version)
+                    self.base_class.verify_scene('GameMapScreen')
+                    self.base_class.wait_for_element_not_present('Interstitial')
+                    self.base_class.verify_scene('GameMapScreen')
+    
+    @step('GameMapScreen is loaded with test credentials: "{number}" ')
+
+    def gamemapscreen_testcredentials(self, number):
+                #self.path = PATH('../../config/config.json')
+                self.execute_steps(u'''
+                Given launch the app
+                ''')
+                #self.obj.install_app()
+                self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+                try:
+                   print "entered try"
+                   self.base_class.verify_scene('GameMapScreen')
+                   self.base_class.wait_for_element_not_present('Interstitial')
+                   self.base_class.verify_scene('GameMapScreen')
+                   #self.base_class.verify_text_for_duplicate_objects('Text', 'utomation')
+                  
+                except:
+                    print "entered except"
+                    self.base_class.wait_for_scene('Onboarding')
+                    try:
+                       self.base_class.tap('Button')
+                    except:
+                        self.execute_steps(u'''
+                        When custom wait: "3"
+                        And tap on element with text: "None of the above"
+                        ''')
+
+                    self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+                    self.base_class.enter_text_app('MobilePanel/InputFieldPrefab', number)
+                    self.execute_steps(u'''
+                    When tap on element: "Toggler"
+                    And tap on element: "NextButton"
+                    Then verify the element:
+                      | object_name            |
+                      | OTPVerification(Clone) |
+                    When enter the: "otp": "1234" in element: "InputFieldPrefab"
+                    ''')
+                    self.obj.install_app()
+                    self.base_class.verify_scene('Loading')
+                    self.base_class.verify_the_element_on_screen('loadingbg/Canvas/Text')
+                    self.base_class.verify_scene('GameMapScreen')
+                    self.base_class.wait_for_element_not_present('Interstitial')
+                    self.base_class.verify_scene('GameMapScreen')
             
     @step('GameMapScreen is loaded')
     def gamemap_scene_loaded(self):
@@ -377,8 +472,13 @@ class GenericStep():
 
     @step('verify hint') 
     def verfiy_hint(self):
-        for row in self.table:
-            self.base_class.verify_presence_of_hint(row['object_name'])
+        try:
+            for row in self.table:
+                self.base_class.verify_presence_of_hint(row['object_name'])
+        except:
+            self.execute_steps(u'''
+              Then verify HintBulb content
+             ''')  
             
     @step('verify HintBulb content') 
     def verfiy_hint_content(self):

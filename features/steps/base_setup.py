@@ -32,7 +32,7 @@ class BaseSetup():
     port = None
     udid = None
     version=None
-    def install_app(self):
+    """def install_app(self):
         print '---------udid and port---------------------------'
         print self.udid
         print self.port
@@ -54,7 +54,34 @@ class BaseSetup():
         print "================================="
         
         self.altdriver = AltrunUnityDriver(self.driver, self.platform,TCP_FWD_PORT=int(self.sys_port),deviceID=self.udid,requestEnd='#')
-        
+        """
+    def install_app(self):
+
+        print '---------udid and port---------------------------'
+        print self.udid
+        print self.port
+        print '------------------------------------'
+        self.desired_caps = {}
+        if ("android" in self.platform.lower()):
+            self.setup_android()
+        elif ("ios" in self.platform.lower()):
+            self.setup_ios()
+        else:
+            print 'platform do not match'
+          
+        self.ip_address = generics_lib.get_data(constants.CONFIG_PATH, 'appium_server', 'ip_address')
+
+        package_name=generics_lib.get_data(constants.CONFIG_PATH, 'app_config', 'app_package')
+        #self.port = generics_lib.get_data(constants.CONFIG_PATH, 'appium_server', 'port')
+        self.driver = webdriver.Remote('http://'+self.ip_address+':'+self.port+'/wd/hub', self.desired_caps)
+        self.driver.implicitly_wait(20)
+        self.altdriver = AltrunUnityDriver(self.driver, self.platform,TCP_FWD_PORT=int(self.sys_port),deviceID=self.udid,requestEnd='#')
+        versi2= str(self.version).replace('@','')
+        #self.altdriver.wait_for_current_scene_to_be('Loading')
+        """ versi1 = self.altdriver.wait_for_element('loadingbg/Canvas/Text').get_text()
+        print "entered install app"
+        versi2= str(self.version).replace('@','')
+        assert str(versi1) in str(versi2)"""
         
     def teardown(self):
         
@@ -68,6 +95,7 @@ class BaseSetup():
     def setup_android(self):
         self.desired_caps['platformName'] = 'android'
         self.desired_caps['deviceName'] = 'device'
+        self.desired_caps['noReset'] = True
         self.desired_caps['udid'] = self.udid
         self.desired_caps['app'] = self.app_path
         self.desired_caps['newCommandTimeout'] = 300
@@ -77,6 +105,7 @@ class BaseSetup():
         self.desired_caps['platformName'] = 'iOS'
         self.desired_caps['deviceName'] = 'device'
         self.desired_caps['automationName'] = 'XCUITest'
+        self.desired_caps['noReset'] = True
         self.desired_caps['app'] = self.app_path
         self.desired_caps['newCommandTimeout'] = 300
         
