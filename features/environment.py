@@ -89,7 +89,9 @@ def before_all(context):
     port forwarding for android and ios
     Handled while creating AltrunUnityDriver
     '''
-    
+     sleep(10)
+    print "starting server"
+
     '''
     starting appium server
     '''
