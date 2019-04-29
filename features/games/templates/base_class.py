@@ -30,6 +30,7 @@ class BaseClass():
     driver = None
     platform = None
     desired_caps = None
+    i=1
     
     def __init__(self, altdriver, driver):
         self.altdriver = altdriver
