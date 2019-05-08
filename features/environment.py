@@ -89,9 +89,8 @@ def before_all(context):
     port forwarding for android and ios
     Handled while creating AltrunUnityDriver
     '''
-     sleep(10)
+    sleep(10)
     print "starting server"
-
     '''
     starting appium server
     '''
@@ -122,6 +121,14 @@ def before_feature(context, feature):
     '''
     capturing the logs for every feature files
     '''
+     
+    if 'android' in device_type:
+        subprocess.Popen('adb -s'+BaseSetup.udid+'logcat -c', shell=True)
+        package_name = generics_lib.get_data(constants.CONFIG_PATH, 'app_config', 'logs')
+        if 'windows' in machine_type:
+            subprocess.Popen('adb -s'+BaseSetup.udid+'logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
+        else:
+            subprocess.Popen('adb -s'+BaseSetup.udid+' logcat | grep ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
     
 def before_scenario(context, scenario):
     data = None
