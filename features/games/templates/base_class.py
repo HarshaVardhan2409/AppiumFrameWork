@@ -30,6 +30,7 @@ class BaseClass():
     driver = None
     platform = None
     desired_caps = None
+    i=1
     
     def __init__(self, altdriver, driver):
         self.altdriver = altdriver
@@ -147,34 +148,50 @@ class BaseClass():
         self.altdriver.wait_for_element_with_text(object_name, text)
         
     def verify_text(self, object_name, expected_text):
-        self.altdriver.wait_for_element(object_name)
-        actual_text = self.get_text(object_name)
-        actual_text = str(actual_text)
-        print '---------'
-        text = actual_text.split()
-        actual_text = " ".join(text)
-        print '---------'
-        value = self.check_status(object_name)
-        count = 0
-        while 'rue' not in value:
-            sleep(0.2)
-            count += 1
-            if count >=20:
-                break
-        assert 'rue' in value
-        print '-----------------------------'
-        print actual_text
-        print type(actual_text)
+        try:
+            self.altdriver.wait_for_element(object_name)
+            actual_text = self.get_text(object_name)
+            actual_text = str(actual_text)
+            print '---------'
+            text = actual_text.split()
+            str4=""
+            for i in range(len(text)):
+                if text[i].startswith('<'):
+                    str3=text[i].split('>')
+                    text[i]=str3[1]
+                    str4=str4+' '+text[i]
+                    print text[i]
+                else:
+                    str4=str4+' '+text[i]
+            actual_text=str4
+            print '---------'
+            value = self.check_status(object_name)
+            count = 0
+            while 'rue' not in value:
+                sleep(0.2)
+                count += 1
+                if count >=20:
+                    break
+            assert 'rue' in value
+            print '-----------------------------'
+            print actual_text
+            print type(actual_text)
+            if '”' in actual_text:
+                actual_text = actual_text.replace('”', '"')
+            if '“' in actual_text:
+                actual_text = actual_text.replace('“', '"')
+            if '’' in actual_text:
+                actual_text = actual_text.replace('’', "'")
+            print '----------------================='
+            print expected_text
+            exp_t="".join(expected_text.split(" "))
+            act_t="".join(actual_text.split(" "))
+            assert exp_t in act_t
+        except:
+            self.get_server_logs()
+            assert exp_t in act_t
         
-        if '”' in actual_text:
-            actual_text = actual_text.replace('”', '"')
-        if '“' in actual_text:
-            actual_text = actual_text.replace('“', '"')
-        if '’' in actual_text:
-            actual_text = actual_text.replace('’', "'")
-        print '----------------================='
-        print actual_text
-        assert expected_text in actual_text
+        
         
     def verify_text_for_duplicate_objects(self, object_name, expected_text):
         elements = self.altdriver.find_elements(object_name)
@@ -409,6 +426,20 @@ class BaseClass():
                 sleep(1)
                 
     def verify_text_for_game_objects(self, object_name, expected_text):
+            elements = self.altdriver.find_elements(object_name)
+            for i in range(len(elements)):
+                actual_text = elements[i].get_text()
+                #actual_text = actual_text.split(' ')
+                expected_text = str(expected_text)
+                #actual_text = actual_text[0]
+                if expected_text in actual_text:
+                    print 'found........................................................................'
+                    sleep(0.5)
+                    elements[i].tap()
+                    break
+            assert expected_text in actual_text
+       
+    """def verify_text_for_game_objects(self, object_name, expected_text):
         elements = self.altdriver.find_elements(object_name)
         for i in range(len(elements)):
             actual_text = elements[i].get_text()
@@ -420,9 +451,9 @@ class BaseClass():
                 sleep(0.5)
                 elements[i].tap()
                 break
-        assert expected_text in actual_text
+        assert expected_text in actual_text"""
 
-    def verify_presence_of_hint(self,object_name):
+    """def verify_presence_of_hint(self,object_name):
     # try:
         self.altdriver.wait_for_element(object_name)
         #except:
@@ -434,8 +465,22 @@ class BaseClass():
             #self.assertNotEqual(glow_range, 0)
         except:
             print "hint not displayed"
-        assert glow_range > 0
+        assert glow_range > 0"""
         
+    def verify_presence_of_hint(self,object_name):
+        try:
+            try:
+                self.altdriver.wait_for_element(object_name)
+            except:
+                try:
+                    self.altdriver.wait_for_element(object_name).get_component_property("Byjus.K123.Templates.MCQ.SpriteOuterGlow", "glowColor")
+                except:
+                    print "hint not dispayed"
+                    #assert False
+        except:
+            self.get_server_logs()
+            assert False
+            
     def verify_presence_of_hint2(self,object_name):
         self.altdriver.wait_for_element(object_name)
         self.altdriver.wait_for_element(object_name).get_component_property("Byjus.K123.Templates.MCQ.SpriteOuterGlow", "glowColor")

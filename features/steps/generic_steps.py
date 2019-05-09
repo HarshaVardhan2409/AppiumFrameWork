@@ -72,47 +72,116 @@ class GenericStep():
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
         self.base_class.wait_for_scene('Onboarding')
         self.base_class.tap('Button')
-        
-    @step('GameMapScreen is loaded with test credentials: "{number}"')
-    def gamemapscreen_testcredentials(self, number):
-        self.path = PATH('../../config/config.json')
+  
+    @step('GameMapScreen is loaded with test credentials: "{number}" "{version}"')
+
+    def gamemapscreen_testcredentials_version(self, number,version):
+        #self.path = PATH('../../config/config.json')
+        self.obj.launch_app()
+        self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
         try:
-            self.obj.launch_app(generics_lib.get_data(self.path, 'app_config', "app_package"), generics_lib.get_data(self.path, 'app_config', "app_activity"), 'True')
-            print '1st'
-            self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+            print "entered try"
+            self.base_class.verify_scene('Loading')
+            self.base_class.verify_the_element_on_screen('loadingbg/Canvas/Text')
+            versi1=self.base_class.get_text('loadingbg/Canvas/Text')
+            print "entered app and checking version"
+            print version
+            assert str(versi1) in str(version)
             self.base_class.verify_scene('GameMapScreen')
             self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
             self.base_class.verify_scene('GameMapScreen')
         except:
-            print '3rd'
+            print "entered except"
+            self.base_class.wait_for_scene('Onboarding')
             try:
-                self.obj.teardown()
+                self.base_class.tap('Button')
+                self.execute_steps(u'''
+                When custom wait: "3"
+                And tap on element with text: "None of the above"
+                ''')
             except:
-                print 'not launched'
-            print '4th'
-            self.execute_steps(u'''
-            Given launch the app
-            And Onboarding scene is loaded
-            When custom wait: "3"
-            And tap on element with text: "None of the above"
-            ''')
+                self.execute_steps(u'''
+                When custom wait: "3"
+                And tap on element with text: "None of the above"
+                ''')
+
             self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
             self.base_class.enter_text_app('MobilePanel/InputFieldPrefab', number)
             self.execute_steps(u'''
             When tap on element: "Toggler"
             And tap on element: "NextButton"
             Then verify the element:
-            | object_name            |
-            | OTPVerification(Clone) |
+                | object_name            |
+               | OTPVerification(Clone) |
             When enter the: "otp": "1234" in element: "InputFieldPrefab"
+            And custom wait: "3"
+            ''')
+            self.base_class.verify_scene('GameMapScreen')
+            self.base_class.wait_for_element_not_present('Interstitial')
+            self.base_class.verify_scene('GameMapScreen')
+            
+            self.execute_steps(u'''
+            Given ParentZone scene is loaded
+            ''')
+            sleep(3)
+            versi1=self.base_class.get_text('VersionNumber')
+            print "entered app and checking version"
+            print version
+            assert str(versi1) in str(version)
+            self.base_class.tap('BackButton')
+            sleep(8)
+            
+    @step('GameMapScreen is loaded with test credentials: "{number}"')
+
+    def gamemapscreen_testcredentials(self, number):
+        #self.path = PATH('../../config/config.json')
+        self.obj.launch_app()
+        self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+        try:
+            print "entered try"
+            self.base_class.verify_scene('GameMapScreen')
+            self.base_class.wait_for_element_not_present('Interstitial')
+            self.base_class.verify_scene('GameMapScreen')
+            #self.base_class.verify_text_for_duplicate_objects('Text', 'utomation')
+                  
+        except:
+            print "entered except"
+            self.base_class.wait_for_scene('Onboarding')
+            try:
+                self.base_class.tap('Button')
+                self.execute_steps(u'''
+                When custom wait: "3"
+                And tap on element with text: "None of the above"
+                ''')
+            except:
+                self.execute_steps(u'''
+                When custom wait: "3"
+                And tap on element with text: "None of the above"
+                ''')
+
+            self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+            self.base_class.enter_text_app('MobilePanel/InputFieldPrefab', number)
+            self.execute_steps(u'''
+            When tap on element: "Toggler"
+            And tap on element: "NextButton"
+            Then verify the element:
+                | object_name            |
+               | OTPVerification(Clone) |
+            When enter the: "otp": "1234" in element: "InputFieldPrefab"
+<<<<<<< HEAD
             And scene is loaded: "GameMapScreen"
             And wait for object not to be present: "Interstitial/FadeTransition-Loading"
             And scene is loaded: "GameMapScreen"
             And verify text lines in multiple text boxes for object with same names:
             | object_name | text |
             | Text | utomation |
+=======
+>>>>>>> c66940c0d4815013a288c0d88f19293340a4b65e
             And custom wait: "3"
             ''')
+            self.base_class.verify_scene('GameMapScreen')
+            self.base_class.wait_for_element_not_present('Interstitial')
+            self.base_class.verify_scene('GameMapScreen')
             
     @step('GameMapScreen is loaded')
     def gamemap_scene_loaded(self):
@@ -303,7 +372,6 @@ class GenericStep():
         if "None of the" in text:
             try:
                 self.base_class.tap("InputFieldPrefab/Text")
-                self.obj.driver.implicitly_wait(5)
                 try:
                     self.base_class.tap_element_text(text)
                 except:
@@ -374,13 +442,39 @@ class GenericStep():
     def uninstall_app(self):
         self.obj.driver.remove_app('com.byjus.k3')
 
+
     @step('verify hint') 
     def verfiy_hint(self):
-        for row in self.table:
-            self.base_class.verify_presence_of_hint(row['object_name'])
+        try:
+            for row in self.table:
+                self.base_class.verify_presence_of_hint(row['object_name'])
+        except:
+            self.execute_steps(u'''
+              Then verify HintBulb content
+             ''')  
+      
             
     @step('verify HintBulb content') 
     def verfiy_hint_content(self):
+        self.execute_steps(u'''
+        When verify the element:
+            | object_name |
+            | HintBulbImage |
+        And tap on element: "HintBulbImage"
+        ''')
+        try:
+            self.execute_steps(u'''
+            And verify the element:
+                | object_name |
+                | HintPanel |
+                | HintImage |
+            And tap on element: "CloseButton"
+            ''')
+        except:
+            print "Hint image without popup"
+            
+    @step('verify HintBulb content "{img_name}"') 
+    def verfiy_hint_content1(self,img_name):
         self.execute_steps(u'''
         When verify the element:
             | object_name |
@@ -390,16 +484,17 @@ class GenericStep():
             | object_name |
             | HintPanel |
             | HintImage |
+        And pixel comparision of images for "{img_name}"
         And tap on element: "CloseButton"
-        ''')
+        '''.format(img_name=img_name))
             
-    @step('pixel comparision of images for "image_name"')
+    @step('pixel comparision of images for "{image_name}"')
     def pixel_comparision(self, image_name):
         generics_lib.takescreenshot(self.obj.driver, PATH('../../a_image/actual_'+image_name+'_pixel.png'))
         generics_lib.pixel_comparision(PATH('../../a_image/'+image_name+'_pixel.png'), PATH('../../a_image/actual_'+image_name+'_pixel.png'))
     
 
-    @step('color comparision of images for "image_name"')
+    @step('color comparision of images for "{image_name}"')
     def color_comparision(self, image_name):
         generics_lib.takescreenshot(self.obj.driver, PATH('../../a_image/actual_'+image_name+'_color.png'))
         generics_lib.color_comparision(PATH('../../a_image/'+image_name+'_color.png'), PATH('../../a_image/actual_'+image_name+'_color.png'))

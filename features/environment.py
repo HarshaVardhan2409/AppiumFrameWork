@@ -33,6 +33,7 @@ def before_all(context):
     BaseSetup.platform = device_type
     BaseSetup.system_os = machine_type
     BaseClass.platform = device_type
+    
     '''
     closing the appium server
     '''
@@ -46,9 +47,6 @@ def before_all(context):
     else:
         # Use below code to stop appium server on the local mac machine
         subprocess.Popen('killall node',shell=True)
-        
-    sleep(20)
-        
     print "==================port value======"
     print BaseSetup.port
     print "===============port value========="
@@ -89,7 +87,8 @@ def before_all(context):
     port forwarding for android and ios
     Handled while creating AltrunUnityDriver
     '''
-    
+    sleep(10)
+    print "starting server"
     '''
     starting appium server
     '''
@@ -98,12 +97,36 @@ def before_all(context):
     context.obj = obj
     
 def before_feature(context, feature):
+
     device_type = str(context.config.userdata['DEVICE_TYPE']).lower()
     machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
-    
+
+    dirname = os.path.dirname(__file__)
+    print "entering before feature"
+    print dirname
+    print feature.name
+    #filename=constants.PATH(feature.name+'.feature')
+
+    filename = os.path.join(dirname,feature.name+'.feature')
+    f = open(filename,'r')
+    for line in f:
+        if '@B' not in line:
+            vers=line
+            break
+    f.close()
+    BaseSetup.version =vers
+    print BaseSetup.version
     '''
     capturing the logs for every feature files
     '''
+     
+    if 'android' in device_type:
+        subprocess.Popen('adb -s'+BaseSetup.udid+'logcat -c', shell=True)
+        package_name = generics_lib.get_data(constants.CONFIG_PATH, 'app_config', 'logs')
+        if 'windows' in machine_type:
+            subprocess.Popen('adb -s'+BaseSetup.udid+'logcat | findstr ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
+        else:
+            subprocess.Popen('adb -s'+BaseSetup.udid+' logcat | grep ' + package_name + ' > ' + constants.PATH('../execution_data/app_logs/logs_' + feature.name + '.txt'), shell=True)
     
 def before_scenario(context, scenario):
     data = None
@@ -155,7 +178,20 @@ def after_scenario(context, scenario):
         print 'Test case ID or the Test Run ID does not match'
     
 
-# def after_all(context):
-#     context.obj = obj
-#     machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
+def after_all(context):
+    context.obj = obj
     
+    machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
+    '''
+    closing the appium server
+    '''
+    
+    if 'windows' in machine_type:
+        # Use below code to Stop appium server on the local windows machine
+#         subprocess.Popen('Taskkill /IM adb.exe /F',shell=True)
+#         subprocess.Popen('Taskkill /IM node.exe /F',shell=True)
+        print ''
+        
+    else:
+        # Use below code to stop appium server on the local mac machine
+        subprocess.Popen('killall node',shell=True)

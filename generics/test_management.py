@@ -195,7 +195,7 @@ def get_section(section_ID):
     return section
         
 def create_feature_file(suite_ID, project_ID, run_ID):
-    delete_feature_files()
+    #delete_feature_files()
     client = APIClient(testrail_url)
     client.user = testrail_username
     client.password = testrail_password
@@ -229,12 +229,14 @@ def create_feature_file(suite_ID, project_ID, run_ID):
                 except:
                     print ''
                 
-                f = open(PATH('../features/' + feature_name + '_'  + str(get_section(str(section_id_2))['name']) + '.feature'), "w+")
-                
-                tag = str(get_section(str(section_id_2))['name'])
-                tag_name = tag.split('_')
-                
-                filedata = "@" + tag_name[0] + tag_name[1] + '\nFeature: ' + str(get_section(str(section_id_2))['name']) + '\n'
+                f = open(PATH('../features/' + str(get_section(str(section_id_2))['name']) + '.feature'), "w+")
+                tag=str(get_section(str(section_id_2))['name'])
+                print tag
+                tag_name=tag.split('_')
+                #print tag_name[0]
+                #print (str(section_id_2))
+                #filedata = "@" + str(get_section(str(section_id_2))['name']) + '\nFeature: ' + str(get_section(str(section_id_2))['name']) + '\n'
+                filedata = "@" + tag_name[0] + tag_name[1]+ '\nFeature: ' + str(get_section(str(section_id_2))['name']) + '\n'
                 count += 1
                 if case['custom_background'] != None:
                     filedata += ('\n\nBackground: ' + case['custom_background'].strip())
@@ -353,7 +355,6 @@ def create_feature_file_tags(suite_ID, project_ID, run_ID, tag_name=None):
                 
                 f = open(PATH('../features/' + feature_name + '_'  + str(get_section(str(section_id_2))['name']) + '.feature'), "w+")
                 filedata = "@" + str(get_section(str(section_id_2))['name']) + '\nFeature: ' + str(get_section(str(section_id_2))['name']) + '\n'
-                
                 count += 1
                 if case['custom_background'] != None:
                     filedata += ('\n\nBackground: ' + case['custom_background'].strip())
@@ -387,5 +388,8 @@ def get_run(run_id):
         print cases[i]
         print '---------------------------------------------------------------------'
     '''
-    
-    
+
+#create_feature_file('96', '2', '93')    
+#get_run('4020')
+#create_feature_file('103', '2', '102')
+#add_run('new_run_2', 'K3', '59')
