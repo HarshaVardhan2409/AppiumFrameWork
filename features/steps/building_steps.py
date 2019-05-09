@@ -28,29 +28,13 @@ class BuildingSteps(GenericStep):
         for row in self.table:
             self.buildings.scroll_verify_quest(row['quest_name'])
             self.buildings.verify_quest_progression('QuestItem ', row['quest_name'], row['total_tasks'], row['completed_tasks'])
-    
-    @step('select the quest with element: "{object_name}" and quest nickname: "{quest_nickname}"')
-    def select_tasks(self, object_name, quest_nickname):
-        self.buildings = Buildings(self.obj.altdriver, self.obj.driver)
-        self.buildings.select_quest(object_name, quest_nickname)
 
-
-    @step('select the building with element: "{object_name}" and building name: "{building_name}"')
-    def select_building_name(self, object_name, building_name):
-        self.buildings = Buildings(self.obj.altdriver, self.obj.driver)
-        self.buildings.select_building(object_name, building_name)
-        
-    @step('scroll and verify all the buildings')
-    def verify_all_buildings(self):
-        self.buildings = Buildings(self.obj.altdriver, self.obj.driver)
-        self.buildings.scroll_verify_all_buildings
-        
     @step('tap on building "{building_name}"')
     def select_building(self, building_name):
         self.buildings = Buildings(self.obj.altdriver, self.obj.driver)
         self.buildings.select_building('Building_', building_name)
         self.base_class.wait_for_scene('Quests')
-        self.base_class.wait_for_element_not_present('Interstitial')
+        self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
         self.base_class.wait_for_element_display('BackButton')
 
     @step('tap on quest "{quest_name}"')
@@ -58,7 +42,7 @@ class BuildingSteps(GenericStep):
         self.buildings = Buildings(self.obj.altdriver, self.obj.driver)
         self.buildings.select_quest('Task Name', quest_name)
         self.base_class.wait_for_scene('Tasks')
-        self.base_class.wait_for_element_not_present('Interstitial')
+        self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
 
     @step('tap on task "{task_number}"')
     def select_task_video(self, task_number):
@@ -86,15 +70,20 @@ class BuildingSteps(GenericStep):
     def quests_loaded(self):
         self.buildings = Buildings(self.obj.altdriver, self.obj.driver)
         self.base_class.wait_for_scene('Quests')
-        self.base_class.wait_for_element_not_present('Interstitial')
+        self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
         self.base_class.wait_for_element_display('BackButton')
     
     @step('task is loaded')
     def tasks_loaded(self):
         self.buildings = Buildings(self.obj.altdriver, self.obj.driver)
         self.base_class.wait_for_scene('Tasks')
-        self.base_class.wait_for_element_not_present('Interstitial')
-        self.base_class.wait_for_element_display('BackButton')
+        self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
+        self.base_class.wait_for_element_display('BackButton', exit_count=8)
+        
+    @step('video is completed')
+    def video_completed(self):
+        self.base_class.verify_the_element_on_screen('Interstitial/FadeTransition-Loading')
+        self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
         
     @step('verify the stickers from quest')
     def verify_stickers_quest(self):

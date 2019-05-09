@@ -12,8 +12,7 @@ import test_management
 
 def create_feature(suite_ID, project_ID, run_ID):
     test_management.create_feature_file(suite_ID, project_ID, run_ID)
-
-# -f allure_behave.formatter:AllureFormatter -o ../execution_data/reports sys.argv[4]--processes 2 --parallel-element scenario 
+ 
 
 suite_id = str(sys.argv[1]).split(',')
 suite_len = len(suite_id)
@@ -25,6 +24,4 @@ if suite_len == run_len:
 else:
     print 'Invalid number of suites or runs'
 
-#start_execution('-f allure_behave.formatter:AllureFormatter -o ../execution_data/reports Account_creation.feature InstallationOnboarding.feature Library.feature chapterandquestflow.feature parentzone.feature')
-
-
+# create_feature('100', '2', '98')

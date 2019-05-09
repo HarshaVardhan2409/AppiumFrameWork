@@ -89,7 +89,7 @@ class BaseClass():
         elif 'true' in lower(check_status):
             assert int(start_position['x']) != int(end_position['x']) or int(start_position['y']) != int(end_position['y'])
     
-    def wait_for_element_display(self, object_name):
+    def wait_for_element_display(self, object_name, exit_count=20):
         value1 = self.get_object_location(object_name)
         rotation1 = None
         rotation2 = None
@@ -140,7 +140,7 @@ class BaseClass():
             if 'dict' in str(type(rotation2)):
                 rotation2 = (rotation2['x'], rotation2['y'], rotation2['z'])
             count = count + 1
-            if count == 20:
+            if count == exit_count:
                 break
     
     def wait_for_element_contains_text(self, object_name, text):

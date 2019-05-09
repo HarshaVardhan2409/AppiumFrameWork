@@ -61,7 +61,7 @@ class InstallationOnboarding(GenericStep):
         | OTPVerification(Clone) |
         When enter the: "otp": "1234" in element: "InputFieldPrefab"
         Then scene is loaded: "GameMapScreen"
-        And wait for object not to be present: "Interstitial"
+        And wait for object not to be present: "Interstitial/FadeTransition-Loading"
         And custom wait: "3"
         ''')
         
@@ -122,7 +122,7 @@ class InstallationOnboarding(GenericStep):
     def landscape_on_gamemapscreen(self):
         self.execute_steps(u'''
         Then scene is loaded: "GameMapScreen"
-        And wait for object not to be present: "Interstitial"
+        And wait for object not to be present: "Interstitial/FadeTransition-Loading"
         And verify orientation is landscape
         ''')
 

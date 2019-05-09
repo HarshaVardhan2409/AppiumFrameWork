@@ -218,7 +218,6 @@ class Video(BaseClass):
                     print "====================================="
                     print 'clicked play...............'
                     self.driver.find_element(By.ID, "com.byjus.k3:id/exo_play").click()
-                    sleep(10)
                     break
         else:
             print 'Given duration is out of total duration.........'
@@ -233,11 +232,25 @@ class Video(BaseClass):
         while flag == True and count < 20:
             count += 1
             try:
-                self.driver.implicitly_wait(1)
+                self.driver.implicitly_wait(0.5)
+                try:
+                    while self.driver.find_element(By.ID, "com.byjus.k3:id/exo_buffering").is_displayed():
+                        print 'Video loading present..................'
+                        sleep(0.2)
+                except:
+                    print 'video loading not present............'
                 self.action.tap(x = x, y = y).perform()
                 self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration")
                 self.driver.implicitly_wait(20)
                 flag = False
             except:
                 flag = True
+                
+    def wait_to_load(self):
+        try:
+            while self.driver.find_element(By.ID, "com.byjus.k3:id/exo_buffering").is_displayed():
+                print 'Video loading present..................'
+                sleep(0.2)
+        except:
+            print 'video loading not present............'
 

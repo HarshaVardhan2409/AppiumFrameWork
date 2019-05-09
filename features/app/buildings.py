@@ -143,12 +143,12 @@ class Buildings(BaseClass):
            
     def select_building(self, object_name, building_name):
         dSize = (self.driver.get_window_size())
-        width = int(dSize['width']) - 50
+        width = int(dSize['width']) - 20
         x_value = 0
         direction = 'right'
         value = 10
         count = 0
-        while (x_value > width or x_value < 20) and count < 20:
+        while (x_value > width or x_value < 20) and count < 30:
             count += 1
             elements = self.altdriver.find_elements_by_component('Byjus.K123.GameMapScreen.BuildingView')
             act_text = ''
@@ -167,14 +167,14 @@ class Buildings(BaseClass):
                     print x_value
                     if value == json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']:
                         direction = 'left'
-                    if x_value > width or x_value < 50: 
+                    if x_value > width or x_value < 20: 
                         if direction == 'left':
                             generics_lib.scroll(self.driver, 0.2, 0.7, 0.5, 0.5, 1200)
                         elif direction == 'right':
                             generics_lib.scroll(self.driver, 0.7, 0.2, 0.5, 0.5, 1200)
                         value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
                         sleep(0.5)
-                    elif x_value < width or x_value > 50:
+                    elif x_value < width or x_value > 20:
                         count = 20
                         elements[i].mobile_tap()
                     break
@@ -351,6 +351,7 @@ class Buildings(BaseClass):
                         direction = 'left'
                     if x_value > width or x_value < 10: 
                         if direction == 'left':
+                 
                             generics_lib.scroll(self.driver, 0.3, 0.6, 0.9, 0.9, 1800)
                         elif direction == 'right':
                             generics_lib.scroll(self.driver, 0.6, 0.3, 0.9, 0.9, 1800)
