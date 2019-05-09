@@ -24,8 +24,9 @@ class AccountCreation(GenericStep):
         When scene is loaded: "Onboarding"
         And tap on element: "Button"
         And custom wait: "3"
+        And tap on element with text: "None of the above"
         ''')
-        
+       
     @step('app should open "mobile/country" screen')
     def verify_mobile_country_screen(self):
         self.execute_steps(u'''
@@ -156,7 +157,7 @@ class AccountCreation(GenericStep):
     @step('"Terms and Conditions" and "Privacy Policy" are displayed/highlighted as hyperlinks and capitalized below the "Next" button')
     def verify_terms_and_condition_privacy_policy_text(self):
         self.execute_steps(u'''
-        Then verify the text: "By clicking next, you consent to all data practices described in the Privacy Policy and Terms & Conditions." for element: "PolicyLinkText"
+        Then verify the text: "I agree with the Privacy Policy and Terms and Conditions." for element: "PolicyLinkText"
         ''')    
         
     @step('user taps on mobile number field')

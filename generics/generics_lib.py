@@ -94,6 +94,7 @@ def pixel_comparision(file1, file2):
     # score: {-1:1} measure of the structural similarity between the a_images
     score, diff = compare_ssim(img_1, img_2, full=True)
     score = int(score * 100)
+    assert int(score) > 90
     print(score)
     return score
 
