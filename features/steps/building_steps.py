@@ -80,11 +80,6 @@ class BuildingSteps(GenericStep):
         self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
         self.base_class.wait_for_element_display('BackButton', exit_count=8)
         
-    @step('video is completed')
-    def video_completed(self):
-        self.base_class.verify_the_element_on_screen('Interstitial/FadeTransition-Loading')
-        self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
-        
     @step('verify the stickers from quest')
     def verify_stickers_quest(self):
         self.buildings = Buildings(self.obj.altdriver, self.obj.driver)
