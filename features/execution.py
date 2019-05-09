@@ -72,8 +72,5 @@ print feature_file
 
 
 start_execution2(feature_file,tcp_port,appium_port)
-<<<<<<< HEAD
 # start_execution(tcp_port, '--tags=@smoke5 final_quest.feature', appium_port)
-=======
-# start_execution(tcp_port, '--tags=@smoke3 final_quest.feature', appium_port)
->>>>>>> c66940c0d4815013a288c0d88f19293340a4b65e
+

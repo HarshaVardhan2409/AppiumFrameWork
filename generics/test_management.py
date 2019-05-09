@@ -388,8 +388,3 @@ def get_run(run_id):
         print cases[i]
         print '---------------------------------------------------------------------'
     '''
-
-#create_feature_file('96', '2', '93')    
-#get_run('4020')
-#create_feature_file('103', '2', '102')
-#add_run('new_run_2', 'K3', '59')

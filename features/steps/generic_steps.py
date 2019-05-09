@@ -132,7 +132,6 @@ class GenericStep():
             sleep(8)
             
     @step('GameMapScreen is loaded with test credentials: "{number}"')
-
     def gamemapscreen_testcredentials(self, number):
         #self.path = PATH('../../config/config.json')
         self.obj.launch_app()
@@ -168,15 +167,12 @@ class GenericStep():
                 | object_name            |
                | OTPVerification(Clone) |
             When enter the: "otp": "1234" in element: "InputFieldPrefab"
-<<<<<<< HEAD
             And scene is loaded: "GameMapScreen"
             And wait for object not to be present: "Interstitial/FadeTransition-Loading"
             And scene is loaded: "GameMapScreen"
             And verify text lines in multiple text boxes for object with same names:
             | object_name | text |
             | Text | utomation |
-=======
->>>>>>> c66940c0d4815013a288c0d88f19293340a4b65e
             And custom wait: "3"
             ''')
             self.base_class.verify_scene('GameMapScreen')
