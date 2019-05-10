@@ -37,18 +37,16 @@ def before_all(context):
     '''
     closing the appium server
     '''
-    
+     
     if 'windows' in machine_type:
         # Use below code to Stop appium server on the local windows machine
         subprocess.Popen('Taskkill /IM adb.exe /F',shell=True)
         subprocess.Popen('Taskkill /IM node.exe /F',shell=True)
         print ''
-        
+         
     else:
         # Use below code to stop appium server on the local mac machine
         subprocess.Popen('killall node',shell=True)
-        
-    
     print "==================port value======"
     print BaseSetup.port
     print "===============port value========="
@@ -112,9 +110,9 @@ def before_feature(context, feature):
     filename = os.path.join(dirname,feature.name+'.feature')
     f = open(filename,'r')
     for line in f:
-      if '@B' not in line:
-         vers=line
-         break
+        if '@B' not in line:
+            vers=line
+            break
     f.close()
     BaseSetup.version =vers
     print BaseSetup.version
@@ -188,12 +186,12 @@ def after_all(context):
     closing the appium server
     '''
     
-    if 'windows' in machine_type:
-        # Use below code to Stop appium server on the local windows machine
+#     if 'windows' in machine_type:
+# #         Use below code to Stop appium server on the local windows machine
 #         subprocess.Popen('Taskkill /IM adb.exe /F',shell=True)
 #         subprocess.Popen('Taskkill /IM node.exe /F',shell=True)
-        print ''
-        
-    else:
-        # Use below code to stop appium server on the local mac machine
-        subprocess.Popen('killall node',shell=True)
+#         print ''
+#         
+#     else:
+#         # Use below code to stop appium server on the local mac machine
+#         subprocess.Popen('killall node',shell=True)

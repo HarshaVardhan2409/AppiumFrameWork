@@ -67,7 +67,7 @@ class WorldMapChapters(GenericStep):
             And custom wait: "3"
             And tap on element: "NextButton"
             Given scene is loaded: "GameMapScreen"
-            And wait for object not to be present: "Interstitial"
+            And wait for object not to be present: "Interstitial/FadeTransition-Loading"
             And custom wait: "3"
             ''')
 
@@ -75,7 +75,7 @@ class WorldMapChapters(GenericStep):
     def worldmap_screen(self):
         self.execute_steps(u'''
             Given scene is loaded: "GameMapScreen"
-            And wait for object not to be present: "Interstitial"
+            And wait for object not to be present: "Interstitial/FadeTransition-Loading"
             And custom wait: "3"
             ''')
 
@@ -225,7 +225,7 @@ class WorldMapChapters(GenericStep):
     def landscape_on_gamemapscreen(self):
         self.execute_steps(u'''
         Then scene is loaded: "GameMapScreen"
-        And wait for object not to be present: "Interstitial"
+        And wait for object not to be present: "Interstitial/FadeTransition-Loading"
         And verify orientation is landscape
         ''')
         

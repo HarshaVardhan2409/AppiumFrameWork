@@ -146,7 +146,7 @@ class ParentGateway(GenericStep):
         self.execute_steps(u'''
             When tap on element: "LetsStartButton"
             And scene is loaded: "GameMapScreen"
-            And wait for object not to be present: "Interstitial"
+            And wait for object not to be present: "Interstitial/FadeTransition-Loading"
             ''')
         
     @step('answers the parent gating by typing in the text box with wrong answer')

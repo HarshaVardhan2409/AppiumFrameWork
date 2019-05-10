@@ -37,7 +37,8 @@ def start_execution2(feature_file,sys_port,ports=None):
     device_list=BaseSetup().get_list_of_devices()
     for i in range(len(device_list)):
         processes = subprocess.Popen(
-                   'behave -D APP_PATH=C:\\Users\\Administrator\\Downloads\\k3_app_170419.apk -D SYSPORT='+str(sys_port[i])+' -D UDID=' + str(device_list[i]) + ' -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D PORT=' + str(ports[i]) +' -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 ' + feature_file[i],
+                   'behave -D APP_PATH=C:\\Users\\Vinayaka\\Downloads\\k3_video_fix.apk -D SYSPORT='+str(sys_port[i])+' -D UDID=' + str(device_list[i]) + ' -D DEVICE_TYPE=android -D MACHINE_TYPE=windows -D PORT=' + str(ports[i]) +' -D TESTRAIL_USER=archana.r@testyantra.com -D TESTRAIL_PASS=Pass1234 ' + feature_file[i],
+
                    shell=False)
 
 
@@ -71,4 +72,3 @@ print feature_file
 
 
 start_execution2(feature_file,tcp_port,appium_port)
-# start_execution(tcp_port, '--tags=@smoke3 final_quest.feature', appium_port)

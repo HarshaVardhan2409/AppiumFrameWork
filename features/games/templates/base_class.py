@@ -90,7 +90,7 @@ class BaseClass():
         elif 'true' in lower(check_status):
             assert int(start_position['x']) != int(end_position['x']) or int(start_position['y']) != int(end_position['y'])
     
-    def wait_for_element_display(self, object_name):
+    def wait_for_element_display(self, object_name, exit_count=20):
         value1 = self.get_object_location(object_name)
         rotation1 = None
         rotation2 = None
@@ -141,7 +141,7 @@ class BaseClass():
             if 'dict' in str(type(rotation2)):
                 rotation2 = (rotation2['x'], rotation2['y'], rotation2['z'])
             count = count + 1
-            if count == 20:
+            if count == exit_count:
                 break
     
     def wait_for_element_contains_text(self, object_name, text):
@@ -156,13 +156,13 @@ class BaseClass():
             text = actual_text.split()
             str4=""
             for i in range(len(text)):
-               if text[i].startswith('<'):
-                 str3=text[i].split('>')
-                 text[i]=str3[1]
-                 str4=str4+' '+text[i]
-                 print text[i]
-               else:
-                str4=str4+' '+text[i]
+                if text[i].startswith('<'):
+                    str3=text[i].split('>')
+                    text[i]=str3[1]
+                    str4=str4+' '+text[i]
+                    print text[i]
+                else:
+                    str4=str4+' '+text[i]
             actual_text=str4
             print '---------'
             value = self.check_status(object_name)
@@ -470,13 +470,13 @@ class BaseClass():
     def verify_presence_of_hint(self,object_name):
         try:
             try:
-              self.altdriver.wait_for_element(object_name)
+                self.altdriver.wait_for_element(object_name)
             except:
-              try:
-                  self.altdriver.wait_for_element(object_name).get_component_property("Byjus.K123.Templates.MCQ.SpriteOuterGlow", "glowColor")
-              except:
-                  print "hint not dispayed"
-                  #assert False
+                try:
+                    self.altdriver.wait_for_element(object_name).get_component_property("Byjus.K123.Templates.MCQ.SpriteOuterGlow", "glowColor")
+                except:
+                    print "hint not dispayed"
+                    #assert False
         except:
             self.get_server_logs()
             assert False

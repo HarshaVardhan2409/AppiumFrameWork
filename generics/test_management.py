@@ -372,10 +372,10 @@ def create_feature_file_tags(suite_ID, project_ID, run_ID, tag_name=None):
     f.close()
     print 'Number of feature file created = '+ str(count)
 
-"""def delete_feature_files():
+def delete_feature_files():
     f_files = glob.glob(PATH('../features/*.feature'))
     for f in f_files:
-        os.remove(f)"""
+        os.remove(f)
 
 def get_run(run_id):
     client = get_testrail_client()
@@ -388,7 +388,3 @@ def get_run(run_id):
         print cases[i]
         print '---------------------------------------------------------------------'
     '''
-#create_feature_file('96', '2', '93')    
-#get_run('4020')
-#create_feature_file('103', '2', '102')
-#add_run('new_run_2', 'K3', '59')

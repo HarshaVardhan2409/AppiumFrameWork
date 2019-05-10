@@ -74,9 +74,7 @@ class GenericStep():
         self.base_class.tap('Button')
   
     @step('GameMapScreen is loaded with test credentials: "{number}" "{version}"')
-
     def gamemapscreen_testcredentials_version(self, number,version):
-        #self.path = PATH('../../config/config.json')
         self.obj.launch_app()
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
         try:
@@ -88,10 +86,8 @@ class GenericStep():
             print version
             assert str(versi1) in str(version)
             self.base_class.verify_scene('GameMapScreen')
-            self.base_class.wait_for_element_not_present('Interstitial')
+            self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
             self.base_class.verify_scene('GameMapScreen')
-            #self.base_class.verify_text_for_duplicate_objects('Text', 'utomation')
-                  
         except:
             print "entered except"
             self.base_class.wait_for_scene('Onboarding')
@@ -134,7 +130,6 @@ class GenericStep():
             sleep(8)
             
     @step('GameMapScreen is loaded with test credentials: "{number}"')
-
     def gamemapscreen_testcredentials(self, number):
         #self.path = PATH('../../config/config.json')
         self.obj.launch_app()
@@ -170,6 +165,12 @@ class GenericStep():
                 | object_name            |
                | OTPVerification(Clone) |
             When enter the: "otp": "1234" in element: "InputFieldPrefab"
+            And scene is loaded: "GameMapScreen"
+            And wait for object not to be present: "Interstitial/FadeTransition-Loading"
+            And scene is loaded: "GameMapScreen"
+            And verify text lines in multiple text boxes for object with same names:
+            | object_name | text |
+            | Text | utomation |
             And custom wait: "3"
             ''')
             self.base_class.verify_scene('GameMapScreen')
@@ -184,7 +185,7 @@ class GenericStep():
             print '1st'
             self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
             self.base_class.verify_scene('GameMapScreen')
-            self.base_class.wait_for_element_not_present('Interstitial')
+            self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
             print '2nd'
         except:
             print '3rd'
@@ -224,7 +225,7 @@ class GenericStep():
             And custom wait: "3"
             And tap on element: "NextButton"
             Then scene is loaded: "GameMapScreen"
-            And wait for object not to be present: "Interstitial"
+            And wait for object not to be present: "Interstitial/FadeTransition-Loading"
             And tap on element: "Avatar(Clone)"
             And tap on element: "LetsStartButton"
             And scene is loaded: "GameMapScreen"
@@ -236,7 +237,7 @@ class GenericStep():
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
         self.base_class.tap('Stickerbook')
         self.base_class.wait_for_scene('stickerbook')
-        self.base_class.wait_for_element_not_present('Interstitial')
+        self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
         self.base_class.wait_for_element_display('final-page')
         sleep(4)
                
@@ -249,7 +250,7 @@ class GenericStep():
         sleep(3)
         self.access.parental_access('ParentGatePanel/AnswerPanel/Question')
         self.base_class.wait_for_scene('Library')
-        self.base_class.wait_for_element_not_present('Interstitial')
+        self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
         
     @step('ParentZone scene is loaded')
     def ParentZone_scene_loaded(self):
@@ -260,7 +261,7 @@ class GenericStep():
         sleep(3)
         self.access.parental_access('ParentGatePanel/AnswerPanel/Question')
         self.base_class.wait_for_scene('ParentZone')
-        self.base_class.wait_for_element_not_present('Interstitial')
+        self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
         
     @step('question is loaded')
     def question_is_loaded(self):
