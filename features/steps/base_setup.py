@@ -46,7 +46,6 @@ class BaseSetup():
             print 'platform do not match'
             
         self.ip_address = generics_lib.get_data(constants.CONFIG_PATH, 'appium_server', 'ip_address')
-        #self.port = generics_lib.get_data(constants.CONFIG_PATH, 'appium_server', 'port')
         self.driver = webdriver.Remote('http://'+self.ip_address+':'+self.port+'/wd/hub', self.desired_caps)
         self.driver.implicitly_wait(20)
         print "================================="
@@ -58,14 +57,9 @@ class BaseSetup():
 
         
     def teardown(self):
-        
         self.altdriver.stop()
         self.driver.quit()
-
-    def togetLogs(self):
-        print "Type of driver"
-        print type(self.driver)
-        print self.driver.log_types
+        
     def setup_android(self ,flag):
         self.desired_caps['platformName'] = 'android'
         self.desired_caps['deviceName'] = 'device'
@@ -98,9 +92,6 @@ class BaseSetup():
             print 'platform do not match'
           
         self.ip_address = generics_lib.get_data(constants.CONFIG_PATH, 'appium_server', 'ip_address')
-
-        package_name=generics_lib.get_data(constants.CONFIG_PATH, 'app_config', 'app_package')
-        #self.port = generics_lib.get_data(constants.CONFIG_PATH, 'appium_server', 'port')
         self.driver = webdriver.Remote('http://'+self.ip_address+':'+self.port+'/wd/hub', self.desired_caps)
         self.driver.implicitly_wait(20)
         self.altdriver = AltrunUnityDriver(self.driver, self.platform,TCP_FWD_PORT=int(self.sys_port),deviceID=self.udid,requestEnd='#')
@@ -123,3 +114,8 @@ class BaseSetup():
     def getting_logs(self):
         self.base_class = BaseClass(self.altdriver, self.driver)
         self.base_class.demo()
+        
+    def togetLogs(self):
+        print "Type of driver"
+        print type(self.driver)
+        print self.driver.log_types
