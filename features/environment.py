@@ -107,7 +107,7 @@ def before_feature(context, feature):
     print feature.name
     #filename=constants.PATH(feature.name+'.feature')
 
-    filename = os.path.join(dirname,feature.name+'.feature')
+    filename = os.path.join(dirname,'Quest_'+feature.name+'.feature')
     f = open(filename,'r')
     for line in f:
         if '@B' not in line:

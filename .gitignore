@@ -23,6 +23,7 @@ wheels/
 *.egg-info/
 execution_data/
 compare_images/
+appium_logs/
 .project
 .pydevproject
 *.feature

@@ -104,6 +104,8 @@ class GenericStep():
                 ''')
 
             self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+            self.base_class.clear_text('MobilePanel/InputFieldPrefab/Text')
+            sleep(1)
             self.base_class.enter_text_app('MobilePanel/InputFieldPrefab', number)
             self.execute_steps(u'''
             When tap on element: "Toggler"
@@ -131,7 +133,6 @@ class GenericStep():
             
     @step('GameMapScreen is loaded with test credentials: "{number}"')
     def gamemapscreen_testcredentials(self, number):
-        #self.path = PATH('../../config/config.json')
         self.obj.launch_app()
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
         try:
@@ -139,8 +140,6 @@ class GenericStep():
             self.base_class.verify_scene('GameMapScreen')
             self.base_class.wait_for_element_not_present('Interstitial')
             self.base_class.verify_scene('GameMapScreen')
-            #self.base_class.verify_text_for_duplicate_objects('Text', 'utomation')
-                  
         except:
             print "entered except"
             self.base_class.wait_for_scene('Onboarding')
@@ -157,6 +156,8 @@ class GenericStep():
                 ''')
 
             self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+            self.base_class.clear_text('MobilePanel/InputFieldPrefab/Text')
+            sleep(1)
             self.base_class.enter_text_app('MobilePanel/InputFieldPrefab', number)
             self.execute_steps(u'''
             When tap on element: "Toggler"
@@ -168,9 +169,6 @@ class GenericStep():
             And scene is loaded: "GameMapScreen"
             And wait for object not to be present: "Interstitial/FadeTransition-Loading"
             And scene is loaded: "GameMapScreen"
-            And verify text lines in multiple text boxes for object with same names:
-            | object_name | text |
-            | Text | utomation |
             And custom wait: "3"
             ''')
             self.base_class.verify_scene('GameMapScreen')
@@ -199,6 +197,7 @@ class GenericStep():
             And Onboarding scene is loaded
             When custom wait: "3"
             And tap on element with text: "None of the above"
+            And clear text field: "MobilePanel/InputFieldPrefab/Text"
             And enter the: "different mobile number": "1552009999" in element: "MobilePanel/InputFieldPrefab"
             And tap on element: "Toggler"
             And tap on element: "NextButton"
