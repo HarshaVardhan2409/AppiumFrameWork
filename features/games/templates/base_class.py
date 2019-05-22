@@ -11,6 +11,7 @@ from appium import webdriver
 from selenium.webdriver.common.by import By
 from appium.webdriver.common.multi_action import MultiAction
 from appium.webdriver.common.touch_action import TouchAction
+from _socket import timeout
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -58,7 +59,7 @@ class BaseClass():
         self.altdriver.wait_for_current_scene_to_be(scene_name)
         
     def wait_for_element_not_present(self, object_name):
-        self.altdriver.wait_for_element_to_not_be_present(object_name)
+        self.altdriver.wait_for_element_to_not_be_present(object_name, timeout=40)
         
     def verify_scene(self, scene_name):
         print 'entered verified'
@@ -67,7 +68,7 @@ class BaseClass():
         assert str(scene_name) in self.altdriver.get_current_scene()
         
     def verify_the_element_on_screen(self, element_name):
-            self.altdriver.wait_for_element(element_name, timeout=30)
+            self.altdriver.wait_for_element(element_name, timeout=60)
             sleep(2)
             
     def get_object_location(self, object_name):
@@ -81,7 +82,7 @@ class BaseClass():
         return value
 
     def verify_question(self, object_name):
-        name = self.altdriver.wait_for_element(object_name).name
+        name = self.altdriver.wait_for_element(object_name, timeout=60).name
         assert object_name in name
     
     def verify_object_location(self, start_position, end_position, check_status):
@@ -189,7 +190,6 @@ class BaseClass():
             assert exp_t in act_t
         except:
             self.get_server_logs()
-            assert exp_t in act_t
         
         
         
@@ -365,7 +365,7 @@ class BaseClass():
         value = self.get_text(object_name)
         count = 0
         while value != '' and count <= 20 :
-            self.altdriver.wait_for_element(object_name).mobile_tap()
+#             self.altdriver.wait_for_element(object_name).mobile_tap()
             self.altdriver.wait_for_element(object_name).mobile_tap(0.1)
             self.altdriver.wait_for_element(object_name).mobile_tap(0.1)
             sleep(0.4)

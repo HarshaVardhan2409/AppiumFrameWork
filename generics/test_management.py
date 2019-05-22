@@ -195,12 +195,10 @@ def get_section(section_ID):
     return section
         
 def create_feature_file(suite_ID, project_ID, run_ID):
-    #delete_feature_files()
+    delete_feature_files()
     client = APIClient(testrail_url)
     client.user = testrail_username
     client.password = testrail_password
-    # case = client.send_get('get_case/181')
-    # print(case) 
     suite = client.send_get('get_suite/' + suite_ID)
     feature_name = suite['name'].replace(" ", "_")
     # print suite
@@ -241,7 +239,11 @@ def create_feature_file(suite_ID, project_ID, run_ID):
                 if case['custom_background'] != None:
                     filedata += ('\n\nBackground: ' + case['custom_background'].strip())
             if case['title'] != None:
-                filedata += ('\n\n' + case['title'].strip() + ' testrail details_' + str(case['id']) + '_' + run_ID)     
+                if 'happyflow' in str(case['title']):
+                    filedata += ('\n\n' + "@" + tag_name[0] + tag_name[1] + '_smoke')
+                    filedata += ('\n' + case['title'].strip() + ' testrail details_' + str(case['id']) + '_' + run_ID)
+                else:
+                    filedata += ('\n\n' + case['title'].strip() + ' testrail details_' + str(case['id']) + '_' + run_ID)     
             if case['custom_given'] != None:
                 filedata += ('\nGiven ' + case['custom_given'].strip())
             if case['custom_when'] != None:

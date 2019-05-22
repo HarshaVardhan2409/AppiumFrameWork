@@ -71,7 +71,7 @@ class Video(BaseClass):
                 if diff < 5:
                     break
         else:
-            print 'Given duration is out of total duration.........'
+            assert  duration <= total_duration, 'forward duration ' + duration + ' is more than total duration ' + total_duration
 
 
     def verify_video(self, duration=0):
@@ -220,8 +220,117 @@ class Video(BaseClass):
                     self.driver.find_element(By.ID, "com.byjus.k3:id/exo_play").click()
                     break
         else:
-            print 'Given duration is out of total duration.........'
-
+            assert  duration <= total_duration, 'forward duration ' + duration + ' is more than total duration ' + total_duration
+            
+    def forward_video_percentage(self, scroll_percentage):
+        self.action = TouchAction(self.driver)
+        dSize = (self.driver.get_window_size())
+        x = (dSize['width']*0.8)
+        y = (dSize['height']*0.8)
+        self.wait_video_controls()
+        while float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.')) == 0.0:
+            self.action.tap(x = x, y = y).perform()
+            self.action.tap(x = x, y = y).perform()
+        self.wait_video_controls()
+        self.driver.find_element(By.ID, "com.byjus.k3:id/exo_pause").click()
+        total_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.'))
+        element = self.driver.find_element(By.ID, "com.byjus.k3:id/exo_progress")
+        location =  element.location
+        size = element.size
+        x = (location['x'] + (size['width']))
+        y = (location['y'] + (size['height']/2))
+        x2 = location['x']
+        percentage = 0
+        default = 0
+        value = 0
+        change = 0
+        count = 0
+        total_seconds = (int(str(total_duration).split('.')[0])*60) + (int(str("%.2f" % total_duration).split('.')[1]))
+        scroll_seconds = int((total_seconds*scroll_percentage)/100)
+        print "checking video 80 scroll......................."
+        print total_seconds
+        print scroll_seconds
+        if scroll_seconds < total_seconds:
+            change = size['width']/(total_seconds)
+            dur = scroll_seconds * change
+            value = default + dur
+            percentage = x2 + value
+            current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
+            current_seconds = (int(str(current_duration).split('.')[0])*60) + (int(str("%.2f" % current_duration).split('.')[1]))
+            print current_seconds
+            while current_seconds != scroll_seconds and count < 20:
+                count += 1
+                self.wait_to_load()
+                current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
+                current_seconds = ((int(str(current_duration).split('.')[0])*60) + (int(str("%.2f" % current_duration).split('.')[1])))
+                if current_seconds < scroll_seconds:
+                    print 'entering current less than expected'
+                    diff = scroll_seconds - current_seconds
+                    percentage = x2 + (change * diff)
+                    self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+                    x2 = percentage
+                elif current_seconds > scroll_seconds:
+                    print 'entering current more than expected'
+                    diff = current_seconds - scroll_seconds
+                    percentage = x2 - (change * diff)
+                    self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+                    x2 = percentage
+                self.wait_to_load()
+                current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
+                current_seconds = ((int(str(current_duration).split('.')[0])*60) + (int(str("%.2f" % current_duration).split('.')[1])))
+                self.wait_to_load()
+                print "Duration................."
+                print current_seconds
+                if current_seconds == scroll_seconds or str(current_seconds) in str(scroll_seconds):
+                    break
+        else:
+            assert  scroll_seconds < total_seconds, 'forward duration ' + scroll_seconds + ' is more than total duration ' + total_seconds
+    
+    def scroll_video_end(self, object_name):
+        self.action = TouchAction(self.driver)
+        self.altdriver.wait_for_current_scene_to_be('Tasks')
+        self.altdriver.wait_for_element(object_name)
+        self.wait_video_controls()
+        dSize = (self.driver.get_window_size())
+        x = (dSize['width']*0.8)
+        y = (dSize['height']*0.8)
+        duration = 0
+        self.wait_video_controls()
+        while float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.')) == 0.0:
+            self.action.tap(x = x, y = y).perform()
+            self.action.tap(x = x, y = y).perform()
+        self.wait_video_controls()
+        self.driver.find_element(By.ID, "com.byjus.k3:id/exo_pause").click()
+        element = self.driver.find_element(By.ID, "com.byjus.k3:id/exo_progress")
+        location =  element.location
+        size = element.size
+        x = (location['x'] + (size['width']))
+        y = (location['y'] + (size['height']/2))
+        x2 = location['x']
+        flag = True
+        count = 0
+        val = 0
+        while flag and count < 10:
+            print 'scrolling..............'
+            self.altdriver.wait_for_element(object_name, timeout=1)
+            self.action.press(x =  x2, y = y).wait(2500).move_to(x = x, y = y).release().perform()
+            while val < 15:
+                try:
+                    self.altdriver.wait_for_element_to_not_be_present(object_name, timeout=1)
+                    flag = False
+                    val = 16
+                except:
+                    val += 1
+            count += 1
+        assert flag == False, 'Unable to complete video'
+        
+    def video_back(self):
+        self.wait_video_controls()
+        self.driver.find_element(By.ID, "com.byjus.k3:id/back").click()
+        sleep(1)
+        self.altdriver.wait_for_element_to_not_be_present('Interstitial/FadeTransition-Loading')
+        sleep(1)
+    
     def wait_video_controls(self):
         self.action = TouchAction(self.driver)
         dSize = (self.driver.get_window_size())
@@ -229,28 +338,36 @@ class Video(BaseClass):
         y = (dSize['height']*0.2)
         flag = True
         count = 0
+        loading_count = 0
         while flag == True and count < 20:
             count += 1
             try:
                 self.driver.implicitly_wait(0.5)
                 try:
-                    while self.driver.find_element(By.ID, "com.byjus.k3:id/exo_buffering").is_displayed():
+                    while self.driver.find_element(By.ID, "com.byjus.k3:id/exo_buffering").is_displayed() and loading_count < 75:
+                        loading_count += 1
                         print 'Video loading present..................'
                         sleep(0.2)
                 except:
-                    print 'video loading not present............'
+                    print ''
                 self.action.tap(x = x, y = y).perform()
                 self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration")
                 self.driver.implicitly_wait(20)
                 flag = False
             except:
+                loading_count = 0
                 flag = True
+        assert flag != True, "Video controls not displaying properly"
                 
     def wait_to_load(self):
+        loading_count = 0
         try:
-            while self.driver.find_element(By.ID, "com.byjus.k3:id/exo_buffering").is_displayed():
+            self.driver.implicitly_wait(0.5)
+            while self.driver.find_element(By.ID, "com.byjus.k3:id/exo_buffering").is_displayed() and loading_count < 75:
+                loading_count += 1
                 print 'Video loading present..................'
                 sleep(0.2)
+            self.driver.implicitly_wait(20)
         except:
-            print 'video loading not present............'
+            self.driver.implicitly_wait(20)
 

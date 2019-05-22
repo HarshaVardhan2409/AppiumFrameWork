@@ -24,7 +24,7 @@ class StickerBook(BaseClass):
         self.altdriver.wait_for_element_where_name_contains(draggable_name).tap()
         elements = self.altdriver.find_elements(draggable_name)
         for i in range(len(elements)):
-            name = elements[i].get_component_property('Byjus.K123.StickerBook.StickerView', 'nickName')
+            name = elements[i].get_component_property('Byjus.K123.StickerBook.StickerView', 'nickname')
             if nickName in name:
                 sleep(1)
                 print 'mobile drag to'
@@ -75,10 +75,10 @@ class StickerBook(BaseClass):
                 print 'No stickers present..........'
             for i in range(len(elements)):
                 if count == 0:
-                    start_name = elements[0].get_component_property('Byjus.K123.StickerBook.StickerView', 'nickName')
-                name = elements[i].get_component_property('Byjus.K123.StickerBook.StickerView', 'nickName')
+                    start_name = elements[0].get_component_property('Byjus.K123.StickerBook.StickerView', 'nickname')
+                name = elements[i].get_component_property('Byjus.K123.StickerBook.StickerView', 'nickname')
                 if count != 0:
-                    end_name = elements[0].get_component_property('Byjus.K123.StickerBook.StickerView', 'nickName')
+                    end_name = elements[0].get_component_property('Byjus.K123.StickerBook.StickerView', 'nickname')
                 if str(sticker_name) == str(name):
                     flag = True
                     break
@@ -87,5 +87,5 @@ class StickerBook(BaseClass):
             for i in range(len(elements)):
                 count += 1
                 break
-        assert name == sticker_name
-        
+        assert name == sticker_name, 'Unable to find the sticker '+sticker_name
+
