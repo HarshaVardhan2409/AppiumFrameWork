@@ -104,6 +104,8 @@ class GenericStep():
                 ''')
 
             self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+            self.base_class.tap('MobilePanel/InputFieldPrefab')
+            sleep(0.5)
             self.base_class.clear_text('MobilePanel/InputFieldPrefab/Text')
             sleep(1)
             self.base_class.enter_text_app('MobilePanel/InputFieldPrefab', number)
@@ -135,15 +137,21 @@ class GenericStep():
     def gamemapscreen_testcredentials(self, number):
         self.obj.launch_app()
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
-        try:
-            print "entered try"
+        current_scene = self.obj.altdriver.get_current_scene()
+        while str(current_scene) == 'Loading':
+            sleep(1)
+            current_scene = self.obj.altdriver.get_current_scene()
+        current_scene = self.obj.altdriver.get_current_scene()
+        if 'GameMapScreen' == str(current_scene):
+            print "entered gamemapscreen condition"
             self.base_class.verify_scene('GameMapScreen')
-            self.base_class.wait_for_element_not_present('Interstitial')
-            self.base_class.verify_scene('GameMapScreen')
-        except:
-            print "entered except"
+            self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
+            sleep(5)
+        elif 'Onboarding' == str(current_scene):
+            print "entered onboarding condition"
             self.base_class.wait_for_scene('Onboarding')
             try:
+                self.obj.altdriver.wait_for_element('Button', timeout=10)
                 self.base_class.tap('Button')
                 self.execute_steps(u'''
                 When custom wait: "3"
@@ -154,8 +162,9 @@ class GenericStep():
                 When custom wait: "3"
                 And tap on element with text: "None of the above"
                 ''')
-
             self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+            self.base_class.tap('MobilePanel/InputFieldPrefab')
+            sleep(0.5)
             self.base_class.clear_text('MobilePanel/InputFieldPrefab/Text')
             sleep(1)
             self.base_class.enter_text_app('MobilePanel/InputFieldPrefab', number)
@@ -168,12 +177,8 @@ class GenericStep():
             When enter the: "otp": "1234" in element: "InputFieldPrefab"
             And scene is loaded: "GameMapScreen"
             And wait for object not to be present: "Interstitial/FadeTransition-Loading"
-            And scene is loaded: "GameMapScreen"
-            And custom wait: "3"
+            And custom wait: "5"
             ''')
-            self.base_class.verify_scene('GameMapScreen')
-            self.base_class.wait_for_element_not_present('Interstitial')
-            self.base_class.verify_scene('GameMapScreen')
             
     @step('GameMapScreen is loaded')
     def gamemap_scene_loaded(self):

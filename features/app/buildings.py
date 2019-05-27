@@ -28,15 +28,15 @@ class Buildings(BaseClass):
                 act_text = elements[i].get_component_property('Byjus.K123.Quests.QuestListViewItem', 'labelText')
             except:
                 print 'property not present'
-            if text in act_text:
+            if text == act_text:
                 act_total_tasks = elements[i].get_component_property('Byjus.K123.Quests.QuestListViewItem', 'totalTasks')
                 print total_tasks
                 print act_total_tasks
-                assert total_tasks == act_total_tasks
+                assert total_tasks == act_total_tasks, 'Expected total tasks '+total_tasks+' and actual total tasks '+act_total_tasks+' does not match'
                 act_completed_tasks = elements[i].get_component_property('Byjus.K123.Quests.QuestListViewItem', 'completedTasks')
                 print completed_tasks
                 print act_completed_tasks
-                assert completed_tasks == act_completed_tasks
+                assert completed_tasks == act_completed_tasks, 'Expected completed tasks '+completed_tasks+' and actual completed tasks '+act_completed_tasks+' does not match'
                 break
 
     def select_quest(self, object_name, quest_nickname):
@@ -62,7 +62,7 @@ class Buildings(BaseClass):
                             act_text = elements[i].get_component_property("TMPro.TextMeshProUGUI", "text", "Unity.TextMeshPro")
                 except:
                     print 'property not present'
-                if quest_nickname in act_text:
+                if quest_nickname == act_text:
                     x_value = int(elements[i].x)
                     if value == json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']:
                         direction = 'left'
@@ -88,7 +88,7 @@ class Buildings(BaseClass):
                 generics_lib.scroll(self.driver, 0.6, 0.3, 0.5, 0.5, 1200)
             value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
             sleep(0.5)
-        assert x_value < width and x_value > 0    
+        assert x_value < width and x_value > 0, 'Unable to scroll to quest '+quest_nickname
         
     def scroll_verify_quest(self, quest_nickname):
         dSize = (self.driver.get_window_size())
@@ -114,7 +114,7 @@ class Buildings(BaseClass):
                 except:
                     print 'property not present'
                 
-                if quest_nickname in act_text:
+                if quest_nickname == act_text:
                     x_value = int(elements[i].x)
                     if value == json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']:
                         direction = 'left'
@@ -139,7 +139,7 @@ class Buildings(BaseClass):
                 generics_lib.scroll(self.driver, 0.6, 0.3, 0.5, 0.5, 1200)
             value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
             sleep(0.5)
-        assert x_value < width and x_value > 0
+        assert x_value < width and x_value > 0, 'Unable to scroll to quest '+quest_nickname
            
     def select_building(self, object_name, building_name):
         dSize = (self.driver.get_window_size())
@@ -178,7 +178,7 @@ class Buildings(BaseClass):
                         count = 30
                         elements[i].mobile_tap()
                     break
-        assert x_value < width and x_value > 0
+        assert x_value < width and x_value > 0, 'Unable to scroll to building '+building_name
         
         
     def scroll_verify_building(self, building_name):
@@ -213,7 +213,7 @@ class Buildings(BaseClass):
                     elif x_value < width or x_value > 50:
                         count = 30
                     break
-        assert x_value < width and x_value > 0
+        assert x_value < width and x_value > 0, 'Unable to scroll to building '+building_name
 
     def check_avatar_selected(self, object_name, exp_status):
         elements = self.altdriver.find_elements(object_name)
@@ -324,12 +324,12 @@ class Buildings(BaseClass):
                         elements[i].tap()
                         count = 20
                     break
-        assert x_value < width and x_value > 0
+        assert x_value < width and x_value > 0, 'Unable to scroll to task '+name
         
     def get_sticker_names(self):
         elements = self.altdriver.find_elements('giftbox_sticker_pop(Clone)')
         sticker_names = []
         for i in range(len(elements)):
             sticker_names.append(elements[i].get_component_property('Byjus.K123.Rewards.RewardSticker', 'nickName'))
-        return sticker_names            
+        return sticker_names
             
