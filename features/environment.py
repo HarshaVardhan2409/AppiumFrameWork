@@ -154,6 +154,7 @@ def after_scenario(context, scenario):
     row = ''
     data = str(context.scenario)
     print "========================data after scenario"
+
     print data
     data = data.split('">')
     data = data[0].split('_')

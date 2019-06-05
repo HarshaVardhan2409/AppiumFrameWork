@@ -32,11 +32,9 @@ class BaseClass():
     platform = None
     desired_caps = None
     i=1
-    count=0
     flag=False
-    num=0
-    e_x=[]
-    e_y=[]
+    checkmark_list=[]
+    index=0
     ele_y=[]
     
     def __init__(self, altdriver, driver):
@@ -552,7 +550,7 @@ class BaseClass():
         print len(elements)
         for i in range(len(elements)-1):
             if elements[i].get_text() in video_name:
-               print "successfully added video to favorites"
+                print "successfully added video to favorites"
     
     def click_on_favorite(self,video_no):
         print "entered fqvorite method"
@@ -566,16 +564,13 @@ class BaseClass():
             for i in range(len(elements)-1):
                 try:
                     if elements[i].get_text() in video_no:
-                        self.e_y=i
-                        #self.ele_y.append(elements[i].x)
+                        self.index=i
                         e=self.altdriver.find_elements_where_name_contains('Header')
-                        print len(e)
                         for j in range(len(e)-1):
                             if e[j].name == "Checkmark":
                                 print "checkmark present"
-                                self.e_x.append(e[j])
-                                #self.e_y.append(e[j].y)
-                        self.flag=True
+                                self.checkmark_list.append(e[j])
+                                self.flag=True
                         break
                     """else:
                          generics_lib.scroll(self.driver, 0.5, 0.5, 0.3, 0.1, 800)"""
@@ -583,11 +578,6 @@ class BaseClass():
                     print "ascii "   
             generics_lib.scroll(self.driver, 0.5, 0.5, 0.3, 0.1, 800)
         print "printing y values................."
-        print self.e_y
-        print self.e_x
-        self.e_x[self.e_y].tap()
+        self.checkmark_list[self.index].tap()
         self.flag=False 
-        self.e_y=0 
-        self.e_x=[]
-      
-   
+        self.checkmark_list=[]
