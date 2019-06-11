@@ -41,6 +41,7 @@ def before_all(context):
     '''
     if 'windows' in machine_type:
         # Use below code to Stop appium server on the local windows machine
+        subprocess.Popen('adb -s'+ BaseSetup.udid +' shell input keyevent KEYCODE_WAKEUP', shell=True, stdout=subprocess.PIPE)
         subprocess.Popen('Taskkill /IM adb.exe /F',shell=True)
         subprocess.Popen('Taskkill /IM node.exe /F',shell=True)
         print ''
@@ -153,6 +154,7 @@ def after_scenario(context, scenario):
     row = ''
     data = str(context.scenario)
     print "========================data after scenario"
+
     print data
     data = data.split('">')
     data = data[0].split('_')
@@ -236,6 +238,7 @@ def after_scenario(context, scenario):
 def after_all(context):
     context.obj = obj
     machine_type = str(context.config.userdata['MACHINE_TYPE']).lower()
+    subprocess.Popen('adb -s'+ BaseSetup.udid +' shell input keyevent KEYCODE_POWER', shell=True, stdout=subprocess.PIPE)
     '''
     closing the appium server
     '''

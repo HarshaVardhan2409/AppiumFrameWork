@@ -32,6 +32,10 @@ class BaseClass():
     platform = None
     desired_caps = None
     i=1
+    flag=False
+    checkmark_list=[]
+    index=0
+    ele_y=[]
     
     def __init__(self, altdriver, driver):
         self.altdriver = altdriver
@@ -517,10 +521,10 @@ class BaseClass():
         ma.add(a1,a2,a3,a4)
         ma.perform()
      
-    def multiple_drag_and_drop(self,drag1,drag2,buckt): 
-        sleep(9)
+    def multiple_drag_and_drop(self,drag1,buckt): 
+        sleep(2)
         a1 = TouchAction(self.driver)
-        a1.long_press(None,585,269,2000).move_to(None,580,499)
+        a1.long_press(None,int(self.altdriver.find_element(drag1).x),int(self.altdriver.find_element(drag1).mobileY),500).move_to(None,int(self.altdriver.find_element(buckt).x),int(self.altdriver.find_element(buckt).mobileY))
         a1.release().perform()
         
     def select_batch(self, object_name,expected_text):
@@ -540,3 +544,40 @@ class BaseClass():
             self.get_server_logs()
             assert False  
 
+    def verify_favorites(self,video_name):
+        sleep(5)
+        elements = self.altdriver.find_elements('Header')
+        print len(elements)
+        for i in range(len(elements)-1):
+            if elements[i].get_text() in video_name:
+                print "successfully added video to favorites"
+    
+    def click_on_favorite(self,video_no):
+        print "entered fqvorite method"
+        sleep(5)
+        while(self.flag==False):
+            elements=self.altdriver.find_elements('Header')
+            print "value of elements ooo"
+            print len(elements)
+            
+                        
+            for i in range(len(elements)-1):
+                try:
+                    if elements[i].get_text() in video_no:
+                        self.index=i
+                        e=self.altdriver.find_elements_where_name_contains('Header')
+                        for j in range(len(e)-1):
+                            if e[j].name == "Checkmark":
+                                print "checkmark present"
+                                self.checkmark_list.append(e[j])
+                                self.flag=True
+                        break
+                    """else:
+                         generics_lib.scroll(self.driver, 0.5, 0.5, 0.3, 0.1, 800)"""
+                except:
+                    print "ascii "   
+            generics_lib.scroll(self.driver, 0.5, 0.5, 0.3, 0.1, 800)
+        print "printing y values................."
+        self.checkmark_list[self.index].tap()
+        self.flag=False 
+        self.checkmark_list=[]

@@ -497,3 +497,13 @@ class GenericStep():
         generics_lib.takescreenshot(self.obj.driver, PATH('../../a_image/actual_'+image_name+'_color.png'))
         generics_lib.color_comparision(PATH('../../a_image/'+image_name+'_color.png'), PATH('../../a_image/actual_'+image_name+'_color.png'))
 
+    @step('adding videos to favourite')
+    def adding_videos_to_favourite(self): 
+        for row in self.table:
+            #self.base_class.wait_for_element_display(row['object_name'])  
+            self.base_class.adding_video_to_favourite(row['video_name'])
+        
+    @step('verify favorites')
+    def verify_favourite(self): 
+        for row in self.table:
+            self.base_class.verify_favorites(row['video_name'])
