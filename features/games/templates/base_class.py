@@ -544,14 +544,25 @@ class BaseClass():
             self.get_server_logs()
             assert False  
 
-    def verify_favorites(self,video_name):
+    def verify_favorites(self,video_no):
         sleep(5)
         elements = self.altdriver.find_elements('Header')
         print len(elements)
         for i in range(len(elements)-1):
-            if elements[i].get_text() in video_name:
-                print "successfully added video to favorites"
-    
+            if elements[i].get_text() in video_no:
+                self.flag=True
+                
+        print self.flag
+        
+        if self.flag==True:
+            print "successfully added video to favorites"
+            self.flag =False
+        else:
+            assert False, "video is not added"
+        
+    def adding_video_to_favourite(self,video_no):
+        self.click_on_favorite(video_no)
+        
     def click_on_favorite(self,video_no):
         print "entered fqvorite method"
         sleep(5)
@@ -575,9 +586,46 @@ class BaseClass():
                     """else:
                          generics_lib.scroll(self.driver, 0.5, 0.5, 0.3, 0.1, 800)"""
                 except:
-                    print "ascii "   
+                    print "ascii error"   
             generics_lib.scroll(self.driver, 0.5, 0.5, 0.3, 0.1, 800)
         print "printing y values................."
         self.checkmark_list[self.index].tap()
         self.flag=False 
         self.checkmark_list=[]
+        
+        
+    def switch_profiles(self,profile_name): 
+        profiles=self.altdriver.find_elements('ChildProfileButton(Clone)/name')
+        for p in range(len(profiles)):
+            if profiles[p].get_text() in profile_name:
+                profiles[p].tap()
+                
+    def select_profiles(self,profile_name):           
+        profiles=self.altdriver.find_elements('Name Panel/Text')
+        for p in range(len(profiles)):
+            if profiles[p].get_text() in profile_name:
+                profiles[p].tap()
+     
+    def switch_grade(self,grade_name):
+        current_grade=self.altdriver.find_elements('ChildProfileButton(Clone)/grade')
+        current_grade[0].tap()
+        print current_grade[0].get_text()
+        sleep(5)
+        if current_grade[0].get_text() in grade_name:
+            sleep(5)            
+            self.altdriver.find_element('BackButton').tap()         
+            sleep(5)
+        else:
+            print "entering if.........."
+            grade=self.altdriver.find_elements('GradeToggle(Clone)/Image/Text')
+            for p in range(len(grade)):
+                print "==================="
+                if grade[p].get_text().split(' ')[0] in grade_name:
+                    sleep(3)
+                    a1=TouchAction(self.driver)
+                    a1.tap(None,int(self.altdriver.find_elements('GradeToggle(Clone)')[p].x),int(self.altdriver.find_elements('GradeToggle(Clone)')[p].mobileY)).perform()
+                    #self.altdriver.find_elements('GradeToggle(Clone)')[p].tap() 
+                    self.altdriver.wait_for_element("NotificationToastBar(Clone)")
+                    break           
+            
+            self.altdriver.find_element('BackButton').tap()         
