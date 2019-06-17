@@ -89,6 +89,49 @@ class StickerBook(BaseClass):
                 break
         assert name == sticker_name, 'Unable to find the sticker '+sticker_name
 
+    def drag_delete_stickers_from_category(self, sticker_name):
+        flag = True
+        count = 0
+        while flag == True and count < 20:
+            count += 1
+            stickers = self.altdriver.find_elements_where_name_contains('grade')
+            for sticker in stickers:
+                if sticker_name in sticker.name:
+                    sticker_name = str(sticker.name) + '/border image'
+                    name = self.altdriver.find_element(sticker_name).get_component_property('UnityEngine.UI.Image', 'sprite')
+                    count = 0
+                    while 'ip_primary_border' not in name and count < 5:
+                        count += 1 
+                        self.tap('OpenStickers')
+                        sleep(4)
+                        name = self.altdriver.find_element(sticker_name).get_component_property('UnityEngine.UI.Image', 'sprite')
+                    flag = False
+                    break
+            if flag == True:
+                self.tap('OpenStickers')
+                sleep(4)
+        assert flag == False, 'Unable to find the stickers category with name '+ sticker_name
+        dSize = (self.driver.get_window_size())
+        end_x = (dSize['width']*0.25)
+        end_y = (dSize['height']*0.5)
+        self.altdriver.wait_for_element_where_name_contains('StickerPrefab(Clone)').tap()
+        elements = self.altdriver.find_elements('StickerPrefab(Clone)')
+        name = elements[0].get_component_property('Byjus.K123.StickerBook.StickerView', 'nickname')
+        sleep(1)
+        print 'mobile drag to'
+        elements[0].mobile_dragTo(end_x, end_y, 6)
+        sleep(1)
+        draggable_nickname = ''
+        dragabbles = self.altdriver.find_elements('DraggableStickerPrefab(Clone)')
+        for i in range(len(dragabbles)):
+            if name in dragabbles[i].get_component_property('Byjus.K123.StickerBook.DraggableStickerView', 'stickerNickname'):
+#                 dragabbles[i].mobile_dragTo(end_x, end_y, 3000)
+                draggable_nickname = dragabbles[i].get_component_property('Byjus.K123.StickerBook.DraggableStickerView', 'stickerNickname')
+                print draggable_nickname
+                break
+        assert name in draggable_nickname
+        self.delete_object_and_verify('DraggableStickerPrefab(Clone)', name)
+
     def drag_stickers_from_category(self, sticker_name):
         flag = True
         count = 0
@@ -125,9 +168,8 @@ class StickerBook(BaseClass):
         dragabbles = self.altdriver.find_elements('DraggableStickerPrefab(Clone)')
         for i in range(len(dragabbles)):
             if name in dragabbles[i].get_component_property('Byjus.K123.StickerBook.DraggableStickerView', 'stickerNickname'):
-                #dragabbles[i].mobile_dragTo(end_x, end_y, 3000)
+#                 dragabbles[i].mobile_dragTo(end_x, end_y, 3000)
                 draggable_nickname = dragabbles[i].get_component_property('Byjus.K123.StickerBook.DraggableStickerView', 'stickerNickname')
                 print draggable_nickname
                 break
         assert name in draggable_nickname
-        self.delete_object_and_verify('DraggableStickerPrefab(Clone)', name)

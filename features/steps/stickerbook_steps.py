@@ -50,13 +50,17 @@ class StickerBookSteps(GenericStep):
         self.stickerbook = StickerBook(self.obj.altdriver, self.obj.driver)
         for row in self.table:
             self.stickerbook.delete_object_and_verify(row['object_name'], row['nick_name'])
-        
-        
+
     @step('drag and drop any sticker from category "{sticker_name}" to scene and delete')
+    def drag_delete_sticker_from_category(self, sticker_name):
+        self.stickerbook = StickerBook(self.obj.altdriver, self.obj.driver)
+        self.stickerbook.drag_delete_stickers_from_category(sticker_name)
+    
+    @step('drag and drop any sticker from category "{sticker_name}" to scene')
     def drag_sticker_from_category(self, sticker_name):
         self.stickerbook = StickerBook(self.obj.altdriver, self.obj.driver)
         self.stickerbook.drag_stickers_from_category(sticker_name)
-        
+            
     @step('draw a line with colour "{colour_name}" and erase')
     def draw_erase(self, colour_name):
         self.stickerbook = StickerBook(self.obj.altdriver, self.obj.driver)
