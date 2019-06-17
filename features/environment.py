@@ -77,7 +77,7 @@ def before_all(context):
     scr = glob.glob(constants.PATH('../execution_data/screenshots/*'))
     for f in scr:
         os.remove(f)
-    c_image = glob.glob(constants.PATH('../execution_data/compare_images/*'))
+    c_image = glob.glob(constants.PATH('../compare_images/*'))
     for f in c_image:
         os.remove(f)
     

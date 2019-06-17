@@ -52,5 +52,60 @@ class StickerBookSteps(GenericStep):
             self.stickerbook.delete_object_and_verify(row['object_name'], row['nick_name'])
         
         
+    @step('drag and drop any sticker from category "{sticker_name}" to scene and delete')
+    def drag_sticker_from_category(self, sticker_name):
+        self.stickerbook = StickerBook(self.obj.altdriver, self.obj.driver)
+        self.stickerbook.drag_stickers_from_category(sticker_name)
         
+    @step('draw a line with colour "{colour_name}" and erase')
+    def draw_erase(self, colour_name):
+        self.stickerbook = StickerBook(self.obj.altdriver, self.obj.driver)
+        self.stickerbook.tap('OpenDoodle')
+        colour_name = self.obj.altdriver.find_element_where_name_contains(colour_name).name
+        self.stickerbook.tap(colour_name)
+        self.stickerbook.tap('CloseDoodleArrow')
+        generics_lib.takescreenshot(self.obj.driver, PATH('../../compare_images/'+colour_name+'.png'))
+        self.stickerbook.stickerbook_draw(float(0.2), float(0.8), float(0.8), float(0.2))
+        self.stickerbook.stickerbook_draw(float(0.8), float(0.2), float(0.8), float(0.2))
+        generics_lib.takescreenshot(self.obj.driver, PATH('../../compare_images/'+colour_name+'_draw.png'))
+        value = generics_lib.pixel_comparision(PATH('../../compare_images/'+colour_name+'.png'), PATH('../../compare_images/'+colour_name+'_draw.png'))
+        assert value > 10, 'Images does not match '+ str(value)
+        self.stickerbook.tap('OpenDoodle')
+        self.stickerbook.tap('EraserSelector')
+        self.stickerbook.tap('CloseDoodleArrow')
+        self.stickerbook.stickerbook_draw(float(0.2), float(0.8), float(0.8), float(0.2))
+        self.stickerbook.stickerbook_draw(float(0.8), float(0.2), float(0.8), float(0.2))
+        generics_lib.takescreenshot(self.obj.driver, PATH('../../compare_images/'+colour_name+'_erase.png'))
+        value = generics_lib.pixel_comparision(PATH('../../compare_images/'+colour_name+'.png'), PATH('../../compare_images/'+colour_name+'_erase.png'))
+        assert  value > 10, 'Images does not match '+ str(value)
+        
+    @step('draw a line with colour "{colour_name}"')
+    def draw(self, colour_name):
+        self.stickerbook = StickerBook(self.obj.altdriver, self.obj.driver)
+        self.stickerbook.tap('OpenDoodle')
+        colour_name = self.obj.altdriver.find_element_where_name_contains(colour_name).name
+        self.stickerbook.tap(colour_name)
+        self.stickerbook.tap('CloseDoodleArrow')
+        generics_lib.takescreenshot(self.obj.driver, PATH('../../compare_images/'+colour_name+'.png'))
+        self.stickerbook.stickerbook_draw(float(0.2), float(0.8), float(0.8), float(0.2))
+        self.stickerbook.stickerbook_draw(float(0.8), float(0.2), float(0.8), float(0.2))
+        generics_lib.takescreenshot(self.obj.driver, PATH('../../compare_images/'+colour_name+'_draw.png'))
+        value = generics_lib.color_comparision(PATH('../../compare_images/'+colour_name+'.png'), PATH('../../compare_images/'+colour_name+'_draw.png'))
+        assert value > 10, 'Images does not match '+ str(value)
+        
+    @step('erase the drawn line "{colour_name}"')
+    def erase_drawn(self, colour_name):
+        self.stickerbook = StickerBook(self.obj.altdriver, self.obj.driver)
+        self.stickerbook.tap('OpenDoodle')
+        self.stickerbook.tap('EraserSelector')
+        colour_name = self.obj.altdriver.find_element_where_name_contains(colour_name).name
+        self.stickerbook.tap('CloseDoodleArrow')
+        generics_lib.takescreenshot(self.obj.driver, PATH('../../compare_images/'+colour_name+'_draw2.png'))
+        value = generics_lib.color_comparision(PATH('../../compare_images/'+colour_name+'_draw2.png'), PATH('../../compare_images/'+colour_name+'_draw.png'))
+        assert  value > 10, 'Images does not match '+ str(value)
+        self.stickerbook.stickerbook_draw(float(0.2), float(0.8), float(0.8), float(0.2))
+        self.stickerbook.stickerbook_draw(float(0.8), float(0.2), float(0.8), float(0.2))
+        generics_lib.takescreenshot(self.obj.driver, PATH('../../compare_images/'+colour_name+'_erase.png'))
+        value = generics_lib.color_comparision(PATH('../../compare_images/'+colour_name+'_draw2.png'), PATH('../../compare_images/'+colour_name+'_erase.png'))
+        assert  value > 10, 'Images does not match '+ str(value)
         

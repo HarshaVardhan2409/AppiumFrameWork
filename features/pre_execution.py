@@ -24,4 +24,5 @@ if suite_len == run_len:
 else:
     print 'Invalid number of suites or runs'
 
-# create_feature('100', '2', '98')
+# create_feature('100', '2', '106')
+# test_management.create_feature_file_of_run('100', '2', '106')

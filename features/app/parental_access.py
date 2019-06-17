@@ -12,7 +12,6 @@ from base_class import BaseClass
 class ParentalAccess(BaseClass):
     
     def parental_access(self, question):
-        
         question1 =  self.get_text(question)
         question = question1.split(' ')
         answer = None
@@ -38,7 +37,6 @@ class ParentalAccess(BaseClass):
                     break
                 
     def wrong_parental_access(self, question):
-        
         question1 =  self.get_text(question)
         question = question1.split(' ')
         answer = None
