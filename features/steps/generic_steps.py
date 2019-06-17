@@ -510,14 +510,3 @@ class GenericStep():
         generics_lib.takescreenshot(self.obj.driver, PATH('../../a_image/actual_'+image_name+'_color.png'))
         generics_lib.color_comparision(PATH('../../a_image/'+image_name+'_color.png'), PATH('../../a_image/actual_'+image_name+'_color.png'))
 
-    @step('10 loops of gamemapscreen is loaded')
-    def gamemapscreen_loop(self):
-        for i in range(10):
-            try:
-                self.execute_steps(u'''
-                Given GameMapScreen is loaded
-                Then close the app
-                ''')
-            except:
-                print 'Launching....'+str(i)
-
