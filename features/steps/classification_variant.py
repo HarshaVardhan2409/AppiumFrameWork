@@ -32,7 +32,8 @@ class ClassificationStep(GenericStep):
             #wait time for elements to appear on the screen
             sleep(1)
             start_position = self.classification.get_object_location(row["draggable"])
-            self.classification.drag_object_to_bucket(row['draggable'], row['bucket'])
+            #self.classification.drag_object_to_bucket(row['draggable'], row['bucket'])
+            self.base_class.multiple_drag_and_drop(row['draggable'],row['bucket'])
             #wait time for animation to happen
             sleep(2)
             end_position = self.classification.get_object_location(row["draggable"])

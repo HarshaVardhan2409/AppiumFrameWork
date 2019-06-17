@@ -90,12 +90,51 @@ class HangmanStep(GenericStep):
         
     @step('select the option')
     def select_the_option(self):
-        for row in self.table:
-            self.base_class.wait_for_element_display(row['option'])
-            break
-        sleep(5)
+        check = ''
+        flag = False
         self.hangman = Hangman(self.obj.altdriver, self.obj.driver)
         for row in self.table:
-            #wait time for options to load
-            self.hangman.tap_option(row['option'])
-            sleep(1)
+            self.base_class.wait_for_element_display(row['option'])
+            try:
+                check = str(self.obj.altdriver.wait_for_element(row['option']).get_component_property('Byjus.K123.Templates.MCQ.GameElement', 'interactive'))
+                count = 0
+                while check.lower() == 'false' and count < 30:
+                    sleep(1)
+                    check = str(self.obj.altdriver.wait_for_element(row['option']).get_component_property('Byjus.K123.Templates.MCQ.GameElement', 'interactive'))
+                    count += 1
+            except:
+                print ''
+            break
+        sleep(5)
+        for row in self.table:
+            ''' for MCQ waiting '''
+            try:
+                val_mcq = 0
+                check = str(self.obj.altdriver.wait_for_element(row['option']).get_component_property('Byjus.K123.Templates.MCQ.GameElement', 'interactive'))
+                while check.lower() == 'true' and val_mcq < 30:
+                    sleep(1)
+                    print 'tapping mcq........................'
+                    self.hangman.tap_option(row['option'])
+                    sleep(0.5)
+                    check = str(self.obj.altdriver.wait_for_element(row['option']).get_component_property('Byjus.K123.Templates.MCQ.GameElement', 'interactive'))
+                    val_mcq += 1
+                assert check == 'false', 'Unable to select option'    
+            except:
+                print ''
+            
+            ''' for hangman waiting '''
+            try:
+                val_hangman = 0
+                check = str(self.obj.altdriver.find_element(row['option']).get_component_property('Byjus.K123.Templates.Hangman.HMOptionsView', 'disable'))
+                answer = str(self.obj.altdriver.find_element(row['option']).get_component_property('Byjus.K123.Templates.Hangman.HMOptionsView', 'answered'))
+                while (check.lower() == 'false' and answer.lower() == 'false') and val_hangman < 30:
+                    sleep(1)
+                    print 'tapping hangman........................'
+                    self.hangman.tap_option(row['option'])
+                    sleep(0.5)
+                    check = str(self.obj.altdriver.find_element(row['option']).get_component_property('Byjus.K123.Templates.Hangman.HMOptionsView', 'disable'))
+                    answer = str(self.obj.altdriver.find_element(row['option']).get_component_property('Byjus.K123.Templates.Hangman.HMOptionsView', 'answered'))
+                    val_hangman += 1
+                assert check == 'true', 'Unable to select option'
+            except:
+                print ''

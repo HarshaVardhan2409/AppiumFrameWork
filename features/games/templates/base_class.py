@@ -11,6 +11,7 @@ from appium import webdriver
 from selenium.webdriver.common.by import By
 from appium.webdriver.common.multi_action import MultiAction
 from appium.webdriver.common.touch_action import TouchAction
+from _socket import timeout
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -31,6 +32,10 @@ class BaseClass():
     platform = None
     desired_caps = None
     i=1
+    flag=False
+    checkmark_list=[]
+    index=0
+    ele_y=[]
     
     def __init__(self, altdriver, driver):
         self.altdriver = altdriver
@@ -58,7 +63,7 @@ class BaseClass():
         self.altdriver.wait_for_current_scene_to_be(scene_name)
         
     def wait_for_element_not_present(self, object_name):
-        self.altdriver.wait_for_element_to_not_be_present(object_name)
+        self.altdriver.wait_for_element_to_not_be_present(object_name, timeout=40)
         
     def verify_scene(self, scene_name):
         print 'entered verified'
@@ -67,7 +72,7 @@ class BaseClass():
         assert str(scene_name) in self.altdriver.get_current_scene()
         
     def verify_the_element_on_screen(self, element_name):
-            self.altdriver.wait_for_element(element_name, timeout=30)
+            self.altdriver.wait_for_element(element_name, timeout=60)
             sleep(2)
             
     def get_object_location(self, object_name):
@@ -81,7 +86,7 @@ class BaseClass():
         return value
 
     def verify_question(self, object_name):
-        name = self.altdriver.wait_for_element(object_name).name
+        name = self.altdriver.wait_for_element(object_name, timeout=60).name
         assert object_name in name
     
     def verify_object_location(self, start_position, end_position, check_status):
@@ -189,7 +194,6 @@ class BaseClass():
             assert exp_t in act_t
         except:
             self.get_server_logs()
-            assert exp_t in act_t
         
         
         
@@ -365,7 +369,7 @@ class BaseClass():
         value = self.get_text(object_name)
         count = 0
         while value != '' and count <= 20 :
-            self.altdriver.wait_for_element(object_name).mobile_tap()
+#             self.altdriver.wait_for_element(object_name).mobile_tap()
             self.altdriver.wait_for_element(object_name).mobile_tap(0.1)
             self.altdriver.wait_for_element(object_name).mobile_tap(0.1)
             sleep(0.4)
@@ -517,10 +521,10 @@ class BaseClass():
         ma.add(a1,a2,a3,a4)
         ma.perform()
      
-    def multiple_drag_and_drop(self,drag1,drag2,buckt): 
-        sleep(9)
+    def multiple_drag_and_drop(self,drag1,buckt): 
+        sleep(2)
         a1 = TouchAction(self.driver)
-        a1.long_press(None,585,269,2000).move_to(None,580,499)
+        a1.long_press(None,int(self.altdriver.find_element(drag1).x),int(self.altdriver.find_element(drag1).mobileY),500).move_to(None,int(self.altdriver.find_element(buckt).x),int(self.altdriver.find_element(buckt).mobileY))
         a1.release().perform()
         
     def select_batch(self, object_name,expected_text):
@@ -540,3 +544,88 @@ class BaseClass():
             self.get_server_logs()
             assert False  
 
+    def verify_favorites(self,video_no):
+        sleep(5)
+        elements = self.altdriver.find_elements('Header')
+        print len(elements)
+        for i in range(len(elements)-1):
+            if elements[i].get_text() in video_no:
+                self.flag=True
+                
+        print self.flag
+        
+        if self.flag==True:
+            print "successfully added video to favorites"
+            self.flag =False
+        else:
+            assert False, "video is not added"
+        
+    def adding_video_to_favourite(self,video_no):
+        self.click_on_favorite(video_no)
+        
+    def click_on_favorite(self,video_no):
+        print "entered fqvorite method"
+        sleep(5)
+        while(self.flag==False):
+            elements=self.altdriver.find_elements('Header')
+            print "value of elements ooo"
+            print len(elements)
+            
+                        
+            for i in range(len(elements)-1):
+                try:
+                    if elements[i].get_text() in video_no:
+                        self.index=i
+                        e=self.altdriver.find_elements_where_name_contains('Header')
+                        for j in range(len(e)-1):
+                            if e[j].name == "Checkmark":
+                                print "checkmark present"
+                                self.checkmark_list.append(e[j])
+                                self.flag=True
+                        break
+                    """else:
+                         generics_lib.scroll(self.driver, 0.5, 0.5, 0.3, 0.1, 800)"""
+                except:
+                    print "ascii error"   
+            generics_lib.scroll(self.driver, 0.5, 0.5, 0.3, 0.1, 800)
+        print "printing y values................."
+        self.checkmark_list[self.index].tap()
+        self.flag=False 
+        self.checkmark_list=[]
+        
+        
+    def switch_profiles(self,profile_name): 
+        profiles=self.altdriver.find_elements('ChildProfileButton(Clone)/name')
+        for p in range(len(profiles)):
+            if profiles[p].get_text() in profile_name:
+                profiles[p].tap()
+                
+    def select_profiles(self,profile_name):           
+        profiles=self.altdriver.find_elements('Name Panel/Text')
+        for p in range(len(profiles)):
+            if profiles[p].get_text() in profile_name:
+                profiles[p].tap()
+     
+    def switch_grade(self,grade_name):
+        current_grade=self.altdriver.find_elements('ChildProfileButton(Clone)/grade')
+        current_grade[0].tap()
+        print current_grade[0].get_text()
+        sleep(5)
+        if current_grade[0].get_text() in grade_name:
+            sleep(5)            
+            self.altdriver.find_element('BackButton').tap()         
+            sleep(5)
+        else:
+            print "entering if.........."
+            grade=self.altdriver.find_elements('GradeToggle(Clone)/Image/Text')
+            for p in range(len(grade)):
+                print "==================="
+                if grade[p].get_text().split(' ')[0] in grade_name:
+                    sleep(3)
+                    a1=TouchAction(self.driver)
+                    a1.tap(None,int(self.altdriver.find_elements('GradeToggle(Clone)')[p].x),int(self.altdriver.find_elements('GradeToggle(Clone)')[p].mobileY)).perform()
+                    #self.altdriver.find_elements('GradeToggle(Clone)')[p].tap() 
+                    self.altdriver.wait_for_element("NotificationToastBar(Clone)")
+                    break           
+            
+            self.altdriver.find_element('BackButton').tap()         
