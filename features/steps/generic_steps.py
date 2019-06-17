@@ -182,32 +182,44 @@ class GenericStep():
             
     @step('GameMapScreen is loaded')
     def gamemap_scene_loaded(self):
-        self.path = PATH('../../config/config.json')
-        try:
-            self.obj.launch_app(generics_lib.get_data(self.path, 'app_config', "app_package"), generics_lib.get_data(self.path, 'app_config', "app_activity"), 'True')
-            print '1st'
-            self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+        self.obj.install_app()
+        self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+        current_scene = self.obj.altdriver.get_current_scene()
+        while str(current_scene) == 'Loading':
+            sleep(1)
+            current_scene = self.obj.altdriver.get_current_scene()
+        current_scene = self.obj.altdriver.get_current_scene()
+        if 'GameMapScreen' == str(current_scene):
+            print "entered gamemapscreen condition"
             self.base_class.verify_scene('GameMapScreen')
             self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
-            print '2nd'
-        except:
-            print '3rd'
+            sleep(5)
+        elif 'Onboarding' == str(current_scene):
+            print "entered onboarding condition"
+            self.base_class.wait_for_scene('Onboarding')
             try:
-                self.obj.teardown()
+                self.obj.altdriver.wait_for_element('Button', timeout=10)
+                self.base_class.tap('Button')
+                self.execute_steps(u'''
+                When custom wait: "3"
+                And tap on element with text: "None of the above"
+                ''')
             except:
-                print 'not launched'
-            print '4th'
+                self.execute_steps(u'''
+                When custom wait: "3"
+                And tap on element with text: "None of the above"
+                ''')
+            self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+            self.base_class.tap('MobilePanel/InputFieldPrefab')
+            sleep(0.5)
+            self.base_class.clear_text('MobilePanel/InputFieldPrefab/Text')
+            sleep(1)
             self.execute_steps(u'''
-            Given launch the app
-            And Onboarding scene is loaded
-            When custom wait: "3"
-            And tap on element with text: "None of the above"
-            And clear text field: "MobilePanel/InputFieldPrefab/Text"
-            And enter the: "different mobile number": "1552009999" in element: "MobilePanel/InputFieldPrefab"
+            When enter the: "different mobile number": "1552009999" in element: "MobilePanel/InputFieldPrefab"
             And tap on element: "Toggler"
             And tap on element: "NextButton"
             And enter the: "nick name": "jimmy" in element: "GradeSelection(Clone)/Background/InputFieldPrefab"
-            And tap on text element: "Text" with text: "Grade 3"
+            And tap on text element: "Text" with text: "Class 2"
             And tap on element: "NextButton"
             Then verify the element:
             | object_name            |
@@ -242,7 +254,7 @@ class GenericStep():
         self.base_class.tap('Stickerbook')
         self.base_class.wait_for_scene('stickerbook')
         self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
-        self.base_class.wait_for_element_display('final-page')
+        self.base_class.wait_for_element_display('grade3-frozen')
         sleep(4)
                
     @step('Library scene is loaded')
@@ -256,7 +268,7 @@ class GenericStep():
         self.base_class.wait_for_scene('Library')
         self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
         
-    @step('ParentZone scene is loaded')
+    @step('parentzone scene is loaded')
     def ParentZone_scene_loaded(self):
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
         self.base_class.tap('ParentButton/FillImage')
@@ -266,6 +278,7 @@ class GenericStep():
         self.access.parental_access('ParentGatePanel/AnswerPanel/Question')
         self.base_class.wait_for_scene('ParentZone')
         self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
+        sleep(2)
         
     @step('question is loaded')
     def question_is_loaded(self):
@@ -313,9 +326,9 @@ class GenericStep():
         data.reverse()
         subprocess.Popen('adb logcat -c', shell=True)
         try:
-            subprocess.Popen('adb logcat | findstr ' + str(package_name) + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
+            subprocess.Popen('adb logcat | findstr ' + str(package_name) + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.json'), shell=True)
         except:
-            subprocess.Popen('adb logcat | grep ' + str(package_name) + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.txt'), shell=True)
+            subprocess.Popen('adb logcat | grep ' + str(package_name) + ' > ' + constants.PATH('../execution_data/app_logs/logs_caseID_' + data[1] + '_runID_' + data[0] + '.json'), shell=True)
 
     @step('tap on element: "{object_name}"')
     def tap(self, object_name):

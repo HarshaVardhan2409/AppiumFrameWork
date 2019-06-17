@@ -4,6 +4,8 @@ This module contains generic methods which are mobile specific
 
 import json
 import sys
+import cv2
+import numpy as np
 
 from matplotlib.pyplot import imread
 from scipy.linalg import norm
@@ -40,8 +42,6 @@ def takescreenshot(driver, path):
     driver.save_screenshot(path)
     
 def color_comparision(image_1, image_2):
-    resize_image(image_1)
-    resize_image(image_2)
     file1 = image_1
     file2 = image_2
 
@@ -105,6 +105,14 @@ def resize_image(image_path):
         image_path = image_path.replace('.jpg', '.png')
     img.save(image_path)
 
-# compare_video_images("C:\\Users\\Vinayaka\\Downloads\\re\\colour_1.png", "C:\\Users\\Vinayaka\\Downloads\\re\\colour_2.png")
+# orignal = cv2.imread("C:\\Users\\Vinayaka\\git\\k123_automation\\compare_images\\RedColorSelector_draw.png")
+# duplicate = cv2.imread("C:\\Users\\Vinayaka\\git\\k123_automation\\compare_images\\RedColorSelector.png")
+# 
+# print orignal.shape
+# print duplicate.shape
+# 
+# if orignal.shape==duplicate.shape:
+#     print 'similar'
+# color_comparision("C:\\Users\\Vinayaka\\git\\k123_automation\\compare_images\\GreenColorSelector_draw.png", "C:\\Users\\Vinayaka\\git\\k123_automation\\compare_images\\GreenColorSelector_draw.png")
 
 

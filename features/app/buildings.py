@@ -18,7 +18,6 @@ import generics_lib
 
 class Buildings(BaseClass):
     
-    
     def verify_quest_progression(self, object_name, text, total_tasks, completed_tasks):
         self.altdriver.wait_for_element_where_name_contains(object_name)
         elements = self.altdriver.find_elements_where_name_contains(object_name)
@@ -69,8 +68,10 @@ class Buildings(BaseClass):
                     if x_value > width or x_value < 20: 
                         if direction == 'left':
                             generics_lib.scroll(self.driver, 0.3, 0.6, 0.5, 0.5, 1200)
+                            sleep(0.5)
                         elif direction == 'right':
                             generics_lib.scroll(self.driver, 0.6, 0.3, 0.5, 0.5, 1200)
+                            sleep(0.5)
                         value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
                         sleep(0.5)
                     elif x_value < width or x_value > 20:
@@ -84,8 +85,10 @@ class Buildings(BaseClass):
                 direction = 'left'
             if direction == 'left':
                 generics_lib.scroll(self.driver, 0.3, 0.6, 0.5, 0.5, 1200)
+                sleep(0.5)
             elif direction == 'right':
                 generics_lib.scroll(self.driver, 0.6, 0.3, 0.5, 0.5, 1200)
+                sleep(0.5)
             value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
             sleep(0.5)
         assert x_value < width and x_value > 0, 'Unable to scroll to quest '+quest_nickname
@@ -121,8 +124,10 @@ class Buildings(BaseClass):
                     if x_value > width or x_value < 20: 
                         if direction == 'left':
                             generics_lib.scroll(self.driver, 0.3, 0.6, 0.5, 0.5, 1200)
+                            sleep(0.5)
                         elif direction == 'right':
                             generics_lib.scroll(self.driver, 0.6, 0.3, 0.5, 0.5, 1200)
+                            sleep(0.5)
                         value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
                         sleep(0.5)
                     elif x_value < width or x_value > 20:
@@ -135,8 +140,10 @@ class Buildings(BaseClass):
                 direction = 'left'
             if direction == 'left':
                 generics_lib.scroll(self.driver, 0.3, 0.6, 0.5, 0.5, 1200)
+                sleep(0.5)
             elif direction == 'right':
                 generics_lib.scroll(self.driver, 0.6, 0.3, 0.5, 0.5, 1200)
+                sleep(0.5)
             value = json.loads(self.altdriver.wait_for_element('Main Camera').get_component_property("UnityEngine.Transform", "localPosition"))['x']
             sleep(0.5)
         assert x_value < width and x_value > 0, 'Unable to scroll to quest '+quest_nickname

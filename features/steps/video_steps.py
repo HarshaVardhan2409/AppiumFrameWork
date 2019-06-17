@@ -51,4 +51,9 @@ class VideoSteps(GenericStep):
     def forward_85(self):
         self.video = Video(self.obj.altdriver, self.obj.driver)
         self.video.forward_video_percentage(85)
-
+        
+    @step('forward the video to duration and select the option')
+    def forward_video_select_correct_option(self):
+        self.video = Video(self.obj.altdriver, self.obj.driver)
+        for row in self.table:
+            self.video.forward_video_select_option(float(row['duration']), str(row['option_text']))
