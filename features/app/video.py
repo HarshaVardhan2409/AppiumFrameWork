@@ -316,7 +316,7 @@ class Video(BaseClass):
             try:
                 self.action.press(x =  x2, y = y).wait(2500).move_to(x = x, y = y).release().perform()
             except:
-                self.action.press(x =  x2, y = y).wait(2500).move_to(el=self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration")).release().perform()
+                self.driver.scroll(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_progress"), self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration"))
             while val < 15:
                 try:
                     self.altdriver.wait_for_element_to_not_be_present(object_name, timeout=1)
