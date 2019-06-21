@@ -17,7 +17,7 @@ class StickerBook(BaseClass):
     def stickerbook_draw(self, start_x, end_x, start_y, end_y):
         generics_lib.scroll(self.driver, start_x, end_x, start_y, end_y, 2600)
         
-    def drag_object_and_verify(self, draggable_name, nickName, end_x, end_y):
+    def drag_object_and_verify(self, draggable_name, nickName, end_x=0.25, end_y=0.5):
         dSize = (self.driver.get_window_size())
         end_x = (dSize['width']*end_x)
         end_y = (dSize['height']*end_y)
@@ -28,7 +28,7 @@ class StickerBook(BaseClass):
             if nickName in name:
                 sleep(1)
                 print 'mobile drag to'
-                elements[i].mobile_dragTo(end_x, end_y, 6000)
+                elements[i].mobile_dragTo(end_x, end_y, 6)
                 break
         sleep(1)
         draggable_nickname = ''
@@ -52,7 +52,7 @@ class StickerBook(BaseClass):
                 delete_button = self.altdriver.find_element('DeleteButton')
                 x = delete_button.x
                 y = delete_button.mobileY
-                elements[i].mobile_dragTo(x, y, 3000)
+                elements[i].mobile_dragTo(x, y, 3)
         
     def check_sticker(self, sticker_name):
         start_name = '1'
