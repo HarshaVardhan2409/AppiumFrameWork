@@ -35,7 +35,13 @@ class VideoSteps(GenericStep):
     def forward_video_end(self):
         self.video = Video(self.obj.altdriver, self.obj.driver)
 #         self.video.forward_video_end()
-        self.video.scroll_video_end('Interstitial/FadeTransition-Loading')
+        self.video.scroll_video_end('Interstitial/FadeTransition-Loading', 'Tasks')
+    
+    @step('forward the library video to end')
+    def forward_library_video_end(self):
+        self.video = Video(self.obj.altdriver, self.obj.driver)
+#         self.video.forward_video_end()
+        self.video.scroll_video_end('Interstitial/FadeTransition-Loading', 'Library')
         
     @step('navigate back from video')
     def video_back(self):

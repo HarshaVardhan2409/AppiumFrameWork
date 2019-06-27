@@ -279,6 +279,7 @@ class BaseClass():
             self.altdriver.wait_for_element(object_name).tap()
         except:
             self.altdriver.find_element(object_name).mobile_tap()
+        sleep(1)
 
     def mobiletap(self, object_name):
         self.altdriver.wait_for_element(object_name)

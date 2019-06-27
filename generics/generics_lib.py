@@ -114,5 +114,6 @@ def resize_image(image_path):
 # if orignal.shape==duplicate.shape:
 #     print 'similar'
 # color_comparision("C:\\Users\\Vinayaka\\git\\k123_automation\\compare_images\\GreenColorSelector_draw.png", "C:\\Users\\Vinayaka\\git\\k123_automation\\compare_images\\GreenColorSelector_draw.png")
+# color_comparision('C:\\Users\\Vinayaka\\git\\k123_automation\\compare_images/RedColorSelector_draw2.png', 'C:\\Users\\Vinayaka\\git\\k123_automation\\compare_images/RedColorSelector_erase.png')
 
 
