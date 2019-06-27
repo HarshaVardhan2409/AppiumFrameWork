@@ -13,6 +13,8 @@ import json
 from decimal import Decimal
 import subprocess
 from numpy.core.defchararray import lower
+from selenium.webdriver.common.by import By
+from parse import percentage
 
 def launch_app(platform):
     desired_caps = {}
@@ -21,12 +23,19 @@ def launch_app(platform):
         desired_caps['deviceName'] = 'device'
         desired_caps['newCommandTimeout'] = 300
         desired_caps['noReset'] = True
-        desired_caps['appPackage'] = "com.byjus.k3"
-        desired_caps['appActivity'] = "com.byjus.unity.support.activities.MainActivity"
+#         desired_caps['appPackage'] = "com.byjus.k3"
+#         desired_caps['appActivity'] = "com.byjus.unity.support.activities.MainActivity"
+        desired_caps['appPackage'] = "com.android.calculator2"
+        desired_caps['appActivity'] = "com.android.calculator2.Calculator"
         driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-        print driver.find_element_by_image('C:\\Users\\Vinayaka\\Pictures\\disney.jpg ').is_displayed()
-        altdriver = AltrunUnityDriver(driver, platform, requestEnd='#')
         driver.implicitly_wait(20)
+        sleep(10)
+        dSize = (driver.get_window_size())
+        print dSize['width']
+        print dSize['height']
+#         print driver.find_element_by_image('C:\\Users\\Vinayaka\\Pictures\\disney.jpg ').is_displayed()
+        altdriver = AltrunUnityDriver(driver, platform, requestEnd='#')
+        
         
         altdriver.wait_for_current_scene_to_be('Onboarding')
 #         altdriver.wait_for_element_to_not_be_present('Interstitial')
@@ -255,7 +264,7 @@ for i in range(val):
     if(nam[i]=='device'):
         print(nam[i-1])
 '''
-    
+
 
 
 

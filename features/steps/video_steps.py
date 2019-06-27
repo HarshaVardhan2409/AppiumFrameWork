@@ -35,7 +35,13 @@ class VideoSteps(GenericStep):
     def forward_video_end(self):
         self.video = Video(self.obj.altdriver, self.obj.driver)
 #         self.video.forward_video_end()
-        self.video.scroll_video_end('Interstitial/FadeTransition-Loading')
+        self.video.scroll_video_end('Interstitial/FadeTransition-Loading', 'Tasks')
+    
+    @step('forward the library video to end')
+    def forward_library_video_end(self):
+        self.video = Video(self.obj.altdriver, self.obj.driver)
+#         self.video.forward_video_end()
+        self.video.scroll_video_end('Interstitial/FadeTransition-Loading', 'Library')
         
     @step('navigate back from video')
     def video_back(self):
@@ -51,4 +57,9 @@ class VideoSteps(GenericStep):
     def forward_85(self):
         self.video = Video(self.obj.altdriver, self.obj.driver)
         self.video.forward_video_percentage(85)
-
+        
+    @step('forward the video to duration and select the option')
+    def forward_video_select_correct_option(self):
+        self.video = Video(self.obj.altdriver, self.obj.driver)
+        for row in self.table:
+            self.video.forward_video_select_option(float(row['duration']), str(row['option_text']))

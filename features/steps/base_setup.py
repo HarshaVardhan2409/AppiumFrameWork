@@ -61,7 +61,7 @@ class BaseSetup():
         self.driver.quit()
         
     def setup_android(self ,flag):
-        self.desired_caps['platformName'] = 'android'
+        self.desired_caps['platformName'] = 'Android'
         self.desired_caps['deviceName'] = 'device'
         self.desired_caps['udid'] = self.udid
         self.desired_caps['noReset'] = flag

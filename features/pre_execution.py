@@ -24,4 +24,3 @@ if suite_len == run_len:
 else:
     print 'Invalid number of suites or runs'
 
-# create_feature('100', '2', '98')
