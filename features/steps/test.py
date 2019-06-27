@@ -14,6 +14,7 @@ from decimal import Decimal
 import subprocess
 from numpy.core.defchararray import lower
 from selenium.webdriver.common.by import By
+from parse import percentage
 
 def launch_app(platform):
     desired_caps = {}
@@ -263,7 +264,7 @@ for i in range(val):
     if(nam[i]=='device'):
         print(nam[i-1])
 '''
-    
+
 
 
 

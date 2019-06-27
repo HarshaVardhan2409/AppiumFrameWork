@@ -106,7 +106,7 @@ class GenericStep():
             self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
             self.base_class.tap('MobilePanel/InputFieldPrefab')
             sleep(0.5)
-            self.base_class.clear_text('MobilePanel/InputFieldPrefab/Text')
+            self.base_class.clear_text('MobilePanel/InputFieldPrefab/TextArea/Content/Text')
             sleep(1)
             self.base_class.enter_text_app('MobilePanel/InputFieldPrefab', number)
             self.execute_steps(u'''
@@ -165,7 +165,7 @@ class GenericStep():
             self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
             self.base_class.tap('MobilePanel/InputFieldPrefab')
             sleep(0.5)
-            self.base_class.clear_text('MobilePanel/InputFieldPrefab/Text')
+            self.base_class.clear_text('MobilePanel/InputFieldPrefab/TextArea/Content/Text')
             sleep(1)
             self.base_class.enter_text_app('MobilePanel/InputFieldPrefab', number)
             self.execute_steps(u'''
@@ -212,7 +212,7 @@ class GenericStep():
             self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
             self.base_class.tap('MobilePanel/InputFieldPrefab')
             sleep(0.5)
-            self.base_class.clear_text('MobilePanel/InputFieldPrefab/Text')
+            self.base_class.clear_text('MobilePanel/InputFieldPrefab/TextArea/Content/Text')
             sleep(1)
             self.execute_steps(u'''
             When enter the: "different mobile number": "1552009999" in element: "MobilePanel/InputFieldPrefab"
@@ -228,10 +228,10 @@ class GenericStep():
             Then verify the element:
             | object_name             |
             | LocationAndEmail(Clone) |
-            And tap on element: "LocationDetector/InputField"
+            And tap on element: "LocationDetector/LocationInput/TextArea"
             And tap on element: "LocateMeButton"
             And tap on element with text: "Allow"
-            And tap on element: "EmailPanel/InputFieldPrefab"
+            And tap on element: "EmailPanel/EmailInput/TextArea"
             And tap on element with text: "@"
             And tap on element with text: "OK"
             And tap on element: "NextButton"

@@ -3,6 +3,7 @@ import sys
 from time import sleep
 from selenium.webdriver.common.by import By
 from appium.webdriver.common.touch_action import TouchAction
+import subprocess
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -49,7 +50,13 @@ class Video(BaseClass):
             value = default + dur
             percentage = x2 + value
             self.wait_video_controls()
-            self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+            try:
+                self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+            except:
+                scroll_values = 'adb shell input touchscreen swipe '+str(x2)+' '+str(y)+' '+str(percentage)+' '+str(y)
+                print '=================================scroll================='
+                print scroll_values
+                os.system(scroll_values)
             x2 = percentage
             self.wait_video_controls()
             current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
@@ -61,12 +68,24 @@ class Video(BaseClass):
                 if current_duration < duration:
                     diff = first - second
                     percentage = x2 + (change * diff)
-                    self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+                    try:
+                        self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+                    except:
+                        scroll_values = 'adb shell input touchscreen swipe '+str(x2)+' '+str(y)+' '+str(percentage)+' '+str(y)
+                        print '=================================scroll================='
+                        print scroll_values
+                        os.system(scroll_values)
                     x2 = percentage
                 elif current_duration > duration:
                     diff = second - first
                     percentage = x2 - (change * diff)
-                    self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+                    try:
+                        self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+                    except:
+                        scroll_values = 'adb shell input touchscreen swipe '+str(x2)+' '+str(y)+' '+str(percentage)+' '+str(y)
+                        print '=================================scroll================='
+                        print scroll_values
+                        os.system(scroll_values)
                     x2 = percentage
                 if diff < 5:
                     break
@@ -267,13 +286,25 @@ class Video(BaseClass):
                     print 'entering current less than expected'
                     diff = scroll_seconds - current_seconds
                     percentage = x2 + (change * diff)
-                    self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+                    try:
+                        self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+                    except:
+                        scroll_values = 'adb shell input touchscreen swipe '+str(x2)+' '+str(y)+' '+str(percentage)+' '+str(y)
+                        print '=================================scroll================='
+                        print scroll_values
+                        os.system(scroll_values)
                     x2 = percentage
                 elif current_seconds > scroll_seconds:
                     print 'entering current more than expected'
                     diff = current_seconds - scroll_seconds
                     percentage = x2 - (change * diff)
-                    self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+                    try:
+                        self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+                    except:
+                        scroll_values = 'adb shell input touchscreen swipe '+str(x2)+' '+str(y)+' '+str(percentage)+' '+str(y)
+                        print '=================================scroll================='
+                        print scroll_values
+                        os.system(scroll_values)
                     x2 = percentage
                 self.wait_to_load()
                 current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
@@ -286,9 +317,9 @@ class Video(BaseClass):
         else:
             assert  scroll_seconds < total_seconds, 'forward duration ' + scroll_seconds + ' is more than total duration ' + total_seconds
     
-    def scroll_video_end(self, object_name):
+    def scroll_video_end(self, object_name, scene_name):
         self.action = TouchAction(self.driver)
-        self.altdriver.wait_for_current_scene_to_be('Tasks')
+        self.altdriver.wait_for_current_scene_to_be(scene_name)
         self.altdriver.wait_for_element(object_name)
         self.wait_video_controls()
         dSize = (self.driver.get_window_size())
@@ -360,7 +391,13 @@ class Video(BaseClass):
             value = default + dur
             percentage = x2 + value
             self.wait_video_controls()
-            self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+            try:
+                self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+            except:
+                scroll_values = 'adb shell input touchscreen swipe '+str(x2)+' '+str(y)+' '+str(percentage)+' '+str(y)
+                print '=================================scroll================='
+                print scroll_values
+                os.system(scroll_values)
             x2 = percentage
             self.wait_video_controls()
             current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
@@ -372,18 +409,30 @@ class Video(BaseClass):
                 if current_duration < duration:
                     diff = first - second
                     percentage = x2 + (change * diff)
-                    self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+                    try:
+                        self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+                    except:
+                        scroll_values = 'adb shell input touchscreen swipe '+str(x2)+' '+str(y)+' '+str(percentage)+' '+str(y)
+                        print '=================================scroll================='
+                        print scroll_values
+                        os.system(scroll_values)
                     x2 = percentage
                 elif current_duration > duration:
                     diff = second - first
                     percentage = x2 - (change * diff)
-                    self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+                    try:
+                        self.action.press(x =  x2, y = y).wait(2500).move_to(x = percentage, y = y).release().perform()
+                    except:
+                        scroll_values = 'adb shell input touchscreen swipe '+str(x2)+' '+str(y)+' '+str(percentage)+' '+str(y)
+                        print '=================================scroll================='
+                        print scroll_values
+                        os.system(scroll_values)
                     x2 = percentage
                 if diff < 5:
                     break
             self.wait_video_controls()
             self.driver.find_element(By.ID, "com.byjus.k3:id/exo_play").click()
-            self.driver.find_element(By.ID, text).click()
+            self.driver.find_element(By.ID, str(text)).click()
         else:
             assert  duration <= total_duration, 'forward duration ' + str(duration) + ' is more than total duration ' + str(total_duration)
         
