@@ -105,15 +105,5 @@ def resize_image(image_path):
         image_path = image_path.replace('.jpg', '.png')
     img.save(image_path)
 
-# orignal = cv2.imread("C:\\Users\\Vinayaka\\git\\k123_automation\\compare_images\\RedColorSelector_draw.png")
-# duplicate = cv2.imread("C:\\Users\\Vinayaka\\git\\k123_automation\\compare_images\\RedColorSelector.png")
-# 
-# print orignal.shape
-# print duplicate.shape
-# 
-# if orignal.shape==duplicate.shape:
-#     print 'similar'
-# color_comparision("C:\\Users\\Vinayaka\\git\\k123_automation\\compare_images\\GreenColorSelector_draw.png", "C:\\Users\\Vinayaka\\git\\k123_automation\\compare_images\\GreenColorSelector_draw.png")
-# color_comparision('C:\\Users\\Vinayaka\\git\\k123_automation\\compare_images/RedColorSelector_draw2.png', 'C:\\Users\\Vinayaka\\git\\k123_automation\\compare_images/RedColorSelector_erase.png')
 
 

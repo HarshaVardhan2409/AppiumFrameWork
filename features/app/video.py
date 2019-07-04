@@ -4,6 +4,9 @@ from time import sleep
 from selenium.webdriver.common.by import By
 from appium.webdriver.common.touch_action import TouchAction
 import subprocess
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import math
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -358,8 +361,9 @@ class Video(BaseClass):
             count += 1
         assert flag == False, 'Unable to complete video'
         
-    def forward_video_select_option(self, duration, text):
+    def forward_video_select_option(self, duration, text, acceptable):
         self.action = TouchAction(self.driver)
+        wait = WebDriverWait(self.driver, 10)
         self.wait_video_controls()
         dSize = (self.driver.get_window_size())
         x = (dSize['width']*0.8)
@@ -433,8 +437,82 @@ class Video(BaseClass):
             self.wait_video_controls()
             self.driver.find_element(By.ID, "com.byjus.k3:id/exo_play").click()
             self.driver.find_element(By.ID, str(text)).click()
+            if 'correct' == str(acceptable):
+                wait.until(EC.invisibility_of_element(By.ID, str(text)))
+            elif 'wrong' == str(acceptable):
+                sleep(3)
+                self.driver.find_element(By.ID, str(text))
         else:
             assert  duration <= total_duration, 'forward duration ' + str(duration) + ' is more than total duration ' + str(total_duration)
+        
+    def fast_forward_video(self, count):
+        self.action = TouchAction(self.driver)
+        dSize = (self.driver.get_window_size())
+        x = (dSize['width']*0.8)
+        y = (dSize['height']*0.8)
+        self.wait_video_controls()
+        while float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.')) == 0.0:
+            self.action.tap(x = x, y = y).perform()
+            self.action.tap(x = x, y = y).perform()
+        self.wait_video_controls()
+        current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
+        total_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.'))
+        total_sec = ((int(str(total_duration).split('.')[0])*60) + (int(str("%.2f" % total_duration).split('.')[1])))
+        current_sec = ((int(str(current_duration).split('.')[0])*60) + (int(str("%.2f" % current_duration).split('.')[1])))
+        diff_sec = float(total_sec) - float((current_sec + 2))
+        possible_fwds = int(math.ceil(diff_sec/10))
+        print '===============fast forward================'
+        if count > possible_fwds:
+            count = possible_fwds
+        print diff_sec
+        print possible_fwds
+        print count
+        switch = count
+        while count > 0:
+            self.wait_video_controls()
+            self.driver.find_element(By.ID, "com.byjus.k3:id/exo_ffwd").click()
+            count -= 1
+        if switch == possible_fwds:
+            self.altdriver.wait_for_element_to_not_be_present('Interstitial/FadeTransition-Loading')
+        elif switch < possible_fwds:
+            self.wait_video_controls()
+            fwd_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
+            fwd_sec = ((int(str(fwd_duration).split('.')[0])*60) + (int(str("%.2f" % fwd_duration).split('.')[1])))
+            assert fwd_sec >= (current_sec + (switch * 10)) and (current_sec + (switch * 10) + 10)
+            
+    def rewind_video(self, count):
+        self.action = TouchAction(self.driver)
+        dSize = (self.driver.get_window_size())
+        x = (dSize['width']*0.8)
+        y = (dSize['height']*0.8)
+        self.wait_video_controls()
+        while float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_duration").text.replace(':', '.')) == 0.0:
+            self.action.tap(x = x, y = y).perform()
+            self.action.tap(x = x, y = y).perform()
+        self.wait_video_controls()
+        current_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
+        current_sec = ((int(str(current_duration).split('.')[0])*60) + (int(str("%.2f" % current_duration).split('.')[1])))
+        diff_sec = float((current_sec + 2))
+        possible_rwds = int(math.ceil(diff_sec/10))
+        print '===============rewinds================'
+        if count > possible_rwds:
+            count = possible_rwds
+        switch = count
+        while count > 0:
+            self.wait_video_controls()
+            self.driver.find_element(By.ID, "com.byjus.k3:id/exo_rew").click()
+            count -= 1
+        if switch == possible_rwds:
+            self.wait_video_controls()
+            rwd_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
+            rwd_sec = ((int(str(rwd_duration).split('.')[0])*60) + (int(str("%.2f" % rwd_duration).split('.')[1])))
+            assert rwd_sec < 10
+        elif switch < possible_rwds:
+            self.wait_video_controls()
+            rwd_duration = float(self.driver.find_element(By.ID, "com.byjus.k3:id/exo_position").text.replace(':', '.'))
+            rwd_sec = ((int(str(rwd_duration).split('.')[0])*60) + (int(str("%.2f" % rwd_duration).split('.')[1])))
+            assert rwd_sec >= (current_sec - (switch * 10) - 10) and  rwd_sec <= (current_sec - (switch * 10) + 10)
+            
         
     def video_back(self):
         self.wait_video_controls()
@@ -442,6 +520,7 @@ class Video(BaseClass):
         sleep(1)
         self.altdriver.wait_for_element_to_not_be_present('Interstitial/FadeTransition-Loading')
         sleep(1)
+        
     
     def wait_video_controls(self):
         self.action = TouchAction(self.driver)
