@@ -516,4 +516,31 @@ class GenericStep():
         interrupt.set_connection_type(self.obj.driver, connection_type)
         sleep(2)
 
- 
+    @step('click on terms of use')
+    def click_on_terms_of_use(self):
+        self.base_class.verify_others_section('Terms of use','Terms & Conditions')
+        self.base_class.click_back()
+        
+    @step('click on Privacy Policy')
+    def click_on_Privacy_Policy(self):
+        self.base_class.verify_others_section('Privacy','Privacy Policy')
+        self.base_class.click_back()
+   
+    @step('click on Rate us')
+    def click_on_Rate_us(self):
+        #generics_lib.scroll(self.driver, 0.5, 0.5, 0.6, 0.1, 800)
+        self.base_class.verify_rate_us('rateUs')
+        self.base_class.click_back()
+      
+    @step('change parent info "{parent_name}"')
+    def change_parent_info(self,parent_name):
+        self.base_class.change_parent_info(parent_name)  
+        
+    @step('click on Edit')
+    def account_details(self):
+        self.base_class.account_details('Edit')
+        
+        
+    @step('click on Logout')
+    def click_on_Logout(self):
+        self.base_class.click_on_logout()
