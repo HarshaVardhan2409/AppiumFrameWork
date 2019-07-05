@@ -11,15 +11,15 @@ def get_network_connection(driver):
     return driver.network_connection
 
 def set_connection_type(driver, conntype):
-    if(conntype == 'WIFI_ONLY'):
+    if(conntype.upper() in 'WIFI_ONLY'):
         driver.set_network_connection(ConnectionType.WIFI_ONLY)
-    elif(conntype == 'DATA_ONLY'):
+    elif(conntype.upper() in 'DATA_ONLY'):
         driver.set_network_connection(ConnectionType.DATA_ONLY)
-    elif(conntype == 'AIRPLANE_MODE'):
+    elif(conntype.upper() in 'AIRPLANE_MODE'):
         driver.set_network_connection(ConnectionType.AIRPLANE_MODE)
-    elif(conntype == 'ALL_NETWORK_ON'):
+    elif(conntype.upper() in 'ALL_NETWORK_ON'):
         driver.set_network_connection(ConnectionType.ALL_NETWORK_ON)
-    else:
+    elif(conntype.upper() in 'OFFLINE'):
         driver.set_network_connection(ConnectionType.NO_CONNECTION)
 
 def click_on_home_button(driver):
@@ -38,3 +38,4 @@ def restart_device():
 def shutdown_device():
     #only for windows with android
     call(['cmd.exe', '/c', 'adb shell reboot -p'])
+

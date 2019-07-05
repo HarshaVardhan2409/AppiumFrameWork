@@ -24,6 +24,7 @@ sys.path.append(PATH('../../generics/'))
 import generics_lib
 import constants
 import test_management
+import interrupt
 
 class GenericStep():
     obj = BaseSetup()
@@ -177,7 +178,6 @@ class GenericStep():
             When enter the: "otp": "1234" in element: "InputFieldPrefab"
             And scene is loaded: "GameMapScreen"
             And wait for object not to be present: "Interstitial/FadeTransition-Loading"
-            And custom wait: "5"
             ''')
             
     @step('GameMapScreen is loaded')
@@ -509,5 +509,11 @@ class GenericStep():
     def color_comparision(self, image_name):
         generics_lib.takescreenshot(self.obj.driver, PATH('../../a_image/actual_'+image_name+'_color.png'))
         generics_lib.color_comparision(PATH('../../a_image/'+image_name+'_color.png'), PATH('../../a_image/actual_'+image_name+'_color.png'))
+        
+    @step('switch network to "{connection_type}"')
+    def network_connection(self, connection_type):
+        sleep(1)
+        interrupt.set_connection_type(self.obj.driver, connection_type)
+        sleep(2)
 
  

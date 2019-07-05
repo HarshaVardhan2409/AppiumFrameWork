@@ -1,6 +1,7 @@
 from time import sleep
 import sys
 import os
+from selenium.webdriver.common.by import By
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
@@ -62,4 +63,23 @@ class VideoSteps(GenericStep):
     def forward_video_select_correct_option(self):
         self.video = Video(self.obj.altdriver, self.obj.driver)
         for row in self.table:
-            self.video.forward_video_select_option(float(row['duration']), str(row['option_text']))
+            self.video.forward_video_select_option(float(row['duration']), str(row['option_text']), str(row['acceptable']))
+    
+    @step('fast forward the video for "{count}" times and check')
+    def fast_forward(self, count):
+        self.video = Video(self.obj.altdriver, self.obj.driver)
+        self.video.fast_forward_video(int(count))
+        
+    @step('rewind the video for "{count}" times and check')
+    def rewind_video(self, count):
+        self.video = Video(self.obj.altdriver, self.obj.driver)
+        self.video.rewind_video(int(count))
+        
+    @step('check if video is paused')
+    def check_pause(self):
+        self.obj.driver.find_element(By.ID, "com.byjus.k3:id/exo_play")
+        
+    @step('resume the video')
+    def resume(self):
+        self.obj.driver.find_element(By.ID, "com.byjus.k3:id/exo_play").click()
+
