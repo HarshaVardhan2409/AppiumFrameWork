@@ -246,7 +246,7 @@ class BaseClass():
         sleep(1)
         keycodes = {"0": 7, "1": 8, "2":9, "3":10, "4":11, "5":12, "6":13, "7":14, "8":15, "9":16, "a":29, "b":30, "c":31, "d":32,
              "e":33, "f":34, "g":35, "h":36, "i":37, "j":38, "k":39, "l":40, "m":41, "n":42, "o":43, 
-            "p":44, "q":45, "r":46, "s":47, "t":48, "u":49, "v":50, "w":51, "x":52, "y":53, "z":54, "@": 77, '"': 75, "\\": 73, ",": 55, "=": 70, "[": 71, "]": 72, "-": 69, ";": 74, "/": 76, " ":62}
+            "p":44, "q":45, "r":46, "s":47, "t":48, "u":49, "v":50, "w":51, "x":52, "y":53, "z":54, "@": 77, '"': 75, "\\": 73, ",": 55, "=": 70, "[": 71, "]": 72, "-": 69, ";": 74, "/": 76, " ":62, ".": 56}
         text = str(text)
         for i in range(len(text)):
             try:
@@ -633,48 +633,4 @@ class BaseClass():
             
             
             
-    def verify_others_section(self,section_name,text):
-        print self.driver.context
-        self.altdriver.find_element(section_name).tap()
-        sleep(3)
-        print self.driver.context
-#         header = self.driver.find_element_by_xpath("//android.view.View[@instance='78']")
-        header = self.driver.find_element_by_xpath("//*[@text='"+text+"']")
-        assert header.text in text
-        print header.text
-        
-        
-    def verify_rate_us(self,section_name):
-        print self.driver.current_activity
-        sleep(3)
-        self.altdriver.find_element(section_name).tap()
-        sleep(6)
-        assert  self.driver.current_activity in 'com.google.android.finsky.activities.MainActivity'
-        
-        
-    def click_on_logout(self):
-        self.altdriver.find_element('logout').tap()
-        
-        
-    def change_parent_info(self,parent_name):
-        self.altdriver.find_element('MyRelationDropDown').tap()
-        droplist=self.altdriver.find_elements('Item Label')
-        print len(droplist)
-        for i in range(len(droplist)):
-            if droplist[i].get_text() in parent_name:
-                droplist[i].tap()
-
-    def account_details(self,option):
-        self.altdriver.find_element(option).tap()
-        sleep(3)
-        self.altdriver.find_element('EmailAdvanceInputField (1)/Text').tap()
-        sleep(10)
-        self.clear_text('EmailAdvanceInputField (1)/Text')
-        sleep(10)
-        self.tap('EmailAdvanceInputField (1)/Text')
-        #wait time for keypad to load
-        sleep(2)
-        self.enter_text_app('EmailAdvanceInputField (1)/Text',"abc@gmail.com")
-        sleep(10)
-        self.altdriver.find_element('Window1/Save').tap()
-        
+    
