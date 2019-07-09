@@ -59,10 +59,10 @@ class ParentZoneSteps(GenericStep):
         self.parentzone = Parentzone(self.obj.altdriver, self.obj.driver)
         self.parentzone.change_parent_info(parent_name)  
         
-    @step('click on Edit')
-    def account_details(self):
+    @step('click on Edit "{email}"')
+    def account_details(self,email):
         self.parentzone = Parentzone(self.obj.altdriver, self.obj.driver)
-        self.parentzone.account_details('Edit')
+        self.parentzone.account_details('Edit',email)
          
     @step('click on Logout')
     def click_on_Logout(self):

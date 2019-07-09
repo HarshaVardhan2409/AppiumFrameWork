@@ -56,7 +56,7 @@ class Parentzone(BaseClass):
             if droplist[i].get_text() in parent_name:
                 droplist[i].tap()
 
-    def account_details(self,option):
+    def account_details(self,option,email):
         self.altdriver.find_element(option).tap()
         sleep(3)
         self.altdriver.find_element('EmailAdvanceInputField (1)/Text').tap()
@@ -67,7 +67,7 @@ class Parentzone(BaseClass):
         self.tap('EmailAdvanceInputField (1)/Text')
         #wait time for keypad to load
         sleep(2)
-        self.base_class.enter_text_app('EmailAdvanceInputField (1)/Text',"abc@gmail.com")
+        self.base_class.enter_text_app('EmailAdvanceInputField (1)/Text',email)
         self.altdriver.find_element('Window1/Save').tap()
         
     
