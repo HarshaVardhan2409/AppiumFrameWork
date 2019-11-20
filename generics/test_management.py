@@ -195,7 +195,7 @@ def get_section(section_ID):
     return section
         
 def create_feature_file(suite_ID, project_ID, run_ID):
-    #delete_feature_files()
+    delete_feature_files()
     client = APIClient(testrail_url)
     client.user = testrail_username
     client.password = testrail_password
@@ -450,6 +450,3 @@ def create_feature_file_of_run(suite_ID, project_ID, run_ID):
     f.write(filedata)
     f.close()
     print 'Number of feature file created = '+ str(count)
-
-
-#create_feature_file('109','2', '110')

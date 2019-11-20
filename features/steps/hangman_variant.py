@@ -34,7 +34,7 @@ class HangmanStep(GenericStep):
             start_position = self.hangman.get_object_location(row['animation_object'])
             self.hangman.tap_option(row['option'])
             #wait time for animation to happen
-            sleep(6)
+            sleep(3)
             end_position = self.hangman.get_object_location(row['animation_object'])
             self.hangman.verify_object_location(start_position, end_position, row['acceptable'])
             
