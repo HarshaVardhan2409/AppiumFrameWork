@@ -146,7 +146,7 @@ class GenericStep():
         if 'GameMapScreen' == str(current_scene):
             print "entered gamemapscreen condition"
             self.base_class.verify_scene('GameMapScreen')
-            self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
+            #self.base_class.wait_for_element_not_present('Interstitial/FadeTransition-Loading')
             sleep(5)
         elif 'Onboarding' == str(current_scene):
             print "entered onboarding condition"
@@ -179,7 +179,9 @@ class GenericStep():
             And scene is loaded: "GameMapScreen"
             And wait for object not to be present: "Interstitial/FadeTransition-Loading"
             ''')
-            
+        print "successfully GameMapScreen is loaded with test credentials with number"
+        
+           
     @step('GameMapScreen is loaded')
     def gamemap_scene_loaded(self):
         self.obj.install_app()
@@ -258,9 +260,12 @@ class GenericStep():
         sleep(4)
                
     @step('Library scene is loaded')
-    def library_scene_loaded(self):    
+    def library_scene_loaded(self): 
+        print "entered library  scene is loaded"   
         self.base_class = BaseClass(self.obj.altdriver, self.obj.driver)
+        print "clicking on lib"
         self.base_class.tap('LibraryButton')
+        print "clicked on lib"
         self.access = ParentalAccess(self.obj.altdriver, self.obj.driver)
         #wait for the question to load
         sleep(3)

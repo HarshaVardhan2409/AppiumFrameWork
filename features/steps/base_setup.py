@@ -78,7 +78,6 @@ class BaseSetup():
         self.desired_caps['newCommandTimeout'] = 300
         
     def launch_app(self):
-
         print '---------udid and port---------------------------'
         print self.udid
         print self.port
